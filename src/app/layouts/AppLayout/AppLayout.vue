@@ -4,6 +4,7 @@ import { defineComponent } from 'vue'
 import AppHeader from './AppHeader.vue'
 import AppNavbar from './AppNavbar.vue'
 import AppAside from './AppAside.vue'
+import PageContentWrapper from '../PageLayout/PageContentWrapper.vue'
 
 defineComponent({
   name: 'AppLayout',
@@ -14,11 +15,9 @@ defineComponent({
     <AppHeader />
     <div class="flex flex-1">
       <AppNavbar />
-      <div class="flex flex-1 p-6 pb-0">
-        <div class="border border-gray-200 rounded-lg p-4 w-full bg-white">
-          <slot />
-        </div>
-      </div>
+      <PageContentWrapper>
+        <slot />
+      </PageContentWrapper>
       <AppAside />
     </div>
   </div>

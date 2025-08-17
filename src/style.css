@@ -6,3 +6,28 @@
 body {
   @apply bg-gray-100 text-gray-600;
 }
+
+:root {
+  /* Project */
+  --color-rise: #16a34a; /* green-600 */
+  --color-fall: #ef4444; /* red-500 */
+
+  /* Дизайн токены PrimeVue --------------------------------------------------------------------- */
+  /* https://primevue.org/datatable/#theming.styled */
+  /* Table */
+  /* ---------------- Header */
+  --p-datatable-header-background: #ffffff !important;
+  --p-datatable-header-cell-background: #ffffff !important;
+  --p-datatable-header-cell-color: #64748b !important; /* slate-500 */
+
+  /* ---------------- Body */
+  --p-datatable-row-background: #ffffff !important;
+  --p-datatable-row-color: #334155 !important; /* slate-700 */
+  --p-datatable-row-hover-background: #f0f9ff !important; /* sky-50 */
+  --p-datatable-row-hover-color: var(--p-datatable-row-color) !important;
+  --p-datatable-header-border-color: #e5e7eb !important; /* gray-200 */
+  --p-datatable-header-border-width: 1px !important;
+  --p-datatable-header-cell-border-color: #e5e7eb !important; /* gray-200 */
+  --p-datatable-body-cell-border-color: #e5e7eb !important; /* gray-200 */
+  /* -------------------------------------------------------------------------------------------- */
+}
