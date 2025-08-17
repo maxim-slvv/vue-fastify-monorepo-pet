@@ -4,8 +4,11 @@ defineOptions({ name: 'PageContentWrapper' })
 
 <template>
   <div class="flex flex-col flex-1 p-6 pb-0">
-    Крошки
-    <div class="border border-gray-200 rounded-lg w-full h-full overflow-hidden bg-white">
+    <!-- Крошки -->
+    <div
+      class="rounded-lg w-full h-full overflow-hidden"
+      :style="{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)' }"
+    >
       <slot />
     </div>
   </div>

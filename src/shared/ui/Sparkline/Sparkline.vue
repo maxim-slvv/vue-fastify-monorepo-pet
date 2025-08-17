@@ -44,7 +44,13 @@ const path = computed(() => {
 </script>
 
 <template>
-  <svg :width="props.width" :height="props.height" viewBox="0 0 120 32" preserveAspectRatio="none">
+  <svg
+    class="block"
+    width="100%"
+    height="100%"
+    :viewBox="`0 0 ${props.width} ${props.height}`"
+    preserveAspectRatio="none"
+  >
     <path :d="path" fill="none" :stroke="color" :stroke-width="props.strokeWidth" />
   </svg>
 </template>

@@ -14,7 +14,6 @@ export interface ColumnDef<Row = any> {
   align?: Align
   headerClass?: string
   bodyClass?: string
-  /** Пользовательский рендер ячейки */
   render?: (row: Row) => unknown
 }
 

@@ -11,7 +11,10 @@ defineComponent({
 })
 </script>
 <template>
-  <div class="flex flex-col h-screen w-screen">
+  <div
+    class="flex flex-col h-screen w-screen"
+    :style="{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }"
+  >
     <AppHeader />
     <div class="flex flex-1">
       <AppNavbar />

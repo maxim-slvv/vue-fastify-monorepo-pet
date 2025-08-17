@@ -16,7 +16,6 @@ const variants: Record<string, string> = {
 
 <template>
   <button :class="[baseClasses, variants[props.variant ?? 'primary']]">
-    <!-- Если слот не передан, то будет отображаться label, вкусна... -->
     <slot>{{ props.label }}</slot>
   </button>
 </template>

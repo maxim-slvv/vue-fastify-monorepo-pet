@@ -24,8 +24,11 @@ function setActive(selected: { label: string; to: string; icon: string; active: 
 }
 </script>
 <template>
-  <aside class="w-64 bg-white/80 border-r border-gray-200">
-    <nav class="p-4 space-y-2">
+  <aside
+    class="w-64"
+    :style="{ backgroundColor: 'var(--surface)', borderRight: '1px solid var(--border)' }"
+  >
+    <nav class="p-4 space-y-2" :style="{ color: 'var(--fg)' }">
       <NavbarLink
         v-for="link in links"
         :key="link.to"

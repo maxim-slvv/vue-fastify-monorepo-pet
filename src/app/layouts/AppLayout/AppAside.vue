@@ -6,7 +6,14 @@ defineComponent({
 })
 </script>
 <template>
-  <div class="w-64 bg-white/80 border-l border-gray-200">
+  <div
+    class="w-100"
+    :style="{
+      backgroundColor: 'var(--surface)',
+      borderLeft: '1px solid var(--border)',
+      color: 'var(--fg)',
+    }"
+  >
     <div class="p-4">
       <h2 class="text-lg font-medium">Courses</h2>
       <p class="text-sm text-gray-500">Current courses</p>

@@ -11,3 +11,6 @@ https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?n
     - Добавить в избранное и при переходе в избранное - подписываться только на избранные валюты
     - Popover что бы показать инфу https://primevue.org/popover/
 [] Aside
+
+
+TODO Нужно весь текст на странице обернуть в типографику для того что бы использовать цвета и размеры

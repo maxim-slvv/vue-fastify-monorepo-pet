@@ -3,6 +3,7 @@ import { defineComponent } from 'vue'
 import UiDataTable, { type ColumnDef } from '@/shared/ui/DataTable/UiDataTable.vue'
 import UiSparkline from '@/shared/ui/Sparkline/Sparkline.vue'
 import UiTypography from '@/shared/ui/Typography/Typography.vue'
+import UiPopover from '@/shared/ui/Popover/Popover.vue'
 
 defineComponent({ name: 'CryptoPage' })
 
@@ -116,8 +117,21 @@ const columns: ColumnDef<CryptoTableRow>[] = [
 
 <template>
   <UiDataTable :rows="rows" :columns="columns">
+    <!-- Печально что обертки вокруг колонок нужно описывать отдельно от columns конфига -->
+    <!-- Может есть какой то вариант - что бы в пропсах прокидывать обертку в которую хотим положить значение колонки -->
+    <!-- Тоесть вопрос в том как в теге script использовать vue компоненты (если это вообще возможно)-->
+    <!-- Типо сделать что то на подобие: -->
+    <!-- {render: (rowData)=> <Popover item={rowData.description}>rowData.text</Popover>} -->
+
     <template #body-spark="{ data }">
-      <UiSparkline :data="data.spark" />
+      <UiPopover :width="500" :height="300">
+        <div :style="{ width: '120px', height: '32px' }">
+          <UiSparkline :data="data.spark" />
+        </div>
+        <template #popover>
+          <UiSparkline :data="data.spark" :width="500" :height="300" :strokeWidth="3" />
+        </template>
+      </UiPopover>
     </template>
     <template #body-ch24h="{ data }">
       <UiTypography :color="data.ch24h_direction === 'up' ? 'green' : 'red'">{{
