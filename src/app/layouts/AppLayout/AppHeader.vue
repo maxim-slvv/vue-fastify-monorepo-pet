@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { defineComponent } from 'vue'
 import Button from '@/shared/ui/Button/Button.vue'
+import HeaderNavLink from '@/shared/ui/nav/HeaderNavLink.vue'
 
 defineComponent({
   name: 'AppHeader',
@@ -26,14 +27,7 @@ const navLinks: string[] = [
         </div>
 
         <nav class="hidden md:flex items-center gap-5 text-sm text-gray-600">
-          <a
-            v-for="link in navLinks"
-            :key="link"
-            href="#"
-            class="hover:text-gray-900 flex items-center gap-1"
-          >
-            {{ link }}
-          </a>
+          <HeaderNavLink v-for="link in navLinks" :key="link" :label="link" />
         </nav>
       </div>
 

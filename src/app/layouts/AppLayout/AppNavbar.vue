@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { defineComponent, ref } from 'vue'
+import NavbarLink from '@/shared/ui/nav/NavbarLink.vue'
 
 defineComponent({
   name: 'AppNavbar',
@@ -25,19 +26,14 @@ function setActive(selected: { label: string; to: string; icon: string; active: 
 <template>
   <aside class="w-64 bg-white/80 border-r border-gray-200">
     <nav class="p-4 space-y-2">
-      <a
+      <NavbarLink
         v-for="link in links"
         :key="link.to"
-        href="#"
-        @click.prevent="setActive(link)"
-        class="flex items-center gap-3 px-4 py-3 rounded-lg transition-colors hover:bg-gray-100"
-      >
-        <i :class="[link.icon, link.active ? 'text-blue-600' : 'text-gray-400']" class="text-xl" />
-        <span :class="link.active ? 'text-blue-700 font-semibold' : 'text-gray-600 font-medium'">
-          {{ link.label }}
-        </span>
-        <i class="pi pi-angle-right text-gray-300 ml-auto" />
-      </a>
+        :label="link.label"
+        :icon="link.icon"
+        :active="link.active"
+        @select="setActive(link)"
+      />
     </nav>
   </aside>
 </template>
