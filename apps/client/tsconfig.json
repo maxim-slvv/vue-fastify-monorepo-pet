@@ -1,5 +1,5 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "extends": "../../typescript.base.json",
   "include": [
     "env.d.ts",
     "src/**/*",
@@ -16,16 +16,6 @@
         "./src/*"
       ]
     },
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve",
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
-    "skipLibCheck": true
+    "noEmit": true
   }
 }

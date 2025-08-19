@@ -14,3 +14,7 @@ https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?n
 
 
 TODO Нужно весь текст на странице обернуть в типографику для того что бы использовать цвета и размеры
+
+Monorepo
+Lerna
+Fastify

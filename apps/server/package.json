@@ -1,0 +1,22 @@
+{
+  "name": "server",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "start": "node dist/index.js",
+    "dev": "node --watch --loader ts-node/esm src/index.ts",
+    "type-check": "tsc -p . --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "fastify": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.17.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}

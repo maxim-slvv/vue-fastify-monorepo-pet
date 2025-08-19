@@ -1,0 +1,268 @@
+{
+  "version": "6.0",
+  "nxVersion": "20.8.2",
+  "pathMappings": {
+    "@client/*": [
+      "apps/client/src/*"
+    ]
+  },
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "projectFileMap": {
+      "server": [
+        {
+          "file": "apps/server/Dockerfile",
+          "hash": "5916372696676072277"
+        },
+        {
+          "file": "apps/server/package.json",
+          "hash": "5639282515227431690",
+          "deps": [
+            "npm:@types/node",
+            "npm:ts-node",
+            "npm:typescript",
+            "npm:fastify"
+          ]
+        },
+        {
+          "file": "apps/server/src/index.ts",
+          "hash": "8002487614934376237"
+        },
+        {
+          "file": "apps/server/tsconfig.json",
+          "hash": "13361865030959496865"
+        }
+      ],
+      "vue-pet": [
+        {
+          "file": "apps/client/.editorconfig",
+          "hash": "5362030851418540636"
+        },
+        {
+          "file": "apps/client/.gitattributes",
+          "hash": "8203086421481795821"
+        },
+        {
+          "file": "apps/client/.gitignore",
+          "hash": "13524112160863732742"
+        },
+        {
+          "file": "apps/client/Dockerfile",
+          "hash": "9483991964165411845"
+        },
+        {
+          "file": "apps/client/README.md",
+          "hash": "5656347508529493968"
+        },
+        {
+          "file": "apps/client/env.d.ts",
+          "hash": "8262019949032536373"
+        },
+        {
+          "file": "apps/client/eslint.config.mjs",
+          "hash": "10089573700825953852"
+        },
+        {
+          "file": "apps/client/index.html",
+          "hash": "14280152328564105816"
+        },
+        {
+          "file": "apps/client/package.json",
+          "hash": "14101353049412607416",
+          "deps": [
+            "npm:@tailwindcss/postcss",
+            "npm:@tsconfig/node22",
+            "npm:@types/node",
+            "npm:@vitejs/plugin-vue@6.0.1",
+            "npm:@vitejs/plugin-vue-jsx@5.0.1",
+            "npm:@vue/eslint-config-prettier",
+            "npm:@vue/eslint-config-typescript",
+            "npm:@vue/tsconfig@0.7.0",
+            "npm:autoprefixer",
+            "npm:class-variance-authority",
+            "npm:clsx",
+            "npm:eslint",
+            "npm:eslint-plugin-vue",
+            "npm:jiti",
+            "npm:npm-run-all2",
+            "npm:postcss",
+            "npm:prettier",
+            "npm:tailwind-merge",
+            "npm:tailwindcss",
+            "npm:typescript@5.8.3",
+            "npm:vite",
+            "npm:vite-plugin-vue-devtools",
+            "npm:vue-tsc@3.0.5",
+            "npm:@primevue/themes",
+            "npm:primeflex",
+            "npm:primeicons",
+            "npm:primevue",
+            "npm:vue@3.5.18"
+          ]
+        },
+        {
+          "file": "apps/client/postcss.config.js",
+          "hash": "14886562286554270667"
+        },
+        {
+          "file": "apps/client/public/favicon.ico",
+          "hash": "18282137866655320110"
+        },
+        {
+          "file": "apps/client/src/app/App.vue",
+          "hash": "4542041812337818331"
+        },
+        {
+          "file": "apps/client/src/app/layouts/AppLayout/AppAside.vue",
+          "hash": "2880876232379307673"
+        },
+        {
+          "file": "apps/client/src/app/layouts/AppLayout/AppHeader.vue",
+          "hash": "18293274192660614537"
+        },
+        {
+          "file": "apps/client/src/app/layouts/AppLayout/AppLayout.vue",
+          "hash": "2503617884354650191"
+        },
+        {
+          "file": "apps/client/src/app/layouts/AppLayout/AppNavbar.vue",
+          "hash": "6151867498893041494"
+        },
+        {
+          "file": "apps/client/src/app/layouts/PageLayout/PageContentWrapper.vue",
+          "hash": "13162873265086108486"
+        },
+        {
+          "file": "apps/client/src/main.ts",
+          "hash": "6115641294124291044"
+        },
+        {
+          "file": "apps/client/src/pages/Crypto/CryptoPage.vue",
+          "hash": "16015222815490760298"
+        },
+        {
+          "file": "apps/client/src/shared/components/ThemeSwitcher.vue",
+          "hash": "16320570459547205396"
+        },
+        {
+          "file": "apps/client/src/shared/lib/tailwind/cn.ts",
+          "hash": "11516636435278812601"
+        },
+        {
+          "file": "apps/client/src/shared/lib/theme/useTheme.ts",
+          "hash": "14057271629000743051"
+        },
+        {
+          "file": "apps/client/src/shared/ui/Button/Button.vue",
+          "hash": "6780266565832290994"
+        },
+        {
+          "file": "apps/client/src/shared/ui/DataTable/UiDataTable.vue",
+          "hash": "1414472097255427136"
+        },
+        {
+          "file": "apps/client/src/shared/ui/Popover/Popover.vue",
+          "hash": "6093533985679138537"
+        },
+        {
+          "file": "apps/client/src/shared/ui/Sparkline/Sparkline.vue",
+          "hash": "5479478616219180492"
+        },
+        {
+          "file": "apps/client/src/shared/ui/Typography/Typography.vue",
+          "hash": "12650590002369425555"
+        },
+        {
+          "file": "apps/client/src/shared/ui/nav/HeaderNavLink.vue",
+          "hash": "15975082702836789454"
+        },
+        {
+          "file": "apps/client/src/shared/ui/nav/NavbarLink.vue",
+          "hash": "14741841013013387909"
+        },
+        {
+          "file": "apps/client/src/style.css",
+          "hash": "11831818202743799624"
+        },
+        {
+          "file": "apps/client/tailwind.config.js",
+          "hash": "11422217318594627775"
+        },
+        {
+          "file": "apps/client/tsconfig.json",
+          "hash": "10934186757913702511"
+        },
+        {
+          "file": "apps/client/tsconfig.node.json",
+          "hash": "5226848183644151439"
+        },
+        {
+          "file": "apps/client/vite.config.ts",
+          "hash": "5666636537659130074"
+        }
+      ]
+    },
+    "nonProjectFiles": [
+      {
+        "file": ".gitignore",
+        "hash": "11049300781391423406"
+      },
+      {
+        "file": ".nvmrc",
+        "hash": "5843818296967970950"
+      },
+      {
+        "file": ".prettierrc.json",
+        "hash": "16953024835664132056"
+      },
+      {
+        "file": ".vscode/extensions.json",
+        "hash": "3612376340414299430"
+      },
+      {
+        "file": ".vscode/settings.json",
+        "hash": "17787339190853841564"
+      },
+      {
+        "file": ".yarnrc.yml",
+        "hash": "17705475711047837865"
+      },
+      {
+        "file": "TODO.md",
+        "hash": "14447883786028812020"
+      },
+      {
+        "file": "docker-compose.yml",
+        "hash": "8151412247251461075"
+      },
+      {
+        "file": "eslint.config.mjs",
+        "hash": "129784650777363187"
+      },
+      {
+        "file": "lerna.json",
+        "hash": "6641226807007002701"
+      },
+      {
+        "file": "nx.json",
+        "hash": "2593852816024476234"
+      },
+      {
+        "file": "package.json",
+        "hash": "13622518585300186679"
+      },
+      {
+        "file": "tsconfig.json",
+        "hash": "8377220878198136444"
+      },
+      {
+        "file": "typescript.base.json",
+        "hash": "13135173093289981480"
+      },
+      {
+        "file": "yarn.lock",
+        "hash": "5489227486788198483"
+      }
+    ]
+  }
+}

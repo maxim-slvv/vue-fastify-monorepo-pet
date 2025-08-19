@@ -1,0 +1,18 @@
+{
+    "files": [],
+    "references": [
+        {
+            "path": "./apps/client"
+        }
+    ],
+    "extends": "./typescript.base.json",
+    "compilerOptions": {
+        "composite": true,
+        "baseUrl": ".",
+        "paths": {
+            "@client/*": [
+                "apps/client/src/*"
+            ]
+        }
+    }
+}

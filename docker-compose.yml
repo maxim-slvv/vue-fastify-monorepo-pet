@@ -1,0 +1,24 @@
+services:
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    working_dir: /app
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+    restart: always
+
+  vue-pet:
+    container_name: vue-pet
+    build:
+      context: .
+      dockerfile: apps/client/Dockerfile
+    working_dir: /app
+    ports:
+      - '4000:4000'
+    environment:
+      - NODE_ENV=production
+    restart: always

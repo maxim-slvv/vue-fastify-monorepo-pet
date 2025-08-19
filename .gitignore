@@ -1,0 +1,16 @@
+.DS_Store
+node_modules
+.pnp.cjs
+.pnp.loader.mjs
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+dist
+dist-ssr
+coverage
+*.log
+
+
