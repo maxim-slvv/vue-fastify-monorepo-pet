@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import Typography from '@/shared/ui/Typography/Typography.vue'
 
 defineOptions({ name: 'NavbarLink' })
 
@@ -24,10 +25,10 @@ const hover = ref(false)
       backgroundColor: hover ? 'var(--bg-hover)' : 'var(--bg-surface)',
     }"
   >
-    <i :class="[icon, active ? 'text-blue-600' : 'text-gray-400']" class="text-xl" />
-    <span :class="active ? 'text-blue-700 font-semibold' : 'text-gray-600 font-medium'">
+    <i :class="[icon]" :style="{ color: active ? 'var(--color-blue)' : 'var(--color-gray)' }" />
+    <Typography :color="active ? 'blue' : 'gray'" class="text-m-bold">
       {{ label }}
-    </span>
+    </Typography>
     <i class="pi pi-angle-right text-gray-300 ml-auto" />
   </a>
 </template>

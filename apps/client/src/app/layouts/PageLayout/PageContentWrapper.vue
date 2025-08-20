@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { blockLayoutStyles } from '@/shared/styles/in-js-styles'
+
 defineOptions({ name: 'PageContentWrapper' })
 </script>
 
@@ -6,8 +8,8 @@ defineOptions({ name: 'PageContentWrapper' })
   <div class="flex flex-col flex-1 p-6 pb-0">
     <!-- Крошки -->
     <div
+      :style="{ ...blockLayoutStyles({ border: 'all' }) }"
       class="rounded-lg w-full h-full overflow-hidden"
-      :style="{ backgroundColor: 'var(--surface)', border: '1px solid var(--border)' }"
     >
       <slot />
     </div>

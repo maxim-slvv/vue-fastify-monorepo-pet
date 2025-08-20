@@ -13,11 +13,12 @@ const {
 </script>
 
 <template>
-  <a
-    :href="href"
-    class="flex items-center gap-1 text-sm transition-colors"
-    :class="active ? 'text-gray-900 font-medium' : 'text-gray-600 hover:text-gray-900'"
-  >
-    {{ label }}
+  <a :href="href" class="flex items-center gap-1 text-sm transition-colors">
+    <Typography
+      :color="active ? 'green' : 'default'"
+      class="text-m-bold border-b-1 border-transparent hover:border-white"
+    >
+      {{ label }}
+    </Typography>
   </a>
 </template>

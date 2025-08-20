@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue'
 import UiDataTable, { type ColumnDef } from '@/shared/ui/DataTable/UiDataTable.vue'
 import UiSparkline from '@/shared/ui/Sparkline/Sparkline.vue'
-import UiTypography from '@/shared/ui/Typography/Typography.vue'
+import Typography from '@/shared/ui/Typography/Typography.vue'
 import UiPopover from '@/shared/ui/Popover/Popover.vue'
 
 defineComponent({ name: 'CryptoPage' })
@@ -134,14 +134,14 @@ const columns: ColumnDef<CryptoTableRow>[] = [
       </UiPopover>
     </template>
     <template #body-ch24h="{ data }">
-      <UiTypography :color="data.ch24h_direction === 'up' ? 'green' : 'red'">{{
+      <Typography :color="data.ch24h_direction === 'up' ? 'green' : 'red'" class="text-m-bold">{{
         data.ch24h
-      }}</UiTypography>
+      }}</Typography>
     </template>
     <template #body-ch7d="{ data }">
-      <UiTypography :color="data.ch7d_direction === 'up' ? 'green' : 'red'">{{
+      <Typography :color="data.ch7d_direction === 'up' ? 'green' : 'red'" class="text-m-bold">{{
         data.ch7d
-      }}</UiTypography>
+      }}</Typography>
     </template>
   </UiDataTable>
 </template>

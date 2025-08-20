@@ -16,6 +16,9 @@ const variants: Record<string, string> = {
 
 <template>
   <button :class="[baseClasses, variants[props.variant ?? 'primary']]">
-    <slot>{{ props.label }}</slot>
+    <!-- TODO размеры дефолтные кнопкам из вариантов -->
+    <Typography class="text-s-bold">
+      <slot>{{ props.label }}</slot>
+    </Typography>
   </button>
 </template>

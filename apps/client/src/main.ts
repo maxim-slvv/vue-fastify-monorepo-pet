@@ -3,7 +3,7 @@ import App from './app/App.vue'
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
 import 'primeicons/primeicons.css'
-import './style.css'
+import './shared/styles/index.css'
 import { useTheme } from '@/shared/lib/theme/useTheme'
 
 const app = createApp(App)

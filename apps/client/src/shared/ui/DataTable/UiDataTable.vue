@@ -2,6 +2,7 @@
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import { useSlots } from 'vue'
+import Typography from '@/shared/ui/Typography/Typography.vue'
 
 defineOptions({ name: 'UiDataTable' })
 
@@ -58,10 +59,10 @@ function alignToClass(align?: Align): string | undefined {
           :is="slots[`body-${col.field}`]"
           v-bind="slotProps"
         />
-        <span v-else-if="col.render">
+        <Typography class="text-m-bold" v-else-if="col.render">
           {{ col.render(slotProps.data) as any }}
-        </span>
-        <span v-else>{{ slotProps.data[col.field] }}</span>
+        </Typography>
+        <Typography class="text-m-bold" v-else>{{ slotProps.data[col.field] }}</Typography>
       </template>
     </Column>
   </DataTable>

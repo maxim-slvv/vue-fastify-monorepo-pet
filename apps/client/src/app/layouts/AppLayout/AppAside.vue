@@ -14,9 +14,9 @@ defineComponent({
       color: 'var(--fg)',
     }"
   >
-    <div class="p-4">
-      <h2 class="text-lg font-medium">Courses</h2>
-      <p class="text-sm text-gray-500">Current courses</p>
+    <div class="p-4 flex flex-col">
+      <Typography class="text-m-bold">Courses</Typography>
+      <Typography class="text-xs">Current courses</Typography>
     </div>
   </div>
 </template>
