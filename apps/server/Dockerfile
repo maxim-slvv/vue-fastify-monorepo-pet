@@ -24,6 +24,7 @@ FROM node:20-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=build /app/apps/server/dist ./apps/server/dist
+COPY --from=build /app/apps/server/public ./apps/server/public
 COPY --from=build /app/apps/server/package.json ./apps/server/package.json
 RUN corepack enable \
   && corepack prepare yarn@4.6.0 --activate \
