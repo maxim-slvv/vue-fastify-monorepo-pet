@@ -4,6 +4,7 @@ body {
   @apply bg-gray-100 text-gray-600;
   background-color: var(--bg);
   color: var(--fg);
+  overflow-x: hidden; /* TODO:пересмотреть - таблица дает скролл горизонтальный */
 }
 
 :root {

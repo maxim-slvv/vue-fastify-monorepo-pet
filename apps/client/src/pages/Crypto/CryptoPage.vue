@@ -1,115 +1,53 @@
 <script setup lang="ts">
 import { defineComponent } from 'vue'
 import UiDataTable, { type ColumnDef } from '@/shared/ui/DataTable/UiDataTable.vue'
-import UiSparkline from '@/shared/ui/Sparkline/Sparkline.vue'
+import Sparkline from '@/shared/ui/Sparkline/Sparkline.vue'
 import Typography from '@/shared/ui/Typography/Typography.vue'
 import UiPopover from '@/shared/ui/Popover/Popover.vue'
+import { useCryptoTicker } from '@/pages/Crypto/useCryptoTicker'
+import type { CryptoTableRow } from '@/pages/Crypto/types'
+import { API_URL } from '@/shared/config/api'
 
 defineComponent({ name: 'CryptoPage' })
 
-type CryptoTableRow = {
-  rank: number
-  name: string
-  symbol: string
-  price: string
-  ch24h: string
-  ch24h_direction: 'up' | 'down'
-  ch7d: string
-  ch7d_direction: 'up' | 'down'
-  marketCap: string
-  volume24h: string
-  spark: number[]
-}
-
-const rows: CryptoTableRow[] = [
-  {
-    rank: 1,
-    name: 'Bitcoin',
-    symbol: 'BTC',
-    price: '$50,355.21',
-    ch24h: '6.49%',
-    ch24h_direction: 'up',
-    ch7d: '22.53%',
-    ch7d_direction: 'up',
-    marketCap: '$766,432,564,346',
-    volume24h: '$38,544,965,954',
-    spark: [
-      101, 102, 120, 101, 28, 100, 100, 150, 120, 125, 150, 145, 140, 220, 150, 120, 125, 150, 145,
-      140, 220,
-    ],
-  },
-  {
-    rank: 2,
-    name: 'Ethereum',
-    symbol: 'ETH',
-    price: '$2,584.55',
-    ch24h: '2.49%',
-    ch24h_direction: 'up',
-    ch7d: '22.53%',
-    ch7d_direction: 'down',
-    marketCap: '$285,843,885,844',
-    volume24h: '$24,954,954,953',
-    spark: [
-      200, 180, 170, 150, 140, 160, 155, 101, 102, 120, 125, 130, 220, 120, 125, 130, 190, 10, 101,
-      102, 103,
-    ],
-  },
-  {
-    rank: 3,
-    name: 'Tether',
-    symbol: 'USDT',
-    price: '$1.00',
-    ch24h: '0.13%',
-    ch24h_direction: 'down',
-    ch7d: '22.53%',
-    ch7d_direction: 'down',
-    marketCap: '$62,453,345,112',
-    volume24h: '$59,953,234,065',
-    spark: [
-      100, 98, 230, 101, 28, 100, 100, 150, 120, 125, 150, 145, 140, 220, 150, 120, 125, 150, 145,
-      140, 220,
-    ],
-  },
-  {
-    rank: 4,
-    name: 'Binance',
-    symbol: 'BNB',
-    price: '$374.20',
-    ch24h: '8.49%',
-    ch24h_direction: 'up',
-    ch7d: '22.53%',
-    ch7d_direction: 'up',
-    marketCap: '$56,954,543,543',
-    volume24h: '$1,594,356,995',
-    spark: [
-      150, 120, 125, 150, 145, 140, 220, 150, 120, 125, 150, 145, 140, 220, 101, 28, 100, 100, 150,
-      90, 50,
-    ],
-  },
-]
+const { rows } = useCryptoTicker()
 
 const columns: ColumnDef<CryptoTableRow>[] = [
   {
     field: 'rank',
     header: '#',
     align: 'center',
+    width: '56px',
     bodyClass: 'text-gray-500 font-medium',
   },
   {
     field: 'name',
     header: 'Name',
-    render: (row) => `${row.name} ${row.symbol}`,
+    width: '220px',
     bodyClass: 'font-medium',
   },
-  { field: 'price', header: 'Price', align: 'right', bodyClass: 'font-medium' },
-  { field: 'ch24h', header: '24h %', align: 'right', bodyClass: 'font-medium' },
-  { field: 'ch7d', header: '7d %', align: 'right', bodyClass: 'font-medium' },
-  { field: 'marketCap', header: 'Market Cap', align: 'right', bodyClass: 'font-medium' },
-  { field: 'volume24h', header: 'Volume(24h)', align: 'right', bodyClass: 'font-medium' },
+  { field: 'price', header: 'Price', align: 'right', width: '120px', bodyClass: 'font-medium' },
+  { field: 'ch24h', header: '24h %', align: 'right', width: '96px', bodyClass: 'font-medium' },
+  { field: 'ch7d', header: '7d %', align: 'right', width: '96px', bodyClass: 'font-medium' },
+  {
+    field: 'marketCap',
+    header: 'Market Cap',
+    align: 'right',
+    width: '180px',
+    bodyClass: 'font-medium',
+  },
+  {
+    field: 'volume24h',
+    header: 'Volume(24h)',
+    align: 'right',
+    width: '180px',
+    bodyClass: 'font-medium',
+  },
   {
     field: 'spark',
     header: 'Last 7 Days',
     align: 'right',
+    width: '140px',
     bodyClass: 'font-medium',
   },
 ]
@@ -123,13 +61,31 @@ const columns: ColumnDef<CryptoTableRow>[] = [
     <!-- Типо сделать что то на подобие: -->
     <!-- {render: (rowData)=> <Popover item={rowData.description}>rowData.text</Popover>} -->
 
+    <template #body-name="{ data }">
+      <div class="flex items-center gap-2">
+        <img
+          :src="`${API_URL}${data.image}`"
+          :alt="data.symbol"
+          class="w-5 h-5 rounded-sm"
+          loading="lazy"
+        />
+        <Typography class="text-m-bold">{{ `${data.name} ${data.symbol}` }}</Typography>
+      </div>
+    </template>
+
     <template #body-spark="{ data }">
       <UiPopover :width="500" :height="300">
         <div :style="{ width: '120px', height: '32px' }">
-          <UiSparkline :data="data.spark" />
+          <Sparkline :data="data.spark" :direction="data.ch7d_direction" />
         </div>
         <template #popover>
-          <UiSparkline :data="data.spark" :width="500" :height="300" :strokeWidth="3" />
+          <Sparkline
+            :data="data.spark"
+            :direction="data.ch7d_direction"
+            :width="500"
+            :height="300"
+            :strokeWidth="3"
+          />
         </template>
       </UiPopover>
     </template>

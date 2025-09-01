@@ -4,6 +4,7 @@ import Button from '@/shared/ui/Button/Button.vue'
 import HeaderNavLink from '@/shared/ui/nav/HeaderNavLink.vue'
 import ThemeSwitcher from '@/shared/ui/ThemeSwitcher/ThemeSwitcher.vue'
 import { blockLayoutStyles } from '@/shared/styles/in-js-styles'
+import Typography from '@/shared/ui/Typography/Typography.vue'
 
 defineComponent({
   name: 'AppHeader',

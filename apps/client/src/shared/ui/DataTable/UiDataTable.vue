@@ -15,6 +15,7 @@ export interface ColumnDef<Row = any> {
   align?: Align
   headerClass?: string
   bodyClass?: string
+  width?: string
   render?: (row: Row) => unknown
 }
 
@@ -39,7 +40,7 @@ function alignToClass(align?: Align): string | undefined {
     :value="props.rows"
     rowHover
     class="w-full bg-white"
-    :pt="{ table: { class: props.tableClass }, bodyRow: { class: 'group' } }"
+    :pt="{ table: { class: [props.tableClass, 'table-fixed'] }, bodyRow: { class: 'group' } }"
   >
     <Column
       v-for="col in props.columns"
@@ -47,9 +48,21 @@ function alignToClass(align?: Align): string | undefined {
       :field="col.field"
       :header="col.header"
       :pt="{
-        headerCell: { class: ['bg-white', col.headerClass] },
+        headerCell: {
+          class: ['bg-white', col.headerClass],
+          style: col.width ? { width: col.width } : undefined,
+        },
         bodyCell: {
-          class: ['bg-white', 'group-hover:bg-sky-50', alignToClass(col.align), col.bodyClass],
+          class: [
+            'bg-white',
+            'group-hover:bg-sky-50',
+            'whitespace-nowrap',
+            'overflow-hidden',
+            'text-ellipsis',
+            alignToClass(col.align),
+            col.bodyClass,
+          ],
+          style: col.width ? { width: col.width } : undefined,
         },
       }"
     >

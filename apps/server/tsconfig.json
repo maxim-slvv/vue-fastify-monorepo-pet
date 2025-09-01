@@ -2,7 +2,11 @@
     "extends": "../../typescript.base.json",
     "compilerOptions": {
         "outDir": "./dist",
-        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.server.tsbuildinfo"
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.server.tsbuildinfo",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "noEmit": true,
+        "allowImportingTsExtensions": true
     },
     "include": [
         "src/**/*"
