@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { defineComponent } from 'vue'
 import UiDataTable, { type ColumnDef } from '@/shared/ui/DataTable/UiDataTable.vue'
-import Sparkline from '@/shared/ui/Sparkline/Sparkline.vue'
+import CryptoCard from './CryptoCard.vue'
+import SparklineCell from '@/shared/ui/Sparkline/SparklineCell.vue'
 import Typography from '@/shared/ui/Typography/Typography.vue'
 import UiPopover from '@/shared/ui/Popover/Popover.vue'
 import { useCryptoTicker } from '@/pages/Crypto/useCryptoTicker'
@@ -75,17 +76,9 @@ const columns: ColumnDef<CryptoTableRow>[] = [
 
     <template #body-spark="{ data }">
       <UiPopover :width="500" :height="300">
-        <div :style="{ width: '120px', height: '32px' }">
-          <Sparkline :data="data.spark" :direction="data.ch7d_direction" />
-        </div>
+        <SparklineCell :data="data.spark" :direction="data.ch7d_direction" />
         <template #popover>
-          <Sparkline
-            :data="data.spark"
-            :direction="data.ch7d_direction"
-            :width="500"
-            :height="300"
-            :strokeWidth="3"
-          />
+          <CryptoCard :row="data" />
         </template>
       </UiPopover>
     </template>

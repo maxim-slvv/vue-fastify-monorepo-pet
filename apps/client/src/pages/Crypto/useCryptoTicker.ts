@@ -4,6 +4,7 @@ import { CryptoTableRow } from './types'
 
 const API_URL = (import.meta as unknown as ImportMeta).env?.VITE_API_URL ?? 'http://localhost:3000'
 
+// Все монеты
 export function useCryptoTicker() {
   const rows = ref<CryptoTableRow[]>([])
   let socket: Socket | null = null
@@ -17,7 +18,7 @@ export function useCryptoTicker() {
   function connect(): void {
     if (socket) return
     socket = io(`${API_URL}/crypto-v1`, { transports: ['websocket'] })
-    socket.on('ticker', (data: CryptoTableRow[]) => {
+    socket.on('ticker:all', (data: CryptoTableRow[]) => {
       rows.value = data
     })
   }
@@ -43,4 +44,32 @@ export function useCryptoTicker() {
   })
 
   return { rows, connect, disconnect }
+}
+
+// Одна монета
+export function useCryptoTickerBySymbol(symbol: string) {
+  const row = ref<CryptoTableRow | null>(null)
+  let socket: Socket | null = null
+
+  function connect(): void {
+    if (socket) return
+    socket = io(`${API_URL}/crypto-v1`, { transports: ['websocket'] })
+    socket.emit('subscribe', symbol)
+    socket.on('ticker', (data: CryptoTableRow) => {
+      if (data?.symbol === symbol) row.value = data
+    })
+  }
+
+  function disconnect(): void {
+    if (!socket) return
+    socket.emit('unsubscribe', symbol)
+    socket.removeAllListeners()
+    socket.disconnect()
+    socket = null
+  }
+
+  onMounted(connect)
+  onBeforeUnmount(disconnect)
+
+  return { row, connect, disconnect }
 }

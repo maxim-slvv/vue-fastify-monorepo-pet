@@ -219,6 +219,22 @@ html.dark {
   --p-datatable-transition-duration: 0ms;
 }
 
+html.dark .p-popover {
+  border: 1px solid #000000 !important;
+  background-color: #000000 !important;
+}
+html.dark .p-popover .p-popover-arrow,
+html.dark .p-popover .p-popover-arrow::before {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+}
+html.dark .p-popover .p-popover-arrow {
+  border-top-color: #000000 !important;
+  border-right-color: #000000 !important;
+  border-bottom-color: #000000 !important;
+  border-left-color: #000000 !important;
+}
+
 /* Что бы DataTable использовал токены темы */
 .p-datatable-thead > tr > th {
   background-color: var(--p-datatable-header-cell-background) !important;

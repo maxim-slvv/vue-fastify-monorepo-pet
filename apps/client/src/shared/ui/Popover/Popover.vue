@@ -13,14 +13,17 @@ const props = withDefaults(
   { width: 500, height: 300, align: 'center' },
 )
 
-const op = ref()
+const op = ref<PopoverMethods | null>(null)
+const hoveringOverlay = ref(false)
 
 function onEnter(event: MouseEvent): void {
-  ;(op.value as PopoverMethods)?.show(event)
+  op.value?.show(event)
 }
 
 function onLeave(): void {
-  ;(op.value as PopoverMethods)?.hide()
+  setTimeout(() => {
+    if (!hoveringOverlay.value) op.value?.hide()
+  }, 120)
 }
 </script>
 
@@ -31,8 +34,16 @@ function onLeave(): void {
 
   <Popover
     ref="op"
+    @mouseenter="hoveringOverlay = true"
+    @mouseleave="((hoveringOverlay = false), onLeave())"
     :pt="{
-      content: { style: { padding: '0', width: `${props.width}px`, height: `${props.height}px` } },
+      content: {
+        style: {
+          padding: '0',
+          width: `${props.width}px`,
+          height: `${props.height}px`,
+        },
+      },
     }"
   >
     <slot name="popover" />
