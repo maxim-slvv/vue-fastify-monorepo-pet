@@ -78,7 +78,7 @@ const columns: ColumnDef<CryptoTableRow>[] = [
       <UiPopover :width="500" :height="300">
         <SparklineCell :data="data.spark" :direction="data.ch7d_direction" />
         <template #popover>
-          <CryptoCard :row="data" />
+          <CryptoCard :key="data.symbol" :row="data" />
         </template>
       </UiPopover>
     </template>

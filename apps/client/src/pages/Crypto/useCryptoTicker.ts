@@ -7,12 +7,16 @@ const API_URL = (import.meta as unknown as ImportMeta).env?.VITE_API_URL ?? 'htt
 // Все монеты
 export function useCryptoTicker() {
   const rows = ref<CryptoTableRow[]>([])
+  const isLoading = ref(true)
   let socket: Socket | null = null
 
   async function loadInitial(): Promise<void> {
     const response = await fetch(`${API_URL}/api/crypto`)
     if (!response.ok) throw new Error(`Failed to load /api/crypto: ${response.status}`)
     rows.value = (await response.json()) as CryptoTableRow[]
+    setTimeout(() => {
+      isLoading.value = false
+    }, 1000)
   }
 
   function connect(): void {
@@ -43,7 +47,7 @@ export function useCryptoTicker() {
     disconnect()
   })
 
-  return { rows, connect, disconnect }
+  return { rows, isLoading, connect, disconnect }
 }
 
 // Одна монета
