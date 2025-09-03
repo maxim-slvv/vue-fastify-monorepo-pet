@@ -19,6 +19,9 @@ export interface ColumnDef<Row = any> {
   width?: string
   render?: (row: Row) => unknown
   skeletonClass?: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component?: any
+  componentProps?: (row: Row) => Record<string, unknown>
 }
 
 const props = defineProps<{
@@ -84,6 +87,11 @@ function alignToClass(align?: Align): string | undefined {
         <Typography class="text-m-bold" v-else-if="col.render && !props.loading">
           {{ col.render(slotProps.data) as any }}
         </Typography>
+        <component
+          v-else-if="col.component && !props.loading"
+          :is="col.component"
+          v-bind="col.componentProps ? col.componentProps(slotProps.data) : {}"
+        />
         <UiSkeleton v-else-if="props.loading" :class="col.skeletonClass ?? 'h-5 w-full'" />
         <Typography class="text-m-bold" v-else>{{ slotProps.data[col.field] }}</Typography>
       </template>
