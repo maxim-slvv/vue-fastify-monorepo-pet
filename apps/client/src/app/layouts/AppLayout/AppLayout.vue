@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { defineComponent } from 'vue'
 
+import AppNavbar from '@/entities/Navigation/ui/AppNavbar.vue'
 import AppHeader from './AppHeader.vue'
-import AppNavbar from './AppNavbar.vue'
 import AppAside from './AppAside.vue'
 import PageContentWrapper from '../PageLayout/PageContentWrapper.vue'
+
 import { outerLayoutStyles } from '@/shared/styles/in-js-styles'
 
 defineComponent({

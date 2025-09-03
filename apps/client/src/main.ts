@@ -5,6 +5,7 @@ import Aura from '@primevue/themes/aura'
 import 'primeicons/primeicons.css'
 import './shared/styles/index.css'
 import { useTheme } from '@/shared/lib/theme/useTheme'
+import router from '@/app/router'
 
 const app = createApp(App)
 
@@ -14,6 +15,8 @@ app.use(PrimeVue, {
     options: { darkModeSelector: 'html.dark' },
   },
 })
+
+app.use(router)
 
 useTheme().init()
 

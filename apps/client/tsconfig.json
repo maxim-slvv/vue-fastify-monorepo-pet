@@ -16,6 +16,10 @@
         "./src/*"
       ]
     },
-    "noEmit": true
+    "noEmit": true,
+    "types": [
+      "vite/client",
+      "vue-router"
+    ]
   }
 }

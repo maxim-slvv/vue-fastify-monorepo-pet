@@ -22,7 +22,7 @@ const hover = ref(false)
     @click.prevent="emit('select')"
     class="flex items-center gap-3 px-4 py-3 rounded-lg"
     :style="{
-      backgroundColor: hover ? 'var(--bg-hover)' : 'var(--bg-surface)',
+      backgroundColor: hover || active ? 'var(--bg-hover)' : 'var(--bg-surface)',
     }"
   >
     <i :class="[icon]" :style="{ color: active ? 'var(--color-blue)' : 'var(--color-gray)' }" />

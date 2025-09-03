@@ -23,7 +23,8 @@
     "primeicons": "^7.0.0",
     "primevue": "^4.3.7",
     "socket.io-client": "^4.8.1",
-    "vue": "^3.5.18"
+    "vue": "^3.5.18",
+    "vue-router": "^4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.12",
