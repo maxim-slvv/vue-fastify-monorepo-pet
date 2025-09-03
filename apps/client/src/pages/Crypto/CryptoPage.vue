@@ -6,8 +6,8 @@ import CoinMainInfo from '@/entities/Crypto/ui/CoinMainInfo.vue'
 import { useCryptoTicker } from '@/pages/Crypto/useCryptoTicker'
 import type { CryptoTableRow } from '@/pages/Crypto/types'
 
-import PriceCell from '@/shared/ui/DataTable/cells/PriceCell.vue'
-import PercentCell from '@/shared/ui/DataTable/cells/PercentCell.vue'
+import PriceCell from '@/entities/Crypto/ui/PriceCell.vue'
+import PercentCell from '@/entities/Crypto/ui/PercentCell.vue'
 
 defineComponent({ name: 'CryptoPage' })
 

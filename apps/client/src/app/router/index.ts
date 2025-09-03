@@ -50,7 +50,7 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/news',
     component: StubPage,
-    meta: { sidebar: { label: 'News Person', icon: 'pi pi-th-large' } },
+    meta: { sidebar: { label: 'News', icon: 'pi pi-th-large' } },
   },
   {
     path: '/notifications',
@@ -74,7 +74,7 @@ export const routes: RouteRecordRaw[] = [
     meta: { sidebar: { label: 'Development', icon: 'pi pi-cog' } },
   },
   {
-    path: '/awards',
+    path: '/honors',
     component: StubPage,
     meta: { sidebar: { label: 'Honors', icon: 'pi pi-thumbs-up' } },
   },

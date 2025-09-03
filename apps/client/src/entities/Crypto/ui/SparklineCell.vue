@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Sparkline from './Sparkline.vue'
+import Sparkline from '@/shared/ui/Sparkline/Sparkline.vue'
 import Typography from '@/shared/ui/Typography/Typography.vue'
 import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
 

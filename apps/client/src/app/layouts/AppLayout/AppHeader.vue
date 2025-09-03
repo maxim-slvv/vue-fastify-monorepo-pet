@@ -22,7 +22,7 @@ const navLinks: string[] = [
 </script>
 <template>
   <header :style="{ ...blockLayoutStyles({ border: 'bottom' }) }">
-    <div class="mx-auto flex items-center justify-between px-6 py-3">
+    <div class="mx-auto flex items-center justify-between px-6">
       <div class="flex items-center">
         <div class="flex items-center gap-2 w-[260px] p-2">
           <i class="pi pi-th-large" style="color: var(--fg)" />

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import UiPopover from '@/shared/ui/Popover/Popover.vue'
-import SparklineCell from '@/shared/ui/Sparkline/SparklineCell.vue'
+import SparklineCell from '@/entities/Crypto/ui/SparklineCell.vue'
 import CoinCard from '@/entities/Crypto/ui/CoinCard.vue'
 
 defineOptions({ name: 'SparkPopoverCell' })

@@ -5,7 +5,7 @@ defineOptions({ name: 'PageContentWrapper' })
 </script>
 
 <template>
-  <div class="flex flex-col flex-1 p-6 pb-0">
+  <div class="flex flex-col flex-1 p-4 pb-0">
     <div
       :style="{ ...blockLayoutStyles({ border: 'all' }) }"
       class="rounded-lg w-full h-full overflow-hidden"
