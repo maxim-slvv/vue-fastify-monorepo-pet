@@ -3,6 +3,7 @@ export const outerLayoutStyles = {
   color: 'var(--fg)',
 }
 
+//TODO пересмотреть подход к стилям на Tailwind для блока, может просто BlockWrapper.vue или BlockContent.vue
 export const blockLayoutStyles = ({
   border,
 }: {

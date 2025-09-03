@@ -85,7 +85,7 @@ onBeforeUnmount(() => {
     ref="op"
     @mouseenter="hoveringOverlay = true"
     @mouseleave="((hoveringOverlay = false), onLeave())"
-    style="margin-left: -520px"
+    style="margin-top: 0px"
     :pt="{
       content: {
         style: {

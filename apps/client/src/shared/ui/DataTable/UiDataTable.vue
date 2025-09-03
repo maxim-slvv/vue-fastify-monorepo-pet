@@ -3,6 +3,7 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import { useSlots } from 'vue'
 import Typography from '@/shared/ui/Typography/Typography.vue'
+import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
 
 defineOptions({ name: 'UiDataTable' })
 
@@ -17,6 +18,7 @@ export interface ColumnDef<Row = any> {
   bodyClass?: string
   width?: string
   render?: (row: Row) => unknown
+  skeletonClass?: string
 }
 
 const props = defineProps<{
@@ -24,6 +26,8 @@ const props = defineProps<{
   rows: any[]
   columns: ColumnDef[]
   tableClass?: string
+  rowKey?: string
+  loading?: boolean
 }>()
 
 const slots = useSlots()
@@ -38,9 +42,13 @@ function alignToClass(align?: Align): string | undefined {
 <template>
   <DataTable
     :value="props.rows"
+    :dataKey="props.rowKey"
     rowHover
     class="w-full bg-white"
-    :pt="{ table: { class: [props.tableClass, 'table-fixed'] }, bodyRow: { class: 'group' } }"
+    :pt="{
+      table: { class: [props.tableClass, 'table-fixed'] },
+      bodyRow: { class: ['group'] },
+    }"
   >
     <Column
       v-for="col in props.columns"
@@ -55,7 +63,7 @@ function alignToClass(align?: Align): string | undefined {
         bodyCell: {
           class: [
             'bg-white',
-            'group-hover:bg-sky-50',
+            props.loading ? undefined : 'group-hover:bg-sky-50',
             'whitespace-nowrap',
             'overflow-hidden',
             'text-ellipsis',
@@ -70,11 +78,13 @@ function alignToClass(align?: Align): string | undefined {
         <component
           v-if="slots[`body-${col.field}`]"
           :is="slots[`body-${col.field}`]"
+          :key="`${slotProps.data.symbol ?? slotProps.index}-${col.field}`"
           v-bind="slotProps"
         />
-        <Typography class="text-m-bold" v-else-if="col.render">
+        <Typography class="text-m-bold" v-else-if="col.render && !props.loading">
           {{ col.render(slotProps.data) as any }}
         </Typography>
+        <UiSkeleton v-else-if="props.loading" :class="col.skeletonClass ?? 'h-5 w-full'" />
         <Typography class="text-m-bold" v-else>{{ slotProps.data[col.field] }}</Typography>
       </template>
     </Column>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Sparkline from './Sparkline.vue'
 import Typography from '@/shared/ui/Typography/Typography.vue'
+import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -10,6 +11,7 @@ const props = withDefaults(
     showPercent?: boolean
     width?: number
     height?: number
+    loading?: boolean
   }>(),
   { showPercent: true, width: 120, height: 32 },
 )
@@ -18,7 +20,8 @@ const props = withDefaults(
 <template>
   <div :style="{ width: `${props.width}px` }" class="flex flex-col">
     <div :style="{ height: `${props.height}px` }">
-      <Sparkline :data="props.data" :direction="props.direction" />
+      <UiSkeleton v-if="props.loading" class="w-full h-full" rounded="md" />
+      <Sparkline v-else :data="props.data" :direction="props.direction" />
     </div>
     <div
       v-if="props.showPercent && props.percent"
