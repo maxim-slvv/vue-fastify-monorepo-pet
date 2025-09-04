@@ -38,6 +38,8 @@ https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?n
 [] Front: Фильтры: Поиск, сортировка ASC/DESC (Rank), 
 [] Front: Таблица может управлять запросом? - научим! - конфигурировать параметры - скорее через nuqs и url.
  
+[] Nginx конфиг
+
 Таблица:
 [x] Export CSV 
 [х] Таблица на весь экран

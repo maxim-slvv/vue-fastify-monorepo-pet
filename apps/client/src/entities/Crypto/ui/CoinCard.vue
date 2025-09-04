@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import Typography from '@/shared/ui/Typography/Typography.vue'
 import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
 import CoinMainInfo from '@/entities/Crypto/ui/CoinMainInfo.vue'
-import type { CryptoTableRow } from '@/pages/Crypto/types'
+import type { CryptoTableRow } from '@/entities/Crypto/types'
 
 const props = defineProps<{
   row: CryptoTableRow
