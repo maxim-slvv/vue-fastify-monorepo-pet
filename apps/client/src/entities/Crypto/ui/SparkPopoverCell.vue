@@ -21,7 +21,7 @@ const props = withDefaults(
 </script>
 
 <template>
-  <div class="flex justify-end">
+  <div class="flex justify-start">
     <SparklineCell
       v-if="props.loading"
       :loading="true"

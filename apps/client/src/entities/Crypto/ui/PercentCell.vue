@@ -11,14 +11,12 @@ const props = withDefaults(
 </script>
 
 <template>
-  <div class="text-right">
-    <UiSkeleton v-if="props.loading" class="h-5 w-full" />
-    <Typography
-      v-else
-      :color="props.trend === 'up' ? 'green' : props.trend === 'down' ? 'red' : undefined"
-      class="text-m-bold"
-    >
-      {{ props.value }}
-    </Typography>
-  </div>
+  <UiSkeleton v-if="props.loading" class="h-5 w-full" />
+  <Typography
+    v-else
+    :color="props.trend === 'up' ? 'green' : props.trend === 'down' ? 'red' : undefined"
+    class="text-m-bold"
+  >
+    {{ props.value }}
+  </Typography>
 </template>

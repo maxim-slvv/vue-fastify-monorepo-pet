@@ -8,8 +8,6 @@ const props = withDefaults(defineProps<{ value?: string | number; loading?: bool
 </script>
 
 <template>
-  <div class="text-right">
-    <UiSkeleton v-if="props.loading" class="h-5 w-full" />
-    <Typography v-else class="text-m-bold">{{ props.value }}</Typography>
-  </div>
+  <UiSkeleton v-if="props.loading" class="h-5 w-full" />
+  <Typography v-else class="text-m-bold">{{ props.value }}</Typography>
 </template>
