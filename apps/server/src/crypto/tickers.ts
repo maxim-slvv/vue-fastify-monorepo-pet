@@ -1,6 +1,6 @@
 import type { Namespace } from 'socket.io'
-import { InMemoryCryptoRepository } from './repository.ts'
-import { DefaultCryptoService } from './service.ts'
+import { InMemoryCryptoRepository } from './store/selectors.ts'
+import { DefaultCryptoService } from './service/index.ts'
 
 export function startCryptoTicker(io: Namespace): void {
   const service = new DefaultCryptoService(new InMemoryCryptoRepository())

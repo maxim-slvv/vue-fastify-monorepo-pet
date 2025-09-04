@@ -1,8 +1,8 @@
 import Fastify from 'fastify'
-import { initializeRoutes } from './routes/index.ts'
-import { initializeSockets } from './sockets/index.ts'
-import { registerPlugins } from './config/plugins.ts'
-import { startServer } from './config/startServer.ts'
+import { initializeRoutes } from './routes.ts'
+import { initializeSockets } from './_configuration/initializeSockets.ts'
+import { registerPlugins } from './_configuration/plugins/index.ts'
+import { startServer } from './_configuration/startServer.ts'
 
 const app = Fastify({ logger: true })
 

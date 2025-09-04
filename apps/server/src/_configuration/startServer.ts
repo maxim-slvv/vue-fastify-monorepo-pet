@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify'
-import { loadConfig } from './loadConfig.ts'
+import { loadConfig } from './config/loadConfig.ts'
 
 export function startServer(app: FastifyInstance): void {
   const cfg = loadConfig(process.env)

@@ -1,6 +1,6 @@
-import type { CryptoTableRow } from './types.ts'
-import type { CryptoRepository } from './repository.ts'
-import { mutateRow } from './store.ts'
+import type { CryptoTableRow } from '../types.ts'
+import type { CryptoRepository } from '../store/selectors.ts'
+import { mutateRow } from '../store/mutations.ts'
 
 export interface CryptoService {
   list(): Promise<CryptoTableRow[]>

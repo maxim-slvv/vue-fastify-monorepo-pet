@@ -1,5 +1,5 @@
-import type { CryptoTableRow } from './types.ts'
-import { initialCryptoRows } from './store.ts'
+import type { CryptoTableRow } from '../types.ts'
+import { initialCryptoRows } from '../store/state.ts'
 
 export interface CryptoRepository {
   getAll(): Promise<CryptoTableRow[]>

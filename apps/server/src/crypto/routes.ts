@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
-import { InMemoryCryptoRepository } from './repository.ts'
-import { DefaultCryptoService } from './service.ts'
+import { InMemoryCryptoRepository } from './store/selectors.ts'
+import { DefaultCryptoService } from './service/index.ts'
 
 export async function registerCryptoRoutes(app: FastifyInstance): Promise<void> {
   const service = new DefaultCryptoService(new InMemoryCryptoRepository())
