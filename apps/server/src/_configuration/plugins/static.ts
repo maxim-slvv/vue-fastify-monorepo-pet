@@ -8,7 +8,7 @@ export async function registerStatic(app: FastifyInstance): Promise<void> {
   const __dirname = dirname(__filename)
 
   await app.register(fastifyStatic, {
-    root: join(__dirname, '..', '..', 'public', 'cdn'),
+    root: join(__dirname, '..', '..', '..', 'public', 'cdn'),
     prefix: '/cdn/',
     list: false,
     decorateReply: false,

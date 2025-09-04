@@ -1,5 +1,5 @@
 import type { Namespace } from 'socket.io'
-import { InMemoryCryptoRepository } from './store/selectors.ts'
+import { InMemoryCryptoRepository } from './store/repository.ts'
 import { DefaultCryptoService } from './service/index.ts'
 
 export function startCryptoTicker(io: Namespace): void {
@@ -16,9 +16,16 @@ export function startCryptoTicker(io: Namespace): void {
 
     service
       .list()
-      .then((rows) => {
+      .then(async (rows) => {
         // Первичная отправка для общего потока
         safeEmit('ticker:all', rows)
+        try {
+          const [top, fav] = await Promise.all([service.listTop(), service.listFavorite()])
+          safeEmit('ticker:top', top)
+          safeEmit('ticker:favorite', fav)
+        } catch {
+          // logger
+        }
       })
       .catch(() => {})
 
@@ -44,6 +51,9 @@ export function startCryptoTicker(io: Namespace): void {
         for (const row of updated) {
           io.to(row.symbol).emit('ticker', row)
         }
+        const [top, fav] = await Promise.all([service.listTop(), service.listFavorite()])
+        io.emit('ticker:top', top)
+        io.emit('ticker:favorite', fav)
       } catch {
         // logger
       }

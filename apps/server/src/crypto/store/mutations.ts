@@ -1,4 +1,4 @@
-import type { CryptoTableRow } from '../types.ts'
+import type { CryptoSymbol, CryptoTableRow } from '../types.ts'
 
 export function mutateRow(row: CryptoTableRow): CryptoTableRow {
   const delta = (Math.random() - 0.5) * 1.0
@@ -23,4 +23,13 @@ export function mutateRow(row: CryptoTableRow): CryptoTableRow {
     ch7d_direction: direction7,
     spark: nextSpark,
   }
+}
+
+export function setFavorite(
+  rows: CryptoTableRow[],
+  symbol: CryptoSymbol,
+  isFavorite: boolean,
+): CryptoTableRow[] {
+  const upper = symbol.toUpperCase()
+  return rows.map((r) => (r.symbol.toUpperCase() === upper ? { ...r, isFavorite } : r))
 }

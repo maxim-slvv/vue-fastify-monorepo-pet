@@ -1,17 +1,12 @@
 import type { CryptoTableRow } from '../types.ts'
-import { initialCryptoRows } from '../store/state.ts'
 
-export interface CryptoRepository {
-  getAll(): Promise<CryptoTableRow[]>
-  saveAll(rows: CryptoTableRow[]): Promise<void>
+export function selectTop(rows: CryptoTableRow[], limit = 20): CryptoTableRow[] {
+  return rows
+    .slice()
+    .sort((a, b) => a.rank - b.rank)
+    .slice(0, limit)
 }
 
-export class InMemoryCryptoRepository implements CryptoRepository {
-  async getAll(): Promise<CryptoTableRow[]> {
-    return initialCryptoRows
-  }
-
-  async saveAll(rows: CryptoTableRow[]): Promise<void> {
-    for (let i = 0; i < rows.length; i += 1) initialCryptoRows[i] = rows[i]
-  }
+export function selectFavorite(rows: CryptoTableRow[]): CryptoTableRow[] {
+  return rows.filter((r) => r.isFavorite === true)
 }

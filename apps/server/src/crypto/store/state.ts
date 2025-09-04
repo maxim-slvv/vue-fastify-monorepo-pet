@@ -1,4 +1,4 @@
-import type { CryptoTableRow } from '../types.ts'
+import { CryptoTableRow } from '../types.ts'
 import { createSparkline } from './generators.ts'
 
 export const initialCryptoRows: CryptoTableRow[] = [
@@ -15,6 +15,7 @@ export const initialCryptoRows: CryptoTableRow[] = [
     marketCap: '$766,432,564,346',
     volume24h: '$38,544,965,954',
     spark: createSparkline(21, 120, 3),
+    isFavorite: true,
   },
   {
     rank: 2,
@@ -29,6 +30,7 @@ export const initialCryptoRows: CryptoTableRow[] = [
     marketCap: '$285,843,885,844',
     volume24h: '$24,954,954,953',
     spark: createSparkline(21, 115, 3),
+    isFavorite: true,
   },
   {
     rank: 3,
