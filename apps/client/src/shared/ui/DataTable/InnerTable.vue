@@ -59,7 +59,7 @@ defineExpose({ exportCSV })
     rowHover
     :scrollable="props.scrollable"
     :scrollHeight="props.scrollHeight"
-    class="w-full bg-white"
+    class="w-full"
     :pt="{
       table: {
         class: [props.tableClass, 'table-fixed'],
@@ -75,13 +75,12 @@ defineExpose({ exportCSV })
       :header="col.header"
       :pt="{
         headerCell: {
-          class: ['bg-white', col.headerClass],
+          class: [col.headerClass],
           style: col.width ? { width: col.width } : undefined,
         },
         bodyCell: {
           class: [
-            'bg-white',
-            props.loading ? undefined : 'group-hover:bg-sky-50',
+            'transition-colors',
             'whitespace-nowrap',
             'overflow-hidden',
             'text-ellipsis',

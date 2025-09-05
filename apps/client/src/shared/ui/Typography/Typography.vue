@@ -34,7 +34,7 @@ const props = withDefaults(
   defineProps<{
     as?: TypographyTag
     variant?: Variant
-    color?: 'green' | 'red' | 'gray' | 'blue'
+    color?: 'green' | 'green-light' | 'red' | 'red-light' | 'gray' | 'blue'
     class?: string
     withOutVariants?: boolean
   }>(),
@@ -82,8 +82,10 @@ const computedClasses = computed(() => {
 })
 
 const computedStyle = computed(() => {
-  if (props.color === 'green') return { color: 'var(--color-rise)' }
-  if (props.color === 'red') return { color: 'var(--color-fall)' }
+  if (props.color === 'green') return { color: 'var(--color-green)' }
+  if (props.color === 'green-light') return { color: 'var(--color-green-light)' }
+  if (props.color === 'red') return { color: 'var(--color-red)' }
+  if (props.color === 'red-light') return { color: 'var(--color-red-light)' }
   if (props.color === 'gray') return { color: 'var(--color-gray)' }
   if (props.color === 'blue') return { color: 'var(--color-blue)' }
   return { color: 'var(--fg)' }

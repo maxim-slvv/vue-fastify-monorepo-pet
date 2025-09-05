@@ -17,8 +17,8 @@ const props = withDefaults(
     width: 120,
     height: 32,
     strokeWidth: 2,
-    upColor: 'var(--color-rise)',
-    downColor: 'var(--color-fall)',
+    upColor: 'var(--color-green-light)',
+    downColor: 'var(--color-red-light)',
   },
 )
 
@@ -53,6 +53,11 @@ const path = computed(() => {
     :viewBox="`0 0 ${props.width} ${props.height}`"
     preserveAspectRatio="none"
   >
-    <path :d="path" fill="none" :stroke="color" :stroke-width="props.strokeWidth" />
+    <path
+      :d="path"
+      fill="none"
+      :style="{ stroke: color as string }"
+      :stroke-width="props.strokeWidth"
+    />
   </svg>
 </template>

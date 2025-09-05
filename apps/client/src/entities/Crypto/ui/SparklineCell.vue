@@ -27,7 +27,9 @@ const props = withDefaults(
       v-if="props.showPercent && props.percent"
       class="flex items-center justify-end gap-1 text-xs mb-[-8px]"
     >
-      <span :class="props.direction === 'up' ? 'text-green-600' : 'text-red-500'">
+      <span
+        :style="{ color: props.direction === 'up' ? 'var(--color-green)' : 'var(--color-red)' }"
+      >
         {{ props.direction === 'up' ? '▲' : '▼' }}
       </span>
       <Typography :color="props.direction === 'up' ? 'green' : 'red'" class="text-xs">

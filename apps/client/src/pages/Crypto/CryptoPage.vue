@@ -52,7 +52,6 @@ const columns: ColumnDef<CryptoTableRow>[] = [
     field: 'name',
     header: 'Name',
     width: '220px',
-    bodyClass: 'font-medium',
     component: CoinMainInfo,
     componentProps: (row) => ({
       name: row.name,
@@ -68,7 +67,6 @@ const columns: ColumnDef<CryptoTableRow>[] = [
     header: 'Price',
     align: 'right',
     width: '120px',
-    bodyClass: 'font-medium',
     component: PriceCell,
     componentProps: (row) => ({ value: row.price, loading: isLoading.value }),
   },
@@ -77,7 +75,6 @@ const columns: ColumnDef<CryptoTableRow>[] = [
     header: '24h %',
     align: 'right',
     width: '96px',
-    bodyClass: 'font-medium',
     component: PercentCell,
     componentProps: (row) => ({
       value: row.ch24h,
@@ -90,7 +87,6 @@ const columns: ColumnDef<CryptoTableRow>[] = [
     header: '7d %',
     align: 'right',
     width: '96px',
-    bodyClass: 'font-medium',
     component: PercentCell,
     componentProps: (row) => ({
       value: row.ch7d,
@@ -103,7 +99,6 @@ const columns: ColumnDef<CryptoTableRow>[] = [
     header: 'Market Cap',
     align: 'right',
     width: '180px',
-    bodyClass: 'font-medium',
     skeletonClass: 'h-5 w-full',
   },
   {
@@ -111,7 +106,6 @@ const columns: ColumnDef<CryptoTableRow>[] = [
     header: 'Volume(24h)',
     align: 'right',
     width: '180px',
-    bodyClass: 'font-medium',
     skeletonClass: 'h-5 w-full',
   },
   {
@@ -119,7 +113,6 @@ const columns: ColumnDef<CryptoTableRow>[] = [
     header: 'Last 7 Days',
     align: 'right',
     width: '140px',
-    bodyClass: 'font-medium',
     component: SparkPopoverCell,
     componentProps: (row) => ({ row, loading: isLoading.value, width: 140, height: 32 }),
   },

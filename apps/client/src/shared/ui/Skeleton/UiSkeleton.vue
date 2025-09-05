@@ -12,7 +12,7 @@ const props = withDefaults(
   { rounded: 'md' },
 )
 
-const base = cva('animate-pulse bg-slate-200 dark:bg-slate-700', {
+const base = cva('animate-pulse', {
   variants: {
     rounded: {
       none: 'rounded-none',
@@ -27,5 +27,8 @@ const base = cva('animate-pulse bg-slate-200 dark:bg-slate-700', {
 </script>
 
 <template>
-  <div :class="cn(props.class, base({ rounded: props.rounded }))" />
+  <div
+    :class="cn(props.class, base({ rounded: props.rounded }))"
+    :style="{ backgroundColor: 'var(--skeleton-bg)' }"
+  />
 </template>

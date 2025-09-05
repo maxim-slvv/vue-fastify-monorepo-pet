@@ -1,19 +1,28 @@
 <script setup lang="ts">
-import { cva } from 'class-variance-authority'
 import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
+import { cn } from '@/shared/lib/tailwind/cn'
 
 defineOptions({ name: 'ComposeInfoSymbolTag' })
 
 const props = defineProps<{ text?: string; loading?: boolean }>()
 
-const symbolTag = cva(
-  'px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-xs dark:bg-slate-800 dark:text-slate-300',
-)
+const symbolTag = cn('px-2 py-0.5 rounded-md text-xs border')
 </script>
 
 <template>
   <div>
     <UiSkeleton v-if="props.loading" class="h-5 w-12" />
-    <span v-else :class="symbolTag()">{{ props.text }}</span>
+    <span
+      v-else
+      :class="symbolTag"
+      :style="{
+        backgroundColor: 'var(--brand-primary-soft)',
+        color: 'var(--fg)',
+        borderColor: 'var(--border)',
+        display: 'inline-block',
+      }"
+    >
+      {{ props.text }}
+    </span>
   </div>
 </template>

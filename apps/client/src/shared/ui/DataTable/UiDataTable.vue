@@ -32,11 +32,11 @@ const dialogVisible = ref(false)
   <div>
     <div class="flex items-center justify-end gap-2 pb-3">
       <!-- //TODO Меню с кнопками -->
-      <UiButton title="Export CSV" @click="onExport" variant="primary">
+      <UiButton title="Export CSV" @click="onExport" variant="success">
         <div class="pi pi-file-excel"></div>
       </UiButton>
-      <UiButton title="Fullscreen" @click="() => (dialogVisible = true)" variant="secondary">
-        <i class="pi pi-window-maximize mr-1" />
+      <UiButton title="Fullscreen" @click="() => (dialogVisible = true)" variant="primary">
+        <i class="pi pi-window-maximize" />
       </UiButton>
     </div>
 

@@ -1,25 +1,52 @@
 <script setup lang="ts">
+import Button from 'primevue/button'
+import { computed } from 'vue'
+
 defineOptions({ name: 'UiButton' })
+
+type Variant = 'primary' | 'secondary' | 'ghost' | 'success' | 'info' | 'warn' | 'danger'
 
 const props = defineProps<{
   label?: string
-  variant?: 'primary' | 'secondary' | 'ghost'
+  variant?: Variant
+  outlined?: boolean
+  text?: boolean
+  link?: boolean
+  rounded?: boolean
+  raised?: boolean
+  size?: 'small' | 'large'
+  icon?: string
+  loading?: boolean
+  disabled?: boolean
 }>()
 
-const baseClasses = 'text-sm font-medium rounded-full px-4 py-2 cursor-pointer'
-const variants: Record<string, string> = {
-  //TODO цвета надо брать из темы и dark юзать
-  primary: 'bg-blue-600 hover:bg-blue-700 text-white',
-  secondary: 'bg-gray-100 hover:bg-gray-200 text-gray-800',
-  ghost: 'bg-transparent hover:bg-gray-100 text-gray-800',
+const severityMap: Record<Variant, string> = {
+  primary: 'primary',
+  secondary: 'secondary',
+  ghost: 'secondary',
+  success: 'success',
+  info: 'info',
+  warn: 'warn',
+  danger: 'danger',
 }
+
+const computedSeverity = computed(() => severityMap[props.variant ?? 'primary'])
 </script>
 
 <template>
-  <button :class="[baseClasses, variants[props.variant ?? 'primary']]">
-    <!-- TODO размеры дефолтные кнопкам из вариантов -->
-    <Typography class="text-s-bold">
-      <slot>{{ props.label }}</slot>
-    </Typography>
-  </button>
+  <Button
+    :label="props.label"
+    :severity="computedSeverity"
+    :outlined="props.outlined"
+    :text="props.text"
+    :link="props.link"
+    :rounded="props.rounded"
+    :raised="props.raised"
+    :size="props.size"
+    :icon="props.icon"
+    :loading="props.loading"
+    :disabled="props.disabled"
+  >
+    <slot />
+  </Button>
 </template>

@@ -8,10 +8,89 @@ body {
 }
 
 :root {
-  --color-rise: #16a34a; /* green-600 */
-  --color-fall: #ef4444; /* red-500 */
-  --color-blue: #3b82f6; /* blue-600 */
-  --color-gray: #64748b; /* slate-500 */
+  /* Base theme tokens (light/dark) */
+  --bg-light: #f3f4f6;
+  --fg-light: #334155;
+  --surface-light: #ffffff;
+  --border-light: #e5e7eb;
+  --bg-hover-light: #f0f9ff;
+
+  --bg-dark: #0b1220;
+  --fg-dark: #cbd5e1;
+  --surface-dark: #0f172a;
+  --border-dark: #334155;
+  --bg-hover-dark: #1e293b;
+  /* Brand severity tokens */
+  --brand-primary: color-mix(in srgb, white 22%, #2563eb);
+  --brand-primary-hover: color-mix(in srgb, white 10%, #1d4ed8);
+  --brand-primary-contrast: #ffffff;
+
+  --brand-secondary: color-mix(in srgb, white 20%, #64748b);
+  --brand-secondary-hover: color-mix(in srgb, white 10%, #475569);
+  --brand-secondary-contrast: #ffffff;
+
+  --brand-success: color-mix(in srgb, white 18%, #16a34a);
+  --brand-success-hover: color-mix(in srgb, white 8%, #15803d);
+  --brand-success-contrast: #e2e8f0;
+
+  --brand-info: color-mix(in srgb, white 20%, #0284c7);
+  --brand-info-hover: color-mix(in srgb, white 10%, #0369a1);
+  --brand-info-contrast: #e2e8f0;
+
+  --brand-warn: color-mix(in srgb, white 20%, #d97706);
+  --brand-warn-hover: color-mix(in srgb, white 10%, #b45309);
+  --brand-warn-contrast: #fff7ed;
+
+  --brand-danger: color-mix(in srgb, white 20%, #dc2626);
+  --brand-danger-hover: color-mix(in srgb, white 8%, #b91c1c);
+  --brand-danger-contrast: #fee2e2;
+
+  /* Dark brand tokens */
+  --brand-primary-dark: color-mix(in srgb, black 18%, #1e40af);
+  --brand-primary-hover-dark: color-mix(in srgb, black 15%, #1e3a8a);
+  --brand-primary-contrast-dark: #e2e8f0;
+
+  --brand-secondary-dark: color-mix(in srgb, black 18%, #334155);
+  --brand-secondary-hover-dark: color-mix(in srgb, black 15%, #1e293b);
+  --brand-secondary-contrast-dark: #e2e8f0;
+
+  --brand-success-dark: color-mix(in srgb, black 18%, #166534);
+  --brand-success-hover-dark: color-mix(in srgb, black 15%, #14532d);
+  --brand-success-contrast-dark: #e2e8f0;
+
+  --brand-info-dark: color-mix(in srgb, black 18%, #075985);
+  --brand-info-hover-dark: color-mix(in srgb, black 15%, #0c4a6e);
+  --brand-info-contrast-dark: #e2e8f0;
+
+  --brand-warn-dark: color-mix(in srgb, black 18%, #92400e);
+  --brand-warn-hover-dark: color-mix(in srgb, black 15%, #78350f);
+  --brand-warn-contrast-dark: #fff7ed;
+
+  --brand-danger-dark: color-mix(in srgb, black 18%, #7f1d1d);
+  --brand-danger-hover-dark: color-mix(in srgb, black 15%, #991b1b);
+  --brand-danger-contrast-dark: #fee2e2;
+
+  /* Soft variants from brand primary */
+  --brand-primary-soft-light: color-mix(in srgb, var(--brand-primary) 12%, var(--surface-light));
+  --brand-primary-soft-dark: color-mix(in srgb, var(--brand-primary-dark) 18%, var(--surface-dark));
+
+  /* Nav link text colors */
+  --nav-link-fg-light: #000000;
+  --nav-link-fg-dark: #ffffff;
+
+  /* Skeleton tokens */
+  --skeleton-bg-light: #e5e7eb; /* gray-200 */
+  --skeleton-bg-dark: #334155; /* slate-700 */
+
+  /* Semantic colors based on brand */
+  --color-green-light: var(--brand-success);
+  --color-green-dark: var(--brand-success-dark);
+  --color-red-light: var(--brand-danger);
+  --color-red-dark: var(--brand-danger-dark);
+  --color-blue-light: var(--brand-primary);
+  --color-blue-dark: var(--brand-primary-dark);
+  --color-gray-light: var(--brand-secondary);
+  --color-gray-dark: var(--brand-secondary-dark);
 
   --font-size-h1: 60px;
   --font-size-h2: 48px;
@@ -165,60 +244,107 @@ body {
 
 html:not(.dark) {
   /* Light theme tokens */
-  --bg: #f3f4f6; /* gray-100 */
-  --fg: #334155; /* slate-700 */
-  --surface: #ffffff;
-  --border: #e5e7eb; /* gray-200 */
-  --bg-hover: #f0f9ff; /* sky-50 */
+  --bg: var(--bg-light);
+  --fg: var(--fg-light);
+  --surface: var(--surface-light);
+  --border: var(--border-light);
+  --bg-hover: var(--bg-hover-light);
+  --brand-primary-soft: var(--brand-primary-soft-light);
+  --skeleton-bg: var(--skeleton-bg-light);
+  --nav-link-fg: var(--fg);
 
-  /* Дизайн токены PrimeVue --------------------------------------------------------------------- */
-  /* https://primevue.org/datatable/#theming.styled */
-  /* Table */
+  /* PrimeVue severity colors*/
+  --p-primary-color: var(--brand-primary);
+  --p-primary-hover-color: var(--brand-primary-hover);
+  --p-primary-contrast-color: var(--brand-primary-contrast);
+  --p-secondary-color: var(--brand-secondary);
+  --p-secondary-hover-color: var(--brand-secondary-hover);
+  --p-secondary-contrast-color: var(--brand-secondary-contrast);
+  --p-success-color: var(--brand-success);
+  --p-success-hover-color: var(--brand-success-hover);
+  --p-success-contrast-color: var(--brand-success-contrast);
+  --p-info-color: var(--brand-info);
+  --p-info-hover-color: var(--brand-info-hover);
+  --p-info-contrast-color: var(--brand-info-contrast);
+  --p-warn-color: var(--brand-warn);
+  --p-warn-hover-color: var(--brand-warn-hover);
+  --p-warn-contrast-color: var(--brand-warn-contrast);
+  --p-danger-color: var(--brand-danger);
+  --p-danger-hover-color: var(--brand-danger-hover);
+  --p-danger-contrast-color: var(--brand-danger-contrast);
+
+  /* Table */ /* https://primevue.org/datatable/#theming.styled */
   /* ---------------- Header */
-  --p-datatable-header-background: #ffffff;
-  --p-datatable-header-cell-background: #ffffff;
-  --p-datatable-header-cell-color: #64748b; /* slate-500 */
+  --p-datatable-header-background: var(--surface);
+  --p-datatable-header-cell-background: var(--surface);
+  --p-datatable-header-cell-color: var(--fg);
 
   /* ---------------- Body */
-  --p-datatable-row-background: #ffffff;
-  --p-datatable-row-color: #334155; /* slate-700 */
-  --p-datatable-row-hover-background: #f0f9ff; /* sky-50 */
+  --p-datatable-row-background: var(--surface);
+  --p-datatable-row-color: var(--fg);
+  --p-datatable-row-hover-background: var(--bg-hover);
   --p-datatable-row-hover-color: var(--p-datatable-row-color);
-  --p-datatable-header-border-color: #e5e7eb; /* gray-200 */
+  --p-datatable-header-border-color: var(--border);
   --p-datatable-header-border-width: 1px;
-  --p-datatable-header-cell-border-color: #e5e7eb; /* gray-200 */
-  --p-datatable-body-cell-border-color: #e5e7eb; /* gray-200 */
+  --p-datatable-header-cell-border-color: var(--border);
+  --p-datatable-body-cell-border-color: var(--border);
   --p-datatable-transition-duration: 0ms;
   /* -------------------------------------------------------------------------------------------- */
 }
 
 html.dark {
   /* Dark theme tokens */
-  --bg: #0b1220;
-  --fg: #cbd5e1; /* slate-300 */
-  --surface: #0f172a; /* slate-900 */
-  --border: #334155; /* slate-700 */
-  --bg-hover: #1e293b; /* slate-800 */
+  --bg: var(--bg-dark);
+  --fg: var(--fg-dark);
+  --surface: var(--surface-dark);
+  --border: var(--border-dark);
+  --bg-hover: var(--bg-hover-dark);
+  --brand-primary-soft: var(--brand-primary-soft-dark);
+  --skeleton-bg: var(--skeleton-bg-dark);
+  --nav-link-fg: var(--fg);
 
-  /* Дизайн токены PrimeVue --------------------------------------------------------------------- */
+  /* PrimeVue severity colors*/
+  --p-primary-color: var(--brand-primary-dark);
+  --p-primary-hover-color: var(--brand-primary-hover-dark);
+  --p-primary-contrast-color: var(--brand-primary-contrast-dark);
+  --p-secondary-color: var(--brand-secondary-dark);
+  --p-secondary-hover-color: var(--brand-secondary-hover-dark);
+  --p-secondary-contrast-color: var(--brand-secondary-contrast-dark);
+  --p-success-color: var(--brand-success-dark);
+  --p-success-hover-color: var(--brand-success-hover-dark);
+  --p-success-contrast-color: var(--brand-success-contrast-dark);
+  --p-info-color: var(--brand-info-dark);
+  --p-info-hover-color: var(--brand-info-hover-dark);
+  --p-info-contrast-color: var(--brand-info-contrast-dark);
+  --p-warn-color: var(--brand-warn-dark);
+  --p-warn-hover-color: var(--brand-warn-hover-dark);
+  --p-warn-contrast-color: var(--brand-warn-contrast-dark);
+  --p-danger-color: var(--brand-danger-dark);
+  --p-danger-hover-color: var(--brand-danger-hover-dark);
+  --p-danger-contrast-color: var(--brand-danger-contrast-dark);
+
+  /* Design tokens for components PrimeVue --------------------------------------------------------------------- */
   /* https://primevue.org/datatable/#theming.styled */
   /* Table */
   /* ---------------- Header */
-  --p-datatable-header-background: #0f172a; /* slate-900 */
-  --p-datatable-header-cell-background: #0f172a;
-  --p-datatable-header-cell-color: #94a3b8; /* slate-400 */
+  --p-datatable-header-background: var(--surface);
+  --p-datatable-header-cell-background: var(--surface);
+  --p-datatable-header-cell-color: var(--fg);
   /* ---------------- Body */
-  --p-datatable-row-background: #0f172a; /* darker per-row */
-  --p-datatable-row-color: #cbd5e1; /* slate-300 */
-  --p-datatable-row-hover-background: var(--bg-hover); /* unify hover */
+  --p-datatable-row-background: var(--surface);
+  --p-datatable-row-color: var(--fg);
+  --p-datatable-row-hover-background: var(--bg-hover);
   --p-datatable-row-hover-color: var(--p-datatable-row-color);
-  --p-datatable-header-border-color: #334155; /* slate-700 */
+  --p-datatable-header-border-color: var(--border);
   --p-datatable-header-border-width: 1px;
-  --p-datatable-header-cell-border-color: #334155;
-  --p-datatable-body-cell-border-color: #334155;
+  --p-datatable-header-cell-border-color: var(--border);
+  --p-datatable-body-cell-border-color: var(--border);
   --p-datatable-transition-duration: 0ms;
 }
 
+/* PrimeVue overrides --------------------------------------------------------------------- */
+
+/* Popover */
 html.dark .p-popover {
   border: 1px solid #000000 !important;
   background-color: #000000 !important;
@@ -235,7 +361,24 @@ html.dark .p-popover .p-popover-arrow {
   border-left-color: #000000 !important;
 }
 
-/* Что бы DataTable использовал токены темы */
+/* Button */
+.p-button.p-button-primary:hover {
+  background: var(--p-primary-hover-color) !important;
+  border-color: var(--p-primary-hover-color) !important;
+}
+
+/* Success button overrides */
+.p-button.p-button-success {
+  background: var(--p-success-color) !important;
+  border-color: var(--p-success-color) !important;
+  color: var(--p-success-contrast-color) !important;
+}
+.p-button.p-button-success:hover {
+  background: var(--p-success-hover-color) !important;
+  border-color: var(--p-success-hover-color) !important;
+}
+
+/* DataTable */
 .p-datatable-thead > tr > th {
   background-color: var(--p-datatable-header-cell-background) !important;
   color: var(--p-datatable-header-cell-color) !important;

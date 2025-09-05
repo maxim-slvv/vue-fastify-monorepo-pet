@@ -31,22 +31,12 @@ function select(key: string): void {
         :style="{
           backgroundColor:
             hoveredKey === it.key || props.modelValue === it.key
-              ? 'var(--bg-hover)'
-              : 'var(--bg-surface)',
+              ? 'var(--brand-primary-soft)'
+              : 'var(--surface)',
         }"
       >
-        <i
-          v-if="it.icon"
-          :class="[it.icon, 'mr-2']"
-          :style="{
-            color: props.modelValue === it.key ? 'var(--color-blue)' : 'var(--color-gray)',
-          }"
-        />
-        <Typography
-          :color="props.modelValue === it.key ? 'blue' : 'gray'"
-          class="text-m-bold"
-          withOutVariants
-        >
+        <i v-if="it.icon" :class="[it.icon, 'mr-2']" :style="{ color: 'var(--nav-link-fg)' }" />
+        <Typography class="text-m-bold" withOutVariants :style="{ color: 'var(--nav-link-fg)' }">
           {{ it.label }}
         </Typography>
       </button>

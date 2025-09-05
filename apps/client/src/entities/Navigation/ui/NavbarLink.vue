@@ -22,11 +22,11 @@ const hover = ref(false)
     @click.prevent="emit('select')"
     class="flex items-center gap-3 px-4 py-3 rounded-lg"
     :style="{
-      backgroundColor: hover || active ? 'var(--bg-hover)' : 'var(--bg-surface)',
+      backgroundColor: hover || active ? 'var(--brand-primary-soft)' : 'var(--surface)',
     }"
   >
-    <i :class="[icon]" :style="{ color: active ? 'var(--color-blue)' : 'var(--color-gray)' }" />
-    <Typography :color="active ? 'blue' : 'gray'" class="text-m-bold">
+    <i :class="[icon]" :style="{ color: 'var(--nav-link-fg)' }" />
+    <Typography class="text-m-bold" :style="{ color: 'var(--nav-link-fg)' }">
       {{ label }}
     </Typography>
     <i class="pi pi-angle-right text-gray-300 ml-auto" />
