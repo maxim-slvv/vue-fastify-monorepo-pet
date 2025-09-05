@@ -2,18 +2,17 @@
 import { ref } from 'vue'
 import UiButton from '@/shared/ui/Button/Button.vue'
 import UiDialog from '@/shared/ui/Dialog/UiDialog.vue'
-import InnerTable from '@/shared/ui/DataTable/InnerTable.vue'
+import BaseDataTable from '@/shared/ui/DataTable/BaseDataTable.vue'
 import Typography from '@/shared/ui/Typography/Typography.vue'
 
 defineOptions({ name: 'UiDataTable' })
 
-// re-export ColumnDef type from InnerTable for consumers
-export type { ColumnDef } from '@/shared/ui/DataTable/InnerTable.vue'
+export type { ColumnDef } from '@/shared/ui/DataTable/BaseDataTable.vue'
 
 const props = defineProps<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rows: any[]
-  columns: import('@/shared/ui/DataTable/InnerTable.vue').ColumnDef[]
+  columns: import('@/shared/ui/DataTable/BaseDataTable.vue').ColumnDef[]
   tableClass?: string
   rowKey?: string
   loading?: boolean
@@ -40,7 +39,7 @@ const dialogVisible = ref(false)
       </UiButton>
     </div>
 
-    <InnerTable
+    <BaseDataTable
       ref="innerRef"
       :rows="props.rows"
       :columns="props.columns"
@@ -54,7 +53,7 @@ const dialogVisible = ref(false)
         <!-- TODO Название -->
         <Typography class="text-l-bold">Fullscreen Table</Typography>
       </template>
-      <InnerTable
+      <BaseDataTable
         :rows="props.rows"
         :columns="props.columns"
         :tableClass="props.tableClass"
