@@ -2,7 +2,7 @@
 import { defineComponent, ref } from 'vue'
 import { useRouter, useRoute, type RouteRecordNormalized } from 'vue-router'
 import NavbarLink from '@/entities/Navigation/ui/NavbarLink.vue'
-import { blockLayoutStyles } from '@/shared/styles/in-js-styles'
+import LayoutBlock from '@/shared/ui/Block/LayoutBlock.vue'
 
 defineComponent({ name: 'AppNavbar' })
 
@@ -34,7 +34,7 @@ function navigate(to: string): void {
 }
 </script>
 <template>
-  <aside :style="{ ...blockLayoutStyles({ border: 'right' }) }" class="w-64">
+  <LayoutBlock tag="aside" border="right" class="w-64">
     <nav class="p-4 space-y-2">
       <NavbarLink
         v-for="link in links"
@@ -45,5 +45,5 @@ function navigate(to: string): void {
         @select="navigate(link.to)"
       />
     </nav>
-  </aside>
+  </LayoutBlock>
 </template>

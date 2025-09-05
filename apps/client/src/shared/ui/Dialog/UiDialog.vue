@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import Dialog from 'primevue/dialog'
-import { blockLayoutStyles } from '@/shared/styles/in-js-styles'
 
 defineOptions({ name: 'UiDialog' })
 
@@ -25,10 +24,7 @@ const visibleProxy = computed({
   set: (val: boolean) => emit('update:modelValue', val),
 })
 
-const contentStyle = computed(() => ({
-  height: props.height,
-  ...blockLayoutStyles({ border: props.border }),
-}))
+const contentStyle = computed(() => ({ height: props.height }))
 
 const pt = computed(() => ({
   root: {

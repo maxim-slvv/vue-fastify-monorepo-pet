@@ -3,7 +3,6 @@ import { defineComponent } from 'vue'
 import Button from '@/shared/ui/Button/Button.vue'
 import HeaderNavLink from '@/entities/Navigation/ui/HeaderNavLink.vue'
 import ThemeSwitcher from '@/shared/ui/ThemeSwitcher/ThemeSwitcher.vue'
-import { blockLayoutStyles } from '@/shared/styles/in-js-styles'
 import Typography from '@/shared/ui/Typography/Typography.vue'
 
 defineComponent({
@@ -21,7 +20,7 @@ const navLinks: string[] = [
 ]
 </script>
 <template>
-  <header :style="{ ...blockLayoutStyles({ border: 'bottom' }) }">
+  <header :style="{ backgroundColor: 'var(--surface)', borderBottom: '1px solid var(--border)' }">
     <div class="mx-auto flex items-center justify-between px-6">
       <div class="flex items-center">
         <div class="flex items-center gap-2 w-[260px] p-2">
