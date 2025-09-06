@@ -13,7 +13,7 @@ import {
   favoriteBodySchema,
   IMAGE_SYMBOLS,
 } from './types.ts'
-import { cryptoFieldsPresets } from './store/selectors.ts'
+import { cryptoFieldsPresets } from './store/selectors/index.ts'
 
 export async function registerCryptoRoutes(app: FastifyInstance): Promise<void> {
   const cryptoResource = makeResource({

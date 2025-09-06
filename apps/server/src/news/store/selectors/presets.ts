@@ -1,0 +1,30 @@
+export const newsFieldsPresets = {
+  base: {
+    id: true,
+    title: true,
+    summary: true,
+    publishedAt: true,
+    source: true,
+    url: true,
+    image: true,
+    tags: true,
+    isFeatured: true,
+  },
+  brief: {
+    id: true,
+    title: true,
+    publishedAt: true,
+    source: true,
+    url: true,
+  },
+  featured: {
+    id: true,
+    title: true,
+    summary: true,
+    publishedAt: true,
+    source: true,
+    url: true,
+    image: true,
+    isFeatured: true,
+  },
+} as const

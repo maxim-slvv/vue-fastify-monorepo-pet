@@ -1,12 +1,12 @@
 import type { CryptoSymbol, CryptoTableRow } from '../types.ts'
 import type { CryptoRepository } from '../store/repository.ts'
 import { mutateRow, setFavorite } from '../store/mutations.ts'
-import { selectAll, selectTop, selectFavorite } from '../store/selectors.ts'
+import { selectAll, selectTop, selectFavorite } from '../store/selectors/index.ts'
 import type {
   CryptoListResponse,
   CryptoTopResponse,
   CryptoFavoriteResponse,
-} from '../store/selectors.ts'
+} from '../store/selectors/index.ts'
 
 export interface CryptoService {
   list(): Promise<CryptoListResponse>
