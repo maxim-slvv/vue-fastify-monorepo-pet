@@ -32,7 +32,13 @@ https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?n
     Пригодится что бы настроить то какие поля будут отдаваться по rest а какие по websockets, а так же их вариации.
 [x] Back: В списках /api/crypto/top и /api/crypto/favorite получать минимум для fallback, а затем подписываться на ws на каждую монету  отдельно или выбирать на что подписаться (заюзать tanstack-query мэйби, что еще можно попробовать?)
 
+[x] Back: архитекрура модулей
+[x] Back: новый модуль для новостей
+[x] Swagger
+[] OrvalDev?
+
 [] Back: Каждый роут наследует пагинацию, сортировку по ячейкам и по rank, поиск
+[] Front: Tanstack Query
 
 [] Front: Настроить взаимодействие с rest.
 [] Front: Фильтры: Поиск, сортировка ASC/DESC (Rank), 

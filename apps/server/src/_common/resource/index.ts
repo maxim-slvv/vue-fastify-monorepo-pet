@@ -17,6 +17,7 @@ export function makeResource<
   Row extends z.infer<z.ZodObject<RowShape>>,
 >(cfg: ResourceConfig<RowShape, Row>) {
   return {
+    entity: cfg.entity,
     schemaByPreset(preset: keyof typeof cfg.presets) {
       const mask: Partial<Record<keyof Row, true>> = {}
       ;(Object.entries(cfg.presets[preset as string]) as Array<[keyof Row, boolean]>).forEach(

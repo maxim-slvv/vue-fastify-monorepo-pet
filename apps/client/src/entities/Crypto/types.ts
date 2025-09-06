@@ -11,4 +11,5 @@ export type CryptoTableRow = {
   marketCap: string
   volume24h: string
   spark: number[]
+  isFavorite?: boolean
 }
