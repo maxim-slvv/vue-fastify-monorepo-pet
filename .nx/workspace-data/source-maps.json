@@ -60,6 +60,10 @@
       "apps/client/package.json",
       "nx/core/package-json"
     ],
+    "metadata.targetGroups.NPM Scripts.9": [
+      "apps/client/package.json",
+      "nx/core/package-json"
+    ],
     "metadata.js": [
       "apps/client/package.json",
       "nx/core/package-json"
@@ -101,6 +105,34 @@
       "nx/core/package-json"
     ],
     "targets.dev.metadata.runCommand": [
+      "apps/client/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.orval:dev": [
+      "apps/client/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.orval:dev.executor": [
+      "apps/client/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.orval:dev.options": [
+      "apps/client/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.orval:dev.metadata": [
+      "apps/client/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.orval:dev.options.script": [
+      "apps/client/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.orval:dev.metadata.scriptContent": [
+      "apps/client/package.json",
+      "nx/core/package-json"
+    ],
+    "targets.orval:dev.metadata.runCommand": [
       "apps/client/package.json",
       "nx/core/package-json"
     ],

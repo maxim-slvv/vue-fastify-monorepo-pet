@@ -3,6 +3,7 @@ import { registerStatic } from './static.ts'
 import { registerCors } from './cors.ts'
 import { registerHelmet } from './helmet.ts'
 import { registerRateLimit } from './rateLimit.ts'
+import { registerSwagger } from './swagger.ts'
 
 export { registerStatic } from './static.ts'
 export { registerCors } from './cors.ts'
@@ -14,4 +15,5 @@ export async function registerPlugins(app: FastifyInstance): Promise<void> {
   await registerCors(app)
   await registerHelmet(app)
   await registerRateLimit(app)
+  await registerSwagger(app)
 }

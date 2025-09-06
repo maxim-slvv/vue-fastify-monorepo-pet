@@ -3,7 +3,6 @@ import { Server as SocketIOServer, type ServerOptions, type Namespace } from 'so
 
 let ioInstance: SocketIOServer | null = null
 
-//Cинглтон Socket.IO
 export function getIO(): SocketIOServer {
   if (!ioInstance) throw new Error('Socket.IO is not initialized. Call initIO(server) first')
   return ioInstance

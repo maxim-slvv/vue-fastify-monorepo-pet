@@ -1,8 +1,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { io, type Socket } from 'socket.io-client'
 import { CryptoTableRow } from './../types'
-
-const API_URL = (import.meta as unknown as ImportMeta).env?.VITE_API_URL ?? 'http://localhost:3000'
+import { API_URL } from '@/shared/config/api'
 
 // Все монеты
 export function useCryptoTicker() {

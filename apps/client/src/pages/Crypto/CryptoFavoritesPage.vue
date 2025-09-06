@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { defineComponent, computed } from 'vue'
 import UiDataTable from '@/shared/ui/DataTable/UiDataTable.vue'
-import { useCryptoTicker } from '@/entities/Crypto/lib/useCryptoTicker'
 import type { CryptoTableRow } from '@/entities/Crypto/types'
+import { useCryptoFavorite } from '@/entities/Crypto/lib/useCryptoFavorite'
 import { createCryptoColumns } from '@/entities/Crypto/lib/columns'
 
-defineComponent({ name: 'CryptoPage' })
+defineComponent({ name: 'CryptoFavoritesPage' })
 
-const { rows, isLoading } = useCryptoTicker()
+const { rows, isLoading } = useCryptoFavorite()
 
 const skeletonRows = computed<CryptoTableRow[]>(
   () =>
@@ -18,9 +18,9 @@ const skeletonRows = computed<CryptoTableRow[]>(
       image: '',
       price: '',
       ch24h: '',
-      ch24h_direction: 'up',
+      ch24h_direction: '' as 'up' | 'down',
       ch7d: '',
-      ch7d_direction: 'up',
+      ch7d_direction: '' as 'up' | 'down',
       marketCap: '',
       volume24h: '',
       spark: [],

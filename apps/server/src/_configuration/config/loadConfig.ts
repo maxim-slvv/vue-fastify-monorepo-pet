@@ -1,4 +1,4 @@
-import { appSchema, AppConfig } from '../types.ts'
+import { appSchema, AppConfig } from '../schema.ts'
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
   const parsed = appSchema.safeParse(env)

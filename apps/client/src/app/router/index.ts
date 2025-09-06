@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouterView, type RouteRecordRaw } from 'vue-router'
 import CryptoPage from '@/pages/Crypto/CryptoPage.vue'
+import CryptoFavoritesPage from '@/pages/Crypto/CryptoFavoritesPage.vue'
 
 const StubPage = () => import('@/pages/StubPage.vue')
 
@@ -8,20 +9,20 @@ export const routes: RouteRecordRaw[] = [
   {
     path: '/crypto',
     component: RouterView,
-    meta: { tabsGroup: 'crypto', sidebar: { label: 'Main Page', icon: 'pi pi-home', order: 0 } },
+    meta: { tabsGroup: 'crypto', sidebar: { label: 'Crypto', icon: 'pi pi-chart-line', order: 0 } },
     children: [
-      { path: '', redirect: { name: 'crypto.list' } },
+      { path: '', redirect: { name: 'crypto.top' } },
       {
-        path: 'cryptocurrencies',
-        name: 'crypto.list',
+        path: 'top',
+        name: 'crypto.top',
         component: CryptoPage,
-        meta: { nav: { group: 'crypto', label: 'Cryptocurrencies', icon: 'pi pi-chart-line' } },
+        meta: { nav: { group: 'crypto', label: 'Top', icon: 'pi pi-chart-line' } },
       },
       {
-        path: 'categories',
-        name: 'crypto.categories',
-        component: StubPage,
-        meta: { nav: { group: 'crypto', label: 'Categories', icon: 'pi pi-sitemap' } },
+        path: 'favorites',
+        name: 'crypto.favorites',
+        component: CryptoFavoritesPage,
+        meta: { nav: { group: 'crypto', label: 'Favorites', icon: 'pi pi-sitemap' } },
       },
       {
         path: 'defi',
