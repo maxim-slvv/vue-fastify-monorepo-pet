@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineComponent, computed } from 'vue'
 import UiDataTable from '@/shared/ui/DataTable/UiDataTable.vue'
-import type { CryptoTableRow } from '@/entities/Crypto/types'
+import type { CryptoFavoriteResponse } from '@/entities/Crypto/types'
 import { useCryptoFavorite } from '@/entities/Crypto/lib/useCryptoFavorite'
 import { createCryptoColumns } from '@/entities/Crypto/lib/columns'
 
@@ -9,7 +9,7 @@ defineComponent({ name: 'CryptoFavoritesPage' })
 
 const { rows, isLoading } = useCryptoFavorite()
 
-const skeletonRows = computed<CryptoTableRow[]>(
+const skeletonRows = computed<CryptoFavoriteResponse[]>(
   () =>
     Array.from({ length: 10 }, (_, i) => ({
       rank: i + 1,
@@ -24,7 +24,7 @@ const skeletonRows = computed<CryptoTableRow[]>(
       marketCap: '',
       volume24h: '',
       spark: [],
-    })) as unknown as CryptoTableRow[],
+    })) as unknown as CryptoFavoriteResponse[],
 )
 
 const rowsToShow = computed(() => (isLoading.value ? skeletonRows.value : rows.value))

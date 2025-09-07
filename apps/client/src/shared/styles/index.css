@@ -1,10 +1,13 @@
 @import 'tailwindcss';
 
+html {
+  overflow: hidden;
+}
+
 body {
   @apply bg-gray-100 text-gray-600;
   background-color: var(--bg);
   color: var(--fg);
-  overflow-x: hidden; /* TODO:пересмотреть - таблица дает скролл горизонтальный */
 }
 
 :root {
@@ -252,6 +255,10 @@ html:not(.dark) {
   --brand-primary-soft: var(--brand-primary-soft-light);
   --skeleton-bg: var(--skeleton-bg-light);
   --nav-link-fg: var(--fg);
+  /* Scrollbar (light) */
+  --scrollbar-track: #ffffff;
+  --scrollbar-thumb: #9ca3af; /* gray-400 */
+  --scrollbar-thumb-hover: #6b7280; /* gray-500 */
 
   /* PrimeVue severity colors*/
   --p-primary-color: var(--brand-primary);
@@ -302,6 +309,10 @@ html.dark {
   --brand-primary-soft: var(--brand-primary-soft-dark);
   --skeleton-bg: var(--skeleton-bg-dark);
   --nav-link-fg: var(--fg);
+  /* Scrollbar (dark) */
+  --scrollbar-track: #0f172a; /* surface-dark */
+  --scrollbar-thumb: #94a3b8; /* slate-400 */
+  --scrollbar-thumb-hover: #cbd5e1; /* slate-300 */
 
   /* PrimeVue severity colors*/
   --p-primary-color: var(--brand-primary-dark);
@@ -343,6 +354,25 @@ html.dark {
 }
 
 /* PrimeVue overrides --------------------------------------------------------------------- */
+
+/* Global scrollbar theming (WebKit & Firefox) */
+* {
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
 
 /* Popover */
 html.dark .p-popover {

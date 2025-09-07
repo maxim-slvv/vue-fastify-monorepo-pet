@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Typography from '@/shared/ui/Typography/Typography.vue'
+import UITypography from '@/shared/ui/Typography/UITypography.vue'
 
 defineOptions({ name: 'UiSubnav' })
 
@@ -36,9 +36,13 @@ function select(key: string): void {
         }"
       >
         <i v-if="it.icon" :class="[it.icon, 'mr-2']" :style="{ color: 'var(--nav-link-fg)' }" />
-        <Typography class="text-m-bold" withOutVariants :style="{ color: 'var(--nav-link-fg)' }">
+        <UITypography
+          variant="text-m-bold"
+          withOutVariants
+          :style="{ color: 'var(--nav-link-fg)' }"
+        >
           {{ it.label }}
-        </Typography>
+        </UITypography>
       </button>
     </template>
   </div>

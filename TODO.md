@@ -1,5 +1,8 @@
 https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?node-id=1923-222&t=uFWzmOXjVG1qlFmU-0
 
+
+
+
 [] AppHeader
     - https://primevue.org/avatar/#image
     - https://primevue.org/avatar/#avatargroup
@@ -14,7 +17,7 @@ https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?n
 [] Aside
 
 
-[х] Весь текст на странице обернуть в Typography для того что бы использовать цвета и размеры
+[х] Весь текст на странице обернуть в UITypography для того что бы использовать цвета и размеры
 [x] Динамические стили блоков в константы
 
 [х] Статику раздавать в виде картинок
@@ -38,6 +41,7 @@ https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?n
 [] OrvalDev?
 
 [] Back: Каждый роут наследует пагинацию, сортировку по ячейкам и по rank, поиск
+[] Front: захардкорженные лимиты убрать
 [] Front: Tanstack Query
 
 [] Front: Настроить взаимодействие с rest.
@@ -71,3 +75,12 @@ Column Toggle выбирать какие показатели нам нужны
 Monorepo
 Lerna
 Fastify
+
+Новости
+https://coinmarketcap.com/ru/currencies/pudgy-penguins/
+
+неплохой компоуз инфы
+https://www.bybit.com/ru-RU/price/pudgy-penguins/
+
+Бегушую строку снизу
+https://www.binance.com/en/trade/BTC_USDT?type=spot

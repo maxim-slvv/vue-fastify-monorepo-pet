@@ -16,7 +16,7 @@ defineComponent({
     class="flex flex-col h-screen w-screen"
   >
     <AppHeader />
-    <div class="flex flex-1">
+    <div class="flex flex-1 overflow-hidden">
       <AppNavbar />
       <PageContentWrapper>
         <slot />

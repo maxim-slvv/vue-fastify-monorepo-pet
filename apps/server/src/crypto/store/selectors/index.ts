@@ -1,4 +1,4 @@
-import type { CryptoTableRow } from '../../types.ts'
+import type { ICryptoServerRow } from '../../types.ts'
 import { z } from 'zod'
 import { rowsBaseSchema, rowsTopSchema, rowsFavoriteSchema } from './schemas.ts'
 import { projectArray } from '../../../_common/zod/schema-tools.ts'
@@ -10,11 +10,11 @@ export type CryptoFavoriteResponse = z.output<typeof rowsFavoriteSchema>
 export { cryptoFieldsPresets } from './presets.ts'
 export { rowsBaseSchema, rowsTopSchema, rowsFavoriteSchema } from './schemas.ts'
 
-export function selectAll(rows: CryptoTableRow[]): CryptoListResponse {
+export function selectAll(rows: ICryptoServerRow[]): CryptoListResponse {
   return projectArray(rows, rowsBaseSchema)
 }
 
-export function selectTop(rows: CryptoTableRow[], limit = 20): CryptoTopResponse {
+export function selectTop(rows: ICryptoServerRow[], limit = 20): CryptoTopResponse {
   const selectedRows = rows
     .slice()
     .sort((a, b) => a.rank - b.rank)
@@ -22,7 +22,7 @@ export function selectTop(rows: CryptoTableRow[], limit = 20): CryptoTopResponse
   return projectArray(selectedRows, rowsTopSchema)
 }
 
-export function selectFavorite(rows: CryptoTableRow[]): CryptoFavoriteResponse {
+export function selectFavorite(rows: ICryptoServerRow[]): CryptoFavoriteResponse {
   const selectedRows = rows.filter((r) => r.isFavorite === true)
   return projectArray(selectedRows, rowsFavoriteSchema)
 }

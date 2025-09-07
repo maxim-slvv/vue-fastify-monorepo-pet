@@ -1,26 +1,19 @@
 <script setup lang="ts">
-import ComposeInfo from '@/shared/ui/ComposeInfo/ComposeInfo.vue'
+import ComposeAvatarInfo, {
+  type IComposeAvatarInfoProps,
+} from '@/shared/ui/ComposeInfo/ComposeAvatarInfo.vue'
 
 defineOptions({ name: 'CoinMainInfoEntity' })
 
-type Variant = 'inline' | 'inlineWithCoinTag' | 'stacked'
-
 const props = withDefaults(
-  defineProps<{
-    name?: string
-    symbol?: string
-    image?: string
-    size?: 'sm' | 'md' | 'lg'
-    variant?: Variant
-    class?: string
-  }>(),
+  defineProps<Omit<IComposeAvatarInfoProps, 'avatar'> & { image?: string }>(),
   {
     size: 'md',
-    variant: 'inline',
+    variant: 'inlineAvatarNameTextTag',
   },
 )
 </script>
 
 <template>
-  <ComposeInfo v-bind="props" />
+  <ComposeAvatarInfo v-bind="{ ...props, avatar: props.image }" />
 </template>

@@ -2,7 +2,7 @@
 import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
 import { cn } from '@/shared/lib/tailwind/cn'
 
-defineOptions({ name: 'ComposeInfoSymbolTag' })
+defineOptions({ name: 'ComposeInfoTagText' })
 
 const props = defineProps<{ text?: string; loading?: boolean }>()
 

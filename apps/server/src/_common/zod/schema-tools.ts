@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+export const CDN_PATH_PATTERN = /^\/cdn\/(?:image|news-image|group-avatar)\/.+\.(png|jpg|jpeg)$/i
+
 export function buildPickMask<Shape extends z.ZodRawShape>(
   preset: Partial<Record<keyof z.infer<z.ZodObject<Shape>>, boolean>>,
 ): Partial<Record<keyof z.infer<z.ZodObject<Shape>>, true>> {

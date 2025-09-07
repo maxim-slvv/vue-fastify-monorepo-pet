@@ -1,5 +1,6 @@
 import { defineConfig } from 'orval'
 
+//TODO переработать
 export default defineConfig({
   crypto: {
     output: {

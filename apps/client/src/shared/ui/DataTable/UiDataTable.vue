@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import UiButton from '@/shared/ui/Button/Button.vue'
 import UiDialog from '@/shared/ui/Dialog/UiDialog.vue'
 import BaseDataTable from '@/shared/ui/DataTable/BaseDataTable.vue'
-import Typography from '@/shared/ui/Typography/Typography.vue'
+import UITypography from '@/shared/ui/Typography/UITypography.vue'
 
 defineOptions({ name: 'UiDataTable' })
 
@@ -38,7 +38,7 @@ const dialogVisible = ref(false)
         <i class="pi pi-window-maximize" />
       </UiButton>
     </div>
-
+    <!-- TODO  scrollHeight="70vh" - observer -->
     <BaseDataTable
       ref="innerRef"
       :rows="props.rows"
@@ -46,12 +46,16 @@ const dialogVisible = ref(false)
       :tableClass="props.tableClass"
       :rowKey="props.rowKey"
       :loading="props.loading"
+      scrollable
+      scrollHeight="70vh"
+      minTableWidth="64rem"
+      scrollDirection="both"
     />
 
     <UiDialog v-model="dialogVisible" width="90vw" height="70vh" fullscreen>
       <template #header>
         <!-- TODO Название -->
-        <Typography class="text-l-bold">Fullscreen Table</Typography>
+        <UITypography variant="text-l-bold">Fullscreen Table</UITypography>
       </template>
       <BaseDataTable
         :rows="props.rows"
@@ -62,6 +66,7 @@ const dialogVisible = ref(false)
         scrollable
         scrollHeight="flex"
         minTableWidth="64rem"
+        scrollDirection="both"
       />
     </UiDialog>
   </div>

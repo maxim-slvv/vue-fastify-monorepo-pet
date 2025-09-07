@@ -1,4 +1,5 @@
-import type { CryptoSymbol, CryptoTableRow } from '../types.ts'
+import type { CryptoSymbol } from '../types.ts'
+import type { ICryptoServerRow } from '../types.ts'
 import type { CryptoRepository } from '../store/repository.ts'
 import { mutateRow, setFavorite } from '../store/mutations.ts'
 import { selectAll, selectTop, selectFavorite } from '../store/selectors/index.ts'
@@ -12,8 +13,8 @@ export interface CryptoService {
   list(): Promise<CryptoListResponse>
   listTop(): Promise<CryptoTopResponse>
   listFavorite(): Promise<CryptoFavoriteResponse>
-  tick(): Promise<CryptoTableRow[]>
-  setFavorite(symbol: CryptoSymbol, isFavorite: boolean): Promise<CryptoTableRow[]>
+  tick(): Promise<ICryptoServerRow[]>
+  setFavorite(symbol: CryptoSymbol, isFavorite: boolean): Promise<ICryptoServerRow[]>
 }
 
 export class DefaultCryptoService implements CryptoService {
@@ -34,7 +35,7 @@ export class DefaultCryptoService implements CryptoService {
     return selectFavorite(rows)
   }
 
-  async setFavorite(symbol: CryptoSymbol, isFavorite: boolean): Promise<CryptoTableRow[]> {
+  async setFavorite(symbol: CryptoSymbol, isFavorite: boolean): Promise<ICryptoServerRow[]> {
     const rows = await this.repository.getAll()
     const updated = setFavorite(rows, symbol, isFavorite)
     await this.repository.saveAll(updated)
@@ -43,7 +44,7 @@ export class DefaultCryptoService implements CryptoService {
 
   //---------------------- WS -------------------------
 
-  async tick(): Promise<CryptoTableRow[]> {
+  async tick(): Promise<ICryptoServerRow[]> {
     const rows = await this.repository.getAll()
     const updated = rows.map(mutateRow)
     await this.repository.saveAll(updated)

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import Typography from '@/shared/ui/Typography/Typography.vue'
+import UITypography from '@/shared/ui/Typography/UITypography.vue'
 import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
 import CoinMainInfo from '@/entities/Crypto/ui/CoinMainInfo.vue'
-import type { CryptoTableRow } from '@/entities/Crypto/types'
+import type { ICryptoServerRow } from '@/entities/Crypto/types'
 
 const props = defineProps<{
-  row: CryptoTableRow
+  row: ICryptoServerRow
 }>()
 
 const isLoading = ref(true)
@@ -25,7 +25,7 @@ onMounted(() => {
     <!-- Скелетоны -->
     <div v-if="isLoading" class="animate-pulse">
       <div class="flex items-center justify-between gap-3 h-[56px]">
-        <CoinMainInfo size="lg" variant="inlineWithCoinTag" :loading="true" />
+        <CoinMainInfo size="lg" variant="inlineAvatarNameTextTag" :loading="true" />
 
         <div class="text-right">
           <UiSkeleton class="h-6 w-24 mb-1" />
@@ -47,25 +47,25 @@ onMounted(() => {
     <div v-else>
       <div class="flex items-center justify-between gap-3">
         <CoinMainInfo
+          variant="inlineAvatarNameTextTag"
+          :avatar="props.row.image"
           :name="props.row.name"
-          :symbol="props.row.symbol"
-          :image="props.row.image"
+          :tagText="props.row.symbol"
           size="lg"
-          variant="inlineWithCoinTag"
           class="min-w-0"
         />
         <div class="text-right">
-          <Typography class="text-l-bold">{{ props.row.price }}</Typography>
+          <UITypography variant="text-l-bold">{{ props.row.price }}</UITypography>
           <div class="flex items-center justify-end gap-1">
             <span :class="props.row.ch24h_direction === 'up' ? 'text-green-600' : 'text-red-500'">
               {{ props.row.ch24h_direction === 'up' ? '▲' : '▼' }}
             </span>
-            <Typography
+            <UITypography
+              variant="text-s-bold"
               :color="props.row.ch24h_direction === 'up' ? 'green' : 'red'"
-              class="text-s-bold"
             >
               {{ props.row.ch24h }}
-            </Typography>
+            </UITypography>
           </div>
         </div>
       </div>

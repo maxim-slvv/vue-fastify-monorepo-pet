@@ -34,7 +34,7 @@ function navigate(to: string): void {
 }
 </script>
 <template>
-  <LayoutBlock tag="aside" border="right" class="w-64">
+  <LayoutBlock tag="aside" border="right" class="w-64 overflow-y-auto">
     <nav class="p-4 space-y-2">
       <NavbarLink
         v-for="link in links"

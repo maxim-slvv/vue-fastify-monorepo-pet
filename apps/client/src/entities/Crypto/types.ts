@@ -1,4 +1,4 @@
-export type CryptoTableRow = {
+export interface ICryptoServerRow {
   rank: number
   name: string
   symbol: string
@@ -13,3 +13,7 @@ export type CryptoTableRow = {
   spark: number[]
   isFavorite?: boolean
 }
+
+export type CryptoListResponse = ICryptoServerRow[]
+export type CryptoTopResponse = ICryptoServerRow[]
+export type CryptoFavoriteResponse = ICryptoServerRow[]

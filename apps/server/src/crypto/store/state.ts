@@ -1,7 +1,7 @@
-import { CryptoTableRow } from '../types.ts'
+import { ICryptoServerRow } from '../types.ts'
 import { createSparkline } from './generators.ts'
 
-export const initialCryptoRows: CryptoTableRow[] = [
+export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 1,
     name: 'Bitcoin',

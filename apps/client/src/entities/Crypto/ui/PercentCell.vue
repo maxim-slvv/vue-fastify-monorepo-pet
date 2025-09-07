@@ -1,22 +1,25 @@
 <script setup lang="ts">
-import Typography from '@/shared/ui/Typography/Typography.vue'
+import UITypography from '@/shared/ui/Typography/UITypography.vue'
 import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
 
 defineOptions({ name: 'PercentCell' })
 
-const props = withDefaults(
-  defineProps<{ value?: string; trend?: 'up' | 'down' | ''; loading?: boolean }>(),
-  {},
-)
+export interface IPercentCellProps {
+  value?: string
+  trend?: 'up' | 'down' | ''
+  loading?: boolean
+}
+
+const props = withDefaults(defineProps<IPercentCellProps>(), {})
 </script>
 
 <template>
   <UiSkeleton v-if="props.loading" class="h-5 w-full" />
-  <Typography
+  <UITypography
     v-else
+    variant="text-m-bold"
     :color="props.trend === 'up' ? 'green-light' : props.trend === 'down' ? 'red-light' : undefined"
-    class="text-m-bold"
   >
     {{ props.value }}
-  </Typography>
+  </UITypography>
 </template>

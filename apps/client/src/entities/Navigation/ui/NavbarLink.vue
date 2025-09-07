@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Typography from '@/shared/ui/Typography/Typography.vue'
+import UITypography from '@/shared/ui/Typography/UITypography.vue'
 
 defineOptions({ name: 'NavbarLink' })
 
@@ -26,9 +26,9 @@ const hover = ref(false)
     }"
   >
     <i :class="[icon]" :style="{ color: 'var(--nav-link-fg)' }" />
-    <Typography class="text-m-bold" :style="{ color: 'var(--nav-link-fg)' }">
+    <UITypography variant="text-m-bold" :style="{ color: 'var(--nav-link-fg)' }">
       {{ label }}
-    </Typography>
+    </UITypography>
     <i class="pi pi-angle-right text-gray-300 ml-auto" />
   </a>
 </template>

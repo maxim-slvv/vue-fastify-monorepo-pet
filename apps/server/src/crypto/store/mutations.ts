@@ -1,6 +1,6 @@
-import type { CryptoSymbol, CryptoTableRow } from '../types.ts'
+import type { CryptoSymbol, ICryptoServerRow } from '../types.ts'
 
-export function mutateRow(row: CryptoTableRow): CryptoTableRow {
+export function mutateRow(row: ICryptoServerRow): ICryptoServerRow {
   const delta = (Math.random() - 0.5) * 1.0
   const priceNum = Number(row.price.replace(/[$,]/g, ''))
   const newPrice = Math.max(0.01, priceNum + priceNum * (delta / 100))
@@ -26,10 +26,10 @@ export function mutateRow(row: CryptoTableRow): CryptoTableRow {
 }
 
 export function setFavorite(
-  rows: CryptoTableRow[],
+  rows: ICryptoServerRow[],
   symbol: CryptoSymbol,
   isFavorite: boolean,
-): CryptoTableRow[] {
+): ICryptoServerRow[] {
   const upper = symbol.toUpperCase()
   return rows.map((r) => (r.symbol.toUpperCase() === upper ? { ...r, isFavorite } : r))
 }

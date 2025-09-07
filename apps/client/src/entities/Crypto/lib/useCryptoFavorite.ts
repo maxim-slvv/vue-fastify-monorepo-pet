@@ -1,17 +1,17 @@
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { io, type Socket } from 'socket.io-client'
-import type { CryptoTableRow } from '@/entities/Crypto/types'
+import type { ICryptoServerRow, CryptoFavoriteResponse } from '@/entities/Crypto/types'
 import { API_URL } from '@/shared/config/api'
 
 export function useCryptoFavorite() {
-  const rows = ref<CryptoTableRow[]>([])
+  const rows = ref<CryptoFavoriteResponse>([])
   const isLoading = ref(true)
   let socket: Socket | null = null
 
   async function loadInitial(): Promise<void> {
     const response = await fetch(`${API_URL}/api/crypto/favorite`)
     if (!response.ok) throw new Error(`Failed to load /api/crypto/favorite: ${response.status}`)
-    rows.value = (await response.json()) as CryptoTableRow[]
+    rows.value = (await response.json()) as CryptoFavoriteResponse
     setTimeout(() => {
       isLoading.value = false
     }, 500)
@@ -22,12 +22,12 @@ export function useCryptoFavorite() {
     socket = io(`${API_URL}/crypto-v1`, { transports: ['websocket'] })
 
     // Обновление общего списка избранного
-    socket.on('ticker:favorite', (data: CryptoTableRow[]) => {
+    socket.on('ticker:favorite', (data: CryptoFavoriteResponse) => {
       rows.value = data
     })
 
     // Точечные обновления по символам
-    socket.on('ticker', (data: CryptoTableRow) => {
+    socket.on('ticker', (data: ICryptoServerRow) => {
       const index = rows.value.findIndex((r) => r.symbol === data.symbol)
       if (index !== -1) {
         rows.value = [

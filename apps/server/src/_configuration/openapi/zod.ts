@@ -35,7 +35,10 @@ export function createResponseWithExample(
 ): {
   response: Record<
     number,
-    { description: string; content: { 'application/json': { schema: unknown; example: unknown } } }
+    {
+      description: string
+      content: { 'application/json': { schema: ZodTypeAny; example: unknown } }
+    }
   >
 } {
   return {
@@ -44,7 +47,7 @@ export function createResponseWithExample(
         description: 'Successful response',
         content: {
           'application/json': {
-            schema: zodToJsonSchema(schema, { $refStrategy: 'none', target: 'openApi3' }),
+            schema,
             example,
           },
         },

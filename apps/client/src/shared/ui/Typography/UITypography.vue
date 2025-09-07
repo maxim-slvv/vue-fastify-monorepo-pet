@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { cva } from 'class-variance-authority'
 import { cn } from '@/shared/lib/tailwind/cn'
 
-defineOptions({ name: 'Typography' })
+defineOptions({ name: 'UITypography' })
 
 type TypographyTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'p' | 'span' | 'nav'
 

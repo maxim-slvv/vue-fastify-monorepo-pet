@@ -3,7 +3,7 @@ import { defineComponent } from 'vue'
 import Button from '@/shared/ui/Button/Button.vue'
 import HeaderNavLink from '@/entities/Navigation/ui/HeaderNavLink.vue'
 import ThemeSwitcher from '@/shared/ui/ThemeSwitcher/ThemeSwitcher.vue'
-import Typography from '@/shared/ui/Typography/Typography.vue'
+import UITypography from '@/shared/ui/Typography/UITypography.vue'
 
 defineComponent({
   name: 'AppHeader',
@@ -25,7 +25,7 @@ const navLinks: string[] = [
       <div class="flex items-center">
         <div class="flex items-center gap-2 w-[260px] p-2">
           <i class="pi pi-th-large" style="color: var(--fg)" />
-          <Typography class="text-l-bold">Crypto Market</Typography>
+          <UITypography variant="text-l-bold">Crypto Market</UITypography>
           <ThemeSwitcher class="mt-1" />
         </div>
         <nav class="hidden md:flex items-center gap-5">

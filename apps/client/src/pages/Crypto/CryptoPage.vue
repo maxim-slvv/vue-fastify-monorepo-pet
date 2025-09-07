@@ -2,14 +2,14 @@
 import { defineComponent, computed } from 'vue'
 import UiDataTable from '@/shared/ui/DataTable/UiDataTable.vue'
 import { useCryptoTicker } from '@/entities/Crypto/lib/useCryptoTicker'
-import type { CryptoTableRow } from '@/entities/Crypto/types'
+import type { CryptoListResponse } from '@/entities/Crypto/types'
 import { createCryptoColumns } from '@/entities/Crypto/lib/columns'
 
 defineComponent({ name: 'CryptoPage' })
 
 const { rows, isLoading } = useCryptoTicker()
 
-const skeletonRows = computed<CryptoTableRow[]>(
+const skeletonRows = computed<CryptoListResponse>(
   () =>
     Array.from({ length: 10 }, (_, i) => ({
       rank: i + 1,
@@ -24,7 +24,7 @@ const skeletonRows = computed<CryptoTableRow[]>(
       marketCap: '',
       volume24h: '',
       spark: [],
-    })) as unknown as CryptoTableRow[],
+    })) as unknown as CryptoListResponse,
 )
 
 const rowsToShow = computed(() => (isLoading.value ? skeletonRows.value : rows.value))
