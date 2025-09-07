@@ -18,7 +18,6 @@ const dateText = computed(() => formatDate(props.row.publishedAt))
         variant="inlineAvatarName"
         :avatar="props.row.sourceAvatar"
         :name="props.row.source"
-        icon="/cdn/svg/VERIFIED.svg"
         size="sm"
         class="cursor-pointer"
       />

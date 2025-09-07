@@ -4,20 +4,11 @@ import Button from '@/shared/ui/Button/Button.vue'
 import HeaderNavLink from '@/entities/Navigation/ui/HeaderNavLink.vue'
 import ThemeSwitcher from '@/shared/ui/ThemeSwitcher/ThemeSwitcher.vue'
 import UITypography from '@/shared/ui/Typography/UITypography.vue'
+import { NAV_LINKS } from '@/entities/Navigation/lib'
 
 defineComponent({
   name: 'AppHeader',
 })
-
-const navLinks: string[] = [
-  'Cryptocurrencies',
-  'Markets',
-  'Trade',
-  'NFT',
-  'Derivatives',
-  'Finance',
-  'Calendars',
-]
 </script>
 <template>
   <header :style="{ backgroundColor: 'var(--surface)', borderBottom: '1px solid var(--border)' }">
@@ -29,7 +20,7 @@ const navLinks: string[] = [
           <ThemeSwitcher class="mt-1" />
         </div>
         <nav class="hidden md:flex items-center gap-5">
-          <HeaderNavLink v-for="link in navLinks" :key="link" :label="link" />
+          <HeaderNavLink v-for="link in NAV_LINKS" :key="link" :label="link" />
         </nav>
       </div>
       <div class="flex items-center gap-4">
