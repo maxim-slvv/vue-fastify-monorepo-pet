@@ -7,7 +7,7 @@ import { createCryptoColumns } from '@/entities/Crypto/lib/columns'
 
 defineComponent({ name: 'CryptoFavoritesPage' })
 
-const { rows, isLoading } = useCryptoFavorite()
+const { rows, isLoading, toggleFavorite } = useCryptoFavorite()
 
 const skeletonRows = computed<CryptoFavoriteResponse[]>(
   () =>
@@ -28,7 +28,7 @@ const skeletonRows = computed<CryptoFavoriteResponse[]>(
 )
 
 const rowsToShow = computed(() => (isLoading.value ? skeletonRows.value : rows.value))
-const columns = createCryptoColumns(isLoading)
+const columns = createCryptoColumns(isLoading, toggleFavorite)
 </script>
 
 <template>

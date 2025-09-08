@@ -2,12 +2,15 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { io, type Socket } from 'socket.io-client'
 import type { CryptoListResponse } from '@/entities/Crypto/types'
 import { API_URL } from '@/shared/config/api'
+import { useCryptoToggleFavorite } from './useCryptoToggleFavorite'
 
-// Все монеты
+// All coins
 export function useCryptoTicker() {
   const rows = ref<CryptoListResponse>([])
   const isLoading = ref(true)
   let socket: Socket | null = null
+
+  const { toggleFavorite } = useCryptoToggleFavorite(rows)
 
   async function loadInitial(): Promise<void> {
     const response = await fetch(`${API_URL}/api/crypto`)
@@ -46,5 +49,5 @@ export function useCryptoTicker() {
     disconnect()
   })
 
-  return { rows, isLoading, connect, disconnect }
+  return { rows, isLoading, connect, disconnect, toggleFavorite }
 }

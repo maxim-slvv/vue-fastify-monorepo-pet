@@ -5,13 +5,30 @@ import CoinMainInfo from '@/entities/Crypto/ui/CoinMainInfo.vue'
 import PriceCell, { IPriceCellProps } from '@/entities/Crypto/ui/PriceCell.vue'
 import PercentCell, { IPercentCellProps } from '@/entities/Crypto/ui/PercentCell.vue'
 import SparkPopoverCell, { ISparkPopoverCellProps } from '@/entities/Crypto/ui/SparkPopoverCell.vue'
+import FavoriteToggle, { IFavoriteToggleProps } from '@/entities/Crypto/ui/FavoriteToggle.vue'
 import { IComposeAvatarInfoProps } from '@/shared/ui/ComposeInfo/ComposeAvatarInfo.vue'
+
+type ToggleFavoriteCallback = (symbol: string, isFavorite: boolean) => void
 
 type TypedColumnDef<T> = Omit<ColumnDef<ICryptoServerRow>, 'componentProps'> & {
   componentProps: (row: ICryptoServerRow) => T
 }
 
-const createTypedColumns = (isLoading: Ref<boolean>) => {
+const createTypedColumns = (isLoading: Ref<boolean>, onToggleFavorite?: ToggleFavoriteCallback) => {
+  const favoriteColumn: TypedColumnDef<IFavoriteToggleProps> = {
+    field: 'isFavorite',
+    header: '',
+    align: 'center',
+    width: '48px',
+    component: FavoriteToggle,
+    componentProps: (row): IFavoriteToggleProps => ({
+      symbol: row.symbol,
+      isFavorite: row.isFavorite,
+      loading: isLoading.value,
+      onToggle: onToggleFavorite,
+    }),
+  }
+
   const nameColumn: TypedColumnDef<IComposeAvatarInfoProps> = {
     field: 'name',
     header: 'Name',
@@ -79,11 +96,14 @@ const createTypedColumns = (isLoading: Ref<boolean>) => {
     }),
   }
 
-  return [nameColumn, priceColumn, ch24hColumn, ch7dColumn, sparkColumn]
+  return [favoriteColumn, nameColumn, priceColumn, ch24hColumn, ch7dColumn, sparkColumn]
 }
 
-export function createCryptoColumns(isLoading: Ref<boolean>): ColumnDef<ICryptoServerRow>[] {
-  const typedColumns = createTypedColumns(isLoading)
+export function createCryptoColumns(
+  isLoading: Ref<boolean>,
+  onToggleFavorite?: ToggleFavoriteCallback,
+): ColumnDef<ICryptoServerRow>[] {
+  const typedColumns = createTypedColumns(isLoading, onToggleFavorite)
 
   return [
     {
