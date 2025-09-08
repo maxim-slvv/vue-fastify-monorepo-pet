@@ -51,13 +51,19 @@ https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?n
 [] Front: Таблица может управлять запросом? - научим! - конфигурировать параметры - скорее через nuqs и url.
  
 [] Новая страница в отдельной вкладке?
-[] Неплохой компоуз инфы https://www.bybit.com/ru-RU/price/pudgy-penguins/
+[] Неплохой компоуз инфы https://www.bybit.com/ru-RU/price/pudgy-penguins/ 
+[] Еще детали https://coinmarketcap.com/ru/currencies/pudgy-penguins/#Chart
 [] Бегушая строка в футере - на странице с инфой по монете https://www.binance.com/en/trade/BTC_USDT?type=spot
 
 [] Nginx конфиг ?
 
 Лендинг на Nuxt для SEO вторым фронтом?
-[] Общий ui kit
+- Он точно должен быть облегчен и иметь более презентабельный дизайн для таблиц с данными.
+- Референс https://www.binance.com/ru/price:
+[] Статичные SVG: Показывают рост, Теряют в цене, Новые листинги на Binance
+[] Статичные списки: Все криптовалюты, Показывают рост, Теряют в цене, Новые криптовалюты
+
+[] Общий ui kit - может и общие фичи для загрузки данных и чартов
 [] Главная страница с таблицей
 [] Страница с инфой по монете
 

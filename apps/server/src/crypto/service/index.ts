@@ -2,37 +2,38 @@ import type { CryptoSymbol } from '../types.ts'
 import type { ICryptoServerRow } from '../types.ts'
 import type { CryptoRepository } from '../store/repository.ts'
 import { mutateRow, setFavorite } from '../store/mutations.ts'
-import { selectAll, selectTop, selectFavorite } from '../store/selectors/index.ts'
-import type {
-  CryptoListResponse,
-  CryptoTopResponse,
-  CryptoFavoriteResponse,
-} from '../store/selectors/index.ts'
+
+import { PaginatedService } from '../../_common/resource/index.ts'
 
 export interface CryptoService {
-  list(): Promise<CryptoListResponse>
-  listTop(): Promise<CryptoTopResponse>
-  listFavorite(): Promise<CryptoFavoriteResponse>
+  list(): Promise<ICryptoServerRow[]>
+  listTop(): Promise<ICryptoServerRow[]>
+  listFavorite(): Promise<ICryptoServerRow[]>
   tick(): Promise<ICryptoServerRow[]>
   setFavorite(symbol: CryptoSymbol, isFavorite: boolean): Promise<ICryptoServerRow[]>
 }
 
-export class DefaultCryptoService implements CryptoService {
-  constructor(private readonly repository: CryptoRepository) {}
-
-  async list(): Promise<CryptoListResponse> {
-    const rows = await this.repository.getAll()
-    return selectAll(rows)
+export class DefaultCryptoService
+  extends PaginatedService<ICryptoServerRow>
+  implements CryptoService
+{
+  constructor(protected readonly repository: CryptoRepository) {
+    super(repository)
   }
 
-  async listTop(): Promise<CryptoTopResponse> {
+  async list(): Promise<ICryptoServerRow[]> {
     const rows = await this.repository.getAll()
-    return selectTop(rows)
+    return rows // Всегда возвращаем сырые данные, форматирование будет в registerListRoute
   }
 
-  async listFavorite(): Promise<CryptoFavoriteResponse> {
+  async listTop(): Promise<ICryptoServerRow[]> {
     const rows = await this.repository.getAll()
-    return selectFavorite(rows)
+    return rows
+  }
+
+  async listFavorite(): Promise<ICryptoServerRow[]> {
+    const rows = await this.repository.getAll()
+    return rows.filter((row) => row.isFavorite)
   }
 
   async setFavorite(symbol: CryptoSymbol, isFavorite: boolean): Promise<ICryptoServerRow[]> {

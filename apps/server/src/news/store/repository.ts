@@ -3,12 +3,17 @@ import { initialNewsRows } from './store.ts'
 
 export interface NewsRepository {
   list(): Promise<NewsTableRow[]>
+  getAll(): Promise<NewsTableRow[]>
   listFeatured(): Promise<NewsTableRow[]>
   saveAll(rows: NewsTableRow[]): Promise<void>
 }
 
 export class InMemoryNewsRepository implements NewsRepository {
   async list(): Promise<NewsTableRow[]> {
+    return initialNewsRows
+  }
+
+  async getAll(): Promise<NewsTableRow[]> {
     return initialNewsRows
   }
 
