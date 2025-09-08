@@ -7,12 +7,7 @@ import { registerListRoute } from '../_common/resource/index.ts'
 import { makeResource } from '../_common/resource/index.ts'
 
 import { cryptoFieldExamples } from './types/schema.ts'
-import {
-  cryptoRowSchema,
-  favoriteParamsSchema,
-  favoriteBodySchema,
-  IMAGE_SYMBOLS,
-} from './types.ts'
+import { cryptoRowSchema, favoriteParamsSchema, favoriteBodySchema } from './types.ts'
 import { cryptoFieldsPresets } from './store/selectors/index.ts'
 
 export async function registerCryptoRoutes(app: FastifyInstance): Promise<void> {
@@ -51,28 +46,9 @@ export async function registerCryptoRoutes(app: FastifyInstance): Promise<void> 
   zapp.post<{ Params: { symbol: string }; Body: { isFavorite: boolean } }>(
     '/api/crypto/favorite/:symbol',
     {
-      preValidation: (req, reply, done) => {
-        try {
-          favoriteParamsSchema.parse(req.params)
-          done()
-        } catch {
-          reply.code(400).send({
-            message: `Invalid symbol. Allowed symbols: ${['BTC', 'ETH', 'USDT', 'SOL', 'DOGE', 'ADA', 'XLM', 'LTC', 'BCH', 'MEME', 'PENGU', 'PEPE', 'POPCAT', 'PROVE', 'RAD', 'SHIB', 'SUI', 'TON', 'TRUMP', 'UNI', 'WIF', 'MAGIC'].join(', ')}`,
-          })
-        }
-      },
       schema: {
-        params: {
-          type: 'object',
-          properties: { symbol: { type: 'string', enum: IMAGE_SYMBOLS as unknown as string[] } },
-          required: ['symbol'],
-        },
-        body: {
-          type: 'object',
-          properties: { isFavorite: { type: 'boolean' } },
-          required: ['isFavorite'],
-        },
-        response: { 200: { type: 'array', items: { type: 'object' } } },
+        params: favoriteParamsSchema,
+        body: favoriteBodySchema,
       },
     },
     async (req) => {

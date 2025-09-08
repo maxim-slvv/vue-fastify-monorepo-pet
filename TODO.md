@@ -1,21 +1,15 @@
 https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?node-id=1923-222&t=uFWzmOXjVG1qlFmU-0
 
-
-
-
-[] AppHeader
+[x] AppHeader
     - https://primevue.org/avatar/#image
     - https://primevue.org/avatar/#avatargroup
     - https://primevue.org/badge/
-[] Navbar c router
+[x] Navbar c router
+[x] Aside
 
 1 раздел:
-[] CoinTable - при наведении высвечивать popover c графиком
-    - Возле графика - добавить процент как в https://www.binance.com/en/price
-    - Добавить в избранное и при переходе в избранное - подписываться только на избранные валюты
-    - Popover что бы показать инфу https://primevue.org/popover/
-[] Aside
-
+[x] Добавить в избранное и при переходе в избранное - подписываться только на избранные валюты
+[] CoinTable показать инфу https://primevue.org/popover/
 
 [х] Весь текст на странице обернуть в UITypography для того что бы использовать цвета и размеры
 [x] Динамические стили блоков в константы
