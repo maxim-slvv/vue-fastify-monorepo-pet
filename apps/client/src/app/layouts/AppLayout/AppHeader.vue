@@ -1,33 +1,45 @@
 <script setup lang="ts">
 import { defineComponent } from 'vue'
 import Button from '@/shared/ui/Button/Button.vue'
-import HeaderNavLink from '@/entities/Navigation/ui/HeaderNavLink.vue'
-import ThemeSwitcher from '@/shared/ui/ThemeSwitcher/ThemeSwitcher.vue'
-import UITypography from '@/shared/ui/Typography/UITypography.vue'
-import { NAV_LINKS } from '@/entities/Navigation/lib'
+import HeaderBrand from '@/entities/Navigation/ui/HeaderBrand.vue'
+
+import HeaderNavigation from '@/entities/Navigation/ui/HeaderNavigation.vue'
+import HeaderIcon from '@/entities/Navigation/ui/HeaderIcon.vue'
+import UiBadge from '@/shared/ui/Badge/UiBadge.vue'
+import GroupAvatar from '@/shared/ui/ComposeInfo/GroupAvatar.vue'
 
 defineComponent({
   name: 'AppHeader',
 })
+
+const users = [
+  { outerUrlImage: 'https://primefaces.org/cdn/primevue/images/organization/walter.jpg' },
+  { outerUrlImage: 'https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png' },
+  { outerUrlImage: 'https://primefaces.org/cdn/primevue/images/avatar/asiyajavayant.png' },
+  { outerUrlImage: 'https://primefaces.org/cdn/primevue/images/avatar/onyamalimba.png' },
+  { outerUrlImage: 'https://primefaces.org/cdn/primevue/images/avatar/ionibowcher.png' },
+]
 </script>
 <template>
-  <header :style="{ backgroundColor: 'var(--surface)', borderBottom: '1px solid var(--border)' }">
+  <header
+    class="select-none"
+    :style="{ backgroundColor: 'var(--surface)', borderBottom: '1px solid var(--border)' }"
+  >
     <div class="mx-auto flex items-center justify-between px-6">
       <div class="flex items-center">
-        <div class="flex items-center gap-2 w-[260px] p-2">
-          <i class="pi pi-th-large" style="color: var(--fg)" />
-          <UITypography variant="text-l-bold">Crypto Market</UITypography>
-          <ThemeSwitcher class="mt-1" />
-        </div>
-        <nav class="hidden md:flex items-center gap-5">
-          <HeaderNavLink v-for="link in NAV_LINKS" :key="link" :label="link" />
-        </nav>
+        <HeaderBrand width="240px" />
+        <Button label="Wallet" class="mr-4" size="small" variant="primary" />
+        <HeaderNavigation />
       </div>
+
       <div class="flex items-center gap-4">
-        <Button label="Wallet" />
-        <i class="pi pi-search text-gray-600" style="color: var(--fg)" />
-        <i class="pi pi-bell text-gray-600" style="color: var(--fg)" />
-        <i class="pi pi-cog text-gray-600" style="color: var(--fg)" />
+        <GroupAvatar :users="users" :max-visible="4" size="md" />
+
+        <HeaderIcon icon="pi-search" />
+        <UiBadge dot overlay severity="danger">
+          <HeaderIcon icon="pi-bell" />
+        </UiBadge>
+        <HeaderIcon icon="pi-cog" />
       </div>
     </div>
   </header>

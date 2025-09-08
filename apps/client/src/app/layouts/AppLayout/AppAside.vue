@@ -11,7 +11,7 @@ defineComponent({ name: 'AppAside' })
 const { rows: news, isLoading: loading } = useNewsBrief()
 </script>
 <template>
-  <LayoutBlock border="left" class="w-100 shrink-0 overflow-y-auto">
+  <LayoutBlock border="left" class="w-100 shrink-0 overflow-y-auto select-none">
     <div class="p-4 flex flex-col gap-3">
       <UITypography variant="text-m-bold">News</UITypography>
 

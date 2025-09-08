@@ -1,26 +1,11 @@
 <script setup lang="ts">
 import Button from 'primevue/button'
+import type { ButtonProps } from 'primevue/button'
 import { computed } from 'vue'
 
 defineOptions({ name: 'UiButton' })
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'success' | 'info' | 'warn' | 'danger'
-
-const props = defineProps<{
-  label?: string
-  variant?: Variant
-  outlined?: boolean
-  text?: boolean
-  link?: boolean
-  rounded?: boolean
-  raised?: boolean
-  size?: 'small' | 'large'
-  icon?: string
-  loading?: boolean
-  disabled?: boolean
-}>()
-
-const severityMap: Record<Variant, string> = {
+const severityMap = {
   primary: 'primary',
   secondary: 'secondary',
   ghost: 'secondary',
@@ -28,25 +13,32 @@ const severityMap: Record<Variant, string> = {
   info: 'info',
   warn: 'warn',
   danger: 'danger',
+} as const
+type Variant = keyof typeof severityMap
+
+export interface IUiButtonProps extends /* @vue-ignore */ ButtonProps {
+  variant?: Variant
 }
 
-const computedSeverity = computed(() => severityMap[props.variant ?? 'primary'])
+const props = defineProps<IUiButtonProps>()
+
+const computedSeverity = computed(() => {
+  if (props.variant) return severityMap[props.variant]
+  return props.severity || 'primary'
+})
+
+const buttonProps = computed(() => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { variant, ...rest } = props
+  return {
+    ...rest,
+    severity: computedSeverity.value,
+  }
+})
 </script>
 
 <template>
-  <Button
-    :label="props.label"
-    :severity="computedSeverity"
-    :outlined="props.outlined"
-    :text="props.text"
-    :link="props.link"
-    :rounded="props.rounded"
-    :raised="props.raised"
-    :size="props.size"
-    :icon="props.icon"
-    :loading="props.loading"
-    :disabled="props.disabled"
-  >
+  <Button v-bind="buttonProps">
     <slot />
   </Button>
 </template>

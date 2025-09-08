@@ -38,7 +38,7 @@ https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?n
 [x] Back: архитекрура модулей
 [x] Back: новый модуль для новостей
 [x] Swagger
-[] OrvalDev?
+[??] OrvalDev?
 
 [] Back: Каждый роут наследует пагинацию, сортировку по ячейкам и по rank, поиск
 [] Front: захардкорженные лимиты убрать
@@ -82,5 +82,7 @@ https://coinmarketcap.com/ru/currencies/pudgy-penguins/
 неплохой компоуз инфы
 https://www.bybit.com/ru-RU/price/pudgy-penguins/
 
-Бегушую строку снизу
+Бегушую строку снизу - на стиранице с инфой по монете
 https://www.binance.com/en/trade/BTC_USDT?type=spot
+
+[] добавить Button наследование пропсов от primeVue и добавить {...props} (поскольку там прозрачная система пропсов для настройки, в отличии от dataTable где нужны и пропсы и свои обертки и слоты)
