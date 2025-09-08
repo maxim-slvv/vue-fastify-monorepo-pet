@@ -3,22 +3,25 @@ import { io, type Socket } from 'socket.io-client'
 import type { ICryptoServerRow, CryptoFavoriteResponse } from '@/entities/Crypto/types'
 import { API_URL } from '@/shared/config/api'
 import { useCryptoToggleFavorite } from './useCryptoToggleFavorite'
+import { useCryptoFavorite as useCryptoFavoriteQuery } from '../api/queries'
 
 export function useCryptoFavorite() {
   const rows = ref<CryptoFavoriteResponse>([])
-  const isLoading = ref(true)
   let socket: Socket | null = null
+
+  const { data, isLoading, error, refetch } = useCryptoFavoriteQuery({})
 
   const { toggleFavorite } = useCryptoToggleFavorite(rows)
 
-  async function loadInitial(): Promise<void> {
-    const response = await fetch(`${API_URL}/api/crypto/favorite`)
-    if (!response.ok) throw new Error(`Failed to load /api/crypto/favorite: ${response.status}`)
-    rows.value = (await response.json()) as CryptoFavoriteResponse
-    setTimeout(() => {
-      isLoading.value = false
-    }, 500)
-  }
+  watch(
+    data,
+    (newData) => {
+      if (newData) {
+        rows.value = newData
+      }
+    },
+    { immediate: true },
+  )
 
   function connect(): void {
     if (socket) return
@@ -78,12 +81,7 @@ export function useCryptoFavorite() {
     },
   )
 
-  onMounted(async () => {
-    try {
-      await loadInitial()
-    } catch (error) {
-      console.error(error)
-    }
+  onMounted(() => {
     connect()
   })
 
@@ -91,5 +89,13 @@ export function useCryptoFavorite() {
     disconnect()
   })
 
-  return { rows, isLoading, connect, disconnect, toggleFavorite }
+  return {
+    rows,
+    isLoading,
+    error,
+    connect,
+    disconnect,
+    toggleFavorite,
+    refetch,
+  }
 }

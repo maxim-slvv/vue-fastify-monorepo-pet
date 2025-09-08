@@ -2672,6 +2672,40 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/match-sorter-utils@npm:^8.19.4":
+  version: 8.19.4
+  resolution: "@tanstack/match-sorter-utils@npm:8.19.4"
+  dependencies:
+    remove-accents: "npm:0.5.0"
+  checksum: 10c0/935022e3d639f19472131d289f3e1202253ff34301717c337e9bac0eeae6a0bd56450ed8ae2f7eb7ac9dfefa7ceaa7d126d8c5441021968b4a9eabc3ac4f8ba1
+  languageName: node
+  linkType: hard
+
+"@tanstack/query-core@npm:5.87.1":
+  version: 5.87.1
+  resolution: "@tanstack/query-core@npm:5.87.1"
+  checksum: 10c0/12c83ca67d778c1065836d0215987b4b04369c8195a32b2b3bd73ed873ff72d20027b72175ee9120b98278c299bdf5161a92f7ba629ab4ee687cb4085e91568a
+  languageName: node
+  linkType: hard
+
+"@tanstack/vue-query@npm:^5.87.1":
+  version: 5.87.1
+  resolution: "@tanstack/vue-query@npm:5.87.1"
+  dependencies:
+    "@tanstack/match-sorter-utils": "npm:^8.19.4"
+    "@tanstack/query-core": "npm:5.87.1"
+    "@vue/devtools-api": "npm:^6.6.3"
+    vue-demi: "npm:^0.14.10"
+  peerDependencies:
+    "@vue/composition-api": ^1.1.2
+    vue: ^2.6.0 || ^3.3.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+  checksum: 10c0/76c530b1dd2215ecc04c5579f022302956850d7833c3f635dc81d75e0c5d7f4e774ded2515363df4eb561f9af67bbd1048568403ad9e47d6d8a5db70d2774acf
+  languageName: node
+  linkType: hard
+
 "@tsconfig/node10@npm:^1.0.7":
   version: 1.0.11
   resolution: "@tsconfig/node10@npm:1.0.11"
@@ -3115,7 +3149,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/devtools-api@npm:^6.6.4":
+"@vue/devtools-api@npm:^6.6.3, @vue/devtools-api@npm:^6.6.4":
   version: 6.6.4
   resolution: "@vue/devtools-api@npm:6.6.4"
   checksum: 10c0/0a993ae23618166e1bee5a7c14cebd8312752b93c143cbdd48fb2d0f7ade070d0e6baf757cd920d4681fef8f9acf29515162160f38cc7410f9a684d2df21b6de
@@ -3725,7 +3759,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.8.3":
+"axios@npm:^1.11.0, axios@npm:^1.8.3":
   version: 1.11.0
   resolution: "axios@npm:1.11.0"
   dependencies:
@@ -9876,6 +9910,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"remove-accents@npm:0.5.0":
+  version: 0.5.0
+  resolution: "remove-accents@npm:0.5.0"
+  checksum: 10c0/a75321aa1b53d9abe82637115a492770bfe42bb38ed258be748bf6795871202bc8b4badff22013494a7029f5a241057ad8d3f72adf67884dbe15a9e37e87adc4
+  languageName: node
+  linkType: hard
+
 "require-directory@npm:^2.1.1":
   version: 2.1.1
   resolution: "require-directory@npm:2.1.1"
@@ -11697,6 +11738,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vue-demi@npm:^0.14.10":
+  version: 0.14.10
+  resolution: "vue-demi@npm:0.14.10"
+  peerDependencies:
+    "@vue/composition-api": ^1.0.0-rc.1
+    vue: ^3.0.0-0 || ^2.6.0
+  peerDependenciesMeta:
+    "@vue/composition-api":
+      optional: true
+  bin:
+    vue-demi-fix: bin/vue-demi-fix.js
+    vue-demi-switch: bin/vue-demi-switch.js
+  checksum: 10c0/a9ed8712fa36d01bc13c39757f95f30cebf42d557b99e94bff86d8660c81f2911b41220f7affc023d1ffcc19e13999e4a83019991e264787cca2c616e83aea48
+  languageName: node
+  linkType: hard
+
 "vue-eslint-parser@npm:^10.2.0":
   version: 10.2.0
   resolution: "vue-eslint-parser@npm:10.2.0"
@@ -11736,6 +11793,7 @@ __metadata:
   dependencies:
     "@primevue/themes": "npm:^4.3.7"
     "@tailwindcss/postcss": "npm:^4.1.12"
+    "@tanstack/vue-query": "npm:^5.87.1"
     "@tsconfig/node22": "npm:^22.0.2"
     "@types/node": "npm:^22.17.2"
     "@vitejs/plugin-vue": "npm:^6.0.1"
@@ -11744,6 +11802,7 @@ __metadata:
     "@vue/eslint-config-typescript": "npm:^14.6.0"
     "@vue/tsconfig": "npm:^0.7.0"
     autoprefixer: "npm:^10.4.21"
+    axios: "npm:^1.11.0"
     class-variance-authority: "npm:^0.7.1"
     clsx: "npm:^2.1.1"
     eslint: "npm:^9.31.0"

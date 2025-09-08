@@ -1,25 +1,27 @@
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { io, type Socket } from 'socket.io-client'
 import type { CryptoListResponse } from '@/entities/Crypto/types'
 import { API_URL } from '@/shared/config/api'
 import { useCryptoToggleFavorite } from './useCryptoToggleFavorite'
+import { useCryptoList } from '../api/queries'
 
-// All coins
+// All coins with TanStack Query + WebSocket updates
 export function useCryptoTicker() {
   const rows = ref<CryptoListResponse>([])
-  const isLoading = ref(true)
   let socket: Socket | null = null
 
+  const { data, isLoading, error, refetch } = useCryptoList({})
   const { toggleFavorite } = useCryptoToggleFavorite(rows)
 
-  async function loadInitial(): Promise<void> {
-    const response = await fetch(`${API_URL}/api/crypto`)
-    if (!response.ok) throw new Error(`Failed to load /api/crypto: ${response.status}`)
-    rows.value = (await response.json()) as CryptoListResponse
-    setTimeout(() => {
-      isLoading.value = false
-    }, 1000)
-  }
+  watch(
+    data,
+    (newData) => {
+      if (newData) {
+        rows.value = newData
+      }
+    },
+    { immediate: true },
+  )
 
   function connect(): void {
     if (socket) return
@@ -36,12 +38,7 @@ export function useCryptoTicker() {
     socket = null
   }
 
-  onMounted(async () => {
-    try {
-      await loadInitial()
-    } catch (error) {
-      console.error(error)
-    }
+  onMounted(() => {
     connect()
   })
 
@@ -49,5 +46,13 @@ export function useCryptoTicker() {
     disconnect()
   })
 
-  return { rows, isLoading, connect, disconnect, toggleFavorite }
+  return {
+    rows,
+    isLoading,
+    error,
+    connect,
+    disconnect,
+    toggleFavorite,
+    refetch,
+  }
 }

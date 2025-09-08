@@ -1,5 +1,9 @@
 https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?node-id=1923-222&t=uFWzmOXjVG1qlFmU-0
 
+[x] Monorepo
+[x] Lerna
+[x] Fastify
+
 [x] AppHeader
     - https://primevue.org/avatar/#image
     - https://primevue.org/avatar/#avatargroup
@@ -29,54 +33,31 @@ https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?n
     Пригодится что бы настроить то какие поля будут отдаваться по rest а какие по websockets, а так же их вариации.
 [x] Back: В списках /api/crypto/top и /api/crypto/favorite получать минимум для fallback, а затем подписываться на ws на каждую монету  отдельно или выбирать на что подписаться (заюзать tanstack-query мэйби, что еще можно попробовать?)
 
-[x] Back: архитекрура модулей
-[x] Back: новый модуль для новостей
-[x] Swagger
-[??] OrvalDev?
-
-[] Back: Каждый роут наследует пагинацию, сортировку по ячейкам и по rank, поиск
-[] Front: захардкорженные лимиты убрать
-[] Front: Tanstack Query
-
-[] Front: Настроить взаимодействие с rest.
-[] Front: Фильтры: Поиск, сортировка ASC/DESC (Rank), 
-[] Front: Таблица может управлять запросом? - научим! - конфигурировать параметры - скорее через nuqs и url.
- 
-[] Nginx конфиг
-
 Таблица:
 [x] Export CSV 
 [х] Таблица на весь экран
 
-Pagination
-Sort
-Filter
+[x] Back: архитекрура модулей
+[x] Back: новый модуль для новостей https://coinmarketcap.com/ru/currencies/pudgy-penguins/
+[x] Swagger
+[??] OrvalDev?
 
-Checkbox для выбора элементов - что бы с их id сделать запрос какой то или передать полностью данные в Dialog для какой то работы/иной презентации
+[x] Front: Axios.
+[x] Front: Tanstack Query
+[] Back: Каждый роут наследует пагинацию, сортировку по ячейкам и по rank, поиск
+[] Front: захардкорженные лимиты убрать
 
-[] Frozen Rows
-[] Frozen Columns
-[] Expandable - что бы показать кто из друзей купил и там тоже таблица с сортировками
-
-Column Toggle выбирать какие показатели нам нужны?
-[] Stateful сохраняет состояние фильтров при перезагрузке?
-[] Clear <Button @click="clearFilter()" />
-
-[] Может постраничный вывод
-
-[] Реэкспорты импортов добавить
+[] Front: Фильтры: Поиск, сортировка ASC/DESC (Rank), 
+[] Front: Таблица может управлять запросом? - научим! - конфигурировать параметры - скорее через nuqs и url.
  
-Monorepo
-Lerna
-Fastify
+[] Новая страница в отдельной вкладке?
+[] Неплохой компоуз инфы https://www.bybit.com/ru-RU/price/pudgy-penguins/
+[] Бегушая строка в футере - на странице с инфой по монете https://www.binance.com/en/trade/BTC_USDT?type=spot
 
-Новости
-https://coinmarketcap.com/ru/currencies/pudgy-penguins/
+[] Nginx конфиг ?
 
-неплохой компоуз инфы
-https://www.bybit.com/ru-RU/price/pudgy-penguins/
+Лендинг на Nuxt для SEO вторым фронтом?
+[] Общий ui kit
+[] Главная страница с таблицей
+[] Страница с инфой по монете
 
-Бегушую строку снизу - на стиранице с инфой по монете
-https://www.binance.com/en/trade/BTC_USDT?type=spot
-
-[] добавить Button наследование пропсов от primeVue и добавить {...props} (поскольку там прозрачная система пропсов для настройки, в отличии от dataTable где нужны и пропсы и свои обертки и слоты)
