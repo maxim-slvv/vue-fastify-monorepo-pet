@@ -18,23 +18,26 @@ export async function registerNewsRoutes(app: FastifyInstance): Promise<void> {
 
   const service = new DefaultNewsService(new InMemoryNewsRepository())
 
-  const zapp = app.withTypeProvider<ZodTypeProvider>()
+  const typedApp = app.withTypeProvider<ZodTypeProvider>()
 
-  registerListRoute(zapp as unknown as FastifyInstance, {
+  registerListRoute(typedApp, {
+    method: 'GET',
     path: '/api/news',
     resource: newsResource,
     preset: 'base',
     handler: () => service.list(),
   })
 
-  registerListRoute(zapp as unknown as FastifyInstance, {
+  registerListRoute(typedApp, {
+    method: 'GET',
     path: '/api/news/brief',
     resource: newsResource,
     preset: 'brief',
     handler: () => service.listBrief(),
   })
 
-  registerListRoute(zapp as unknown as FastifyInstance, {
+  registerListRoute(typedApp, {
+    method: 'GET',
     path: '/api/news/featured',
     resource: newsResource,
     preset: 'featured',

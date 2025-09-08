@@ -3,7 +3,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 
 import { InMemoryCryptoRepository } from './store/repository.ts'
 import { DefaultCryptoService } from './service/index.ts'
-import { registerListRoute } from '../_common/resource/index.ts'
+import { registerListRoute, registerActionRoute } from '../_common/resource/index.ts'
 import { makeResource } from '../_common/resource/index.ts'
 
 import { cryptoFieldExamples } from './types/schema.ts'
@@ -22,39 +22,39 @@ export async function registerCryptoRoutes(app: FastifyInstance): Promise<void> 
 
   const zapp = app.withTypeProvider<ZodTypeProvider>()
 
-  registerListRoute(zapp as unknown as FastifyInstance, {
+  registerListRoute(zapp, {
+    method: 'GET',
     path: '/api/crypto',
     resource: cryptoResource,
     preset: 'base',
     handler: () => service.list(),
   })
 
-  registerListRoute(zapp as unknown as FastifyInstance, {
+  registerListRoute(zapp, {
+    method: 'GET',
     path: '/api/crypto/top',
     resource: cryptoResource,
     preset: 'top',
     handler: () => service.listTop(),
   })
 
-  registerListRoute(zapp as unknown as FastifyInstance, {
+  registerListRoute(zapp, {
+    method: 'GET',
     path: '/api/crypto/favorite',
     resource: cryptoResource,
     preset: 'favorite',
     handler: () => service.listFavorite(),
   })
 
-  zapp.post<{ Params: { symbol: string }; Body: { isFavorite: boolean } }>(
-    '/api/crypto/favorite/:symbol',
-    {
-      schema: {
-        params: favoriteParamsSchema,
-        body: favoriteBodySchema,
-      },
-    },
-    async (req) => {
+  registerActionRoute(zapp, {
+    method: 'POST',
+    path: '/api/crypto/favorite/:symbol',
+    paramsSchema: favoriteParamsSchema,
+    bodySchema: favoriteBodySchema,
+    handler: async (req) => {
       const { symbol } = favoriteParamsSchema.parse(req.params)
       const { isFavorite } = favoriteBodySchema.parse(req.body)
       return service.setFavorite(symbol, isFavorite)
     },
-  )
+  })
 }
