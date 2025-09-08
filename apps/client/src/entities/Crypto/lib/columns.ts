@@ -1,12 +1,11 @@
 import type { Ref } from 'vue'
 import type { ColumnDef } from '@/shared/ui/DataTable/BaseDataTable.vue'
 import type { ICryptoServerRow } from '@/entities/Crypto/types'
-import CoinMainInfo from '@/entities/Crypto/ui/CoinMainInfo.vue'
+import CoinMainInfo, { ICoinMainInfoProps } from '@/entities/Crypto/ui/CoinMainInfo.vue'
 import PriceCell, { IPriceCellProps } from '@/entities/Crypto/ui/PriceCell.vue'
 import PercentCell, { IPercentCellProps } from '@/entities/Crypto/ui/PercentCell.vue'
 import SparkPopoverCell, { ISparkPopoverCellProps } from '@/entities/Crypto/ui/SparkPopoverCell.vue'
 import FavoriteToggle, { IFavoriteToggleProps } from '@/entities/Crypto/ui/FavoriteToggle.vue'
-import { IComposeAvatarInfoProps } from '@/shared/ui/ComposeInfo/ComposeAvatarInfo.vue'
 
 type ToggleFavoriteCallback = (symbol: string, isFavorite: boolean) => void
 
@@ -17,9 +16,9 @@ type TypedColumnDef<T> = Omit<ColumnDef<ICryptoServerRow>, 'componentProps'> & {
 const createTypedColumns = (isLoading: Ref<boolean>, onToggleFavorite?: ToggleFavoriteCallback) => {
   const favoriteColumn: TypedColumnDef<IFavoriteToggleProps> = {
     field: 'isFavorite',
-    header: '',
+    header: '★',
     align: 'center',
-    width: '48px',
+    width: '36px',
     component: FavoriteToggle,
     componentProps: (row): IFavoriteToggleProps => ({
       symbol: row.symbol,
@@ -29,15 +28,15 @@ const createTypedColumns = (isLoading: Ref<boolean>, onToggleFavorite?: ToggleFa
     }),
   }
 
-  const nameColumn: TypedColumnDef<IComposeAvatarInfoProps> = {
+  const nameColumn: TypedColumnDef<ICoinMainInfoProps> = {
     field: 'name',
     header: 'Name',
     width: '220px',
     component: CoinMainInfo,
-    componentProps: (row): IComposeAvatarInfoProps => ({
+    componentProps: (row): ICoinMainInfoProps => ({
       tagText: row.symbol,
       name: row.name,
-      avatar: row.image,
+      image: row.image,
       size: 'sm',
       variant: 'inlineAvatarNameTextTag',
       loading: isLoading.value,
@@ -48,7 +47,7 @@ const createTypedColumns = (isLoading: Ref<boolean>, onToggleFavorite?: ToggleFa
     field: 'price',
     header: 'Price',
     align: 'right',
-    width: '120px',
+    width: '130px',
     component: PriceCell,
     componentProps: (row): IPriceCellProps => ({
       value: row.price,
@@ -60,7 +59,7 @@ const createTypedColumns = (isLoading: Ref<boolean>, onToggleFavorite?: ToggleFa
     field: 'ch24h',
     header: '24h %',
     align: 'right',
-    width: '96px',
+    width: '120px',
     component: PercentCell,
     componentProps: (row): IPercentCellProps => ({
       value: row.ch24h,

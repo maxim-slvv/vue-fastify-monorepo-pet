@@ -5,13 +5,14 @@ import ComposeAvatarInfo, {
 
 defineOptions({ name: 'CoinMainInfoEntity' })
 
-const props = withDefaults(
-  defineProps<Omit<IComposeAvatarInfoProps, 'avatar'> & { image?: string }>(),
-  {
-    size: 'md',
-    variant: 'inlineAvatarNameTextTag',
-  },
-)
+export interface ICoinMainInfoProps extends Omit<IComposeAvatarInfoProps, 'avatar'> {
+  image?: string
+}
+
+const props = withDefaults(defineProps<ICoinMainInfoProps>(), {
+  size: 'md',
+  variant: 'inlineAvatarNameTextTag',
+})
 </script>
 
 <template>

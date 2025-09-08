@@ -32,7 +32,7 @@ const handleToggle = () => {
 </script>
 
 <template>
-  <IconButton @click="handleToggle" :disabled="props.loading" size="sm">
+  <IconButton @click="handleToggle" :disabled="props.loading" size="sm" class="-ml-[8px]">
     <i
       :class="[
         'pi',
