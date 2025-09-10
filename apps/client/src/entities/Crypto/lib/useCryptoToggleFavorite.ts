@@ -2,26 +2,56 @@ import type { Ref } from 'vue'
 import type { ICryptoServerRow } from '@/entities/Crypto/types'
 import { useSetCryptoFavorite } from '../api/mutations'
 
-export function useCryptoToggleFavorite(rows?: Ref<ICryptoServerRow[]>) {
+interface UseCryptoToggleFavoriteOptions {
+  onUnfavorite?: (symbol: string) => void
+}
+
+export function useCryptoToggleFavorite(
+  rows?: Ref<ICryptoServerRow[]>,
+  options?: UseCryptoToggleFavoriteOptions,
+) {
   const setFavoriteMutation = useSetCryptoFavorite({
-    onSuccess: (data, variables) => {
+    onError: (error, variables) => {
+      console.error('Error toggling favorite:', error)
+
+      // Откатываем локальное состояние при ошибке
       if (rows) {
-        const index = rows.value.findIndex((r) => r.symbol === variables.symbol)
-        if (index !== -1) {
-          rows.value = [
-            ...rows.value.slice(0, index),
-            { ...rows.value[index], isFavorite: variables.isFavorite },
-            ...rows.value.slice(index + 1),
-          ]
+        if (!variables.isFavorite && options?.onUnfavorite) {
+          // Если мы пытались убрать из избранного, но произошла ошибка,
+          // нужно восстановить элемент в массиве
+          // Здесь нужна более сложная логика восстановления из кэша TanStack Query
+          console.warn('Failed to remove from favorites, element should be restored')
+        } else {
+          // Обычный откат для изменения состояния
+          const index = rows.value.findIndex((r) => r.symbol === variables.symbol)
+          if (index !== -1) {
+            rows.value = [
+              ...rows.value.slice(0, index),
+              { ...rows.value[index], isFavorite: !variables.isFavorite },
+              ...rows.value.slice(index + 1),
+            ]
+          }
         }
       }
-    },
-    onError: (error) => {
-      console.error('Error toggling favorite:', error)
     },
   })
 
   async function toggleFavorite(symbol: string, isFavorite: boolean): Promise<void> {
+    if (!isFavorite && options?.onUnfavorite) {
+      options.onUnfavorite(symbol)
+    } else {
+      if (rows) {
+        const index = rows.value.findIndex((r) => r.symbol === symbol)
+        if (index !== -1) {
+          rows.value = [
+            ...rows.value.slice(0, index),
+            { ...rows.value[index], isFavorite },
+            ...rows.value.slice(index + 1),
+          ]
+        }
+      }
+    }
+
     setFavoriteMutation.mutate({ symbol, isFavorite })
   }
 

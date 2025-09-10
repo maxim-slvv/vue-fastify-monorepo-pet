@@ -4,6 +4,7 @@ import UiButton from '@/shared/ui/Button/Button.vue'
 import UiDialog from '@/shared/ui/Dialog/UiDialog.vue'
 import BaseDataTable from '@/shared/ui/DataTable/BaseDataTable.vue'
 import UITypography from '@/shared/ui/Typography/UITypography.vue'
+import type { PaginationState } from '@/shared/lib/pagination'
 
 defineOptions({ name: 'UiDataTable' })
 
@@ -17,6 +18,10 @@ const props = defineProps<{
   rowKey?: string
   loading?: boolean
   fullscreen?: boolean
+  pagination?: PaginationState
+  totalRecords?: number
+  emptyStateEmoji?: string
+  emptyStateText?: string
 }>()
 
 const innerRef = ref<{ exportCSV: () => void } | null>(null)
@@ -46,6 +51,10 @@ const dialogVisible = ref(false)
       :tableClass="props.tableClass"
       :rowKey="props.rowKey"
       :loading="props.loading"
+      :pagination="props.pagination"
+      :totalRecords="props.totalRecords"
+      :emptyStateEmoji="props.emptyStateEmoji"
+      :emptyStateText="props.emptyStateText"
       scrollable
       scrollHeight="70vh"
       minTableWidth="64rem"
@@ -63,6 +72,10 @@ const dialogVisible = ref(false)
         :tableClass="props.tableClass"
         :rowKey="props.rowKey"
         :loading="props.loading"
+        :pagination="props.pagination"
+        :totalRecords="props.totalRecords"
+        :emptyStateEmoji="props.emptyStateEmoji"
+        :emptyStateText="props.emptyStateText"
         scrollable
         scrollHeight="flex"
         minTableWidth="64rem"

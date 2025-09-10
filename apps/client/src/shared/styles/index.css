@@ -283,7 +283,7 @@ html:not(.dark) {
   /* Table */ /* https://primevue.org/datatable/#theming.styled */
   /* ---------------- Header */
   --p-datatable-header-background: var(--surface);
-  --p-datatable-header-cell-background: var(--surface);
+  --p-datatable-header-cell-background: var(--border);
   --p-datatable-header-cell-color: var(--fg);
 
   /* ---------------- Body */
@@ -339,10 +339,10 @@ html.dark {
   /* Table */
   /* ---------------- Header */
   --p-datatable-header-background: var(--surface);
-  --p-datatable-header-cell-background: var(--surface);
+  --p-datatable-header-cell-background: var(--border);
   --p-datatable-header-cell-color: var(--fg);
   /* ---------------- Body */
-  --p-datatable-row-background: var(--surface);
+  --p-datatable-row-background: var(--bg);
   --p-datatable-row-color: var(--fg);
   --p-datatable-row-hover-background: var(--bg-hover);
   --p-datatable-row-hover-color: var(--p-datatable-row-color);
@@ -428,3 +428,70 @@ html.dark .p-popover .p-popover-arrow {
 .p-datatable-tbody > tr > td {
   transition: none !important;
 } */
+
+/* PrimePaginator black theme */
+.p-paginator {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page {
+  background: transparent !important;
+  border: 1px solid var(--border) !important;
+  color: var(--fg) !important;
+  border-radius: 0.375rem !important;
+  margin: 0 0.125rem !important;
+  min-width: 2.5rem !important;
+  height: 2.5rem !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page:hover {
+  background: var(--bg-hover) !important;
+  border-color: var(--p-primary-color) !important;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: var(--p-primary-color) !important;
+  border-color: var(--p-primary-color) !important;
+  color: var(--p-primary-contrast-color) !important;
+}
+
+.p-paginator .p-paginator-first,
+.p-paginator .p-paginator-prev,
+.p-paginator .p-paginator-next,
+.p-paginator .p-paginator-last {
+  background: transparent !important;
+  border: 1px solid var(--border) !important;
+  color: var(--fg) !important;
+  border-radius: 0.375rem !important;
+  margin: 0 0.125rem !important;
+  min-width: 2.5rem !important;
+  height: 2.5rem !important;
+  transition: all 0.15s ease-in-out !important;
+}
+
+.p-paginator .p-paginator-first:hover,
+.p-paginator .p-paginator-prev:hover,
+.p-paginator .p-paginator-next:hover,
+.p-paginator .p-paginator-last:hover {
+  background: var(--bg-hover) !important;
+  border-color: var(--p-primary-color) !important;
+}
+
+.p-paginator .p-paginator-first:disabled,
+.p-paginator .p-paginator-prev:disabled,
+.p-paginator .p-paginator-next:disabled,
+.p-paginator .p-paginator-last:disabled {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+.p-paginator .p-paginator-current {
+  background: transparent !important;
+  border: none !important;
+  color: var(--fg) !important;
+  font-size: 0.875rem !important;
+  padding: 0 0.75rem !important;
+}

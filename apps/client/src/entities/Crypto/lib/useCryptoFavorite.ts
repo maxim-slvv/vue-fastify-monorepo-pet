@@ -1,23 +1,29 @@
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { io, type Socket } from 'socket.io-client'
-import type { ICryptoServerRow, CryptoFavoriteResponse } from '@/entities/Crypto/types'
+import type { ICryptoServerRow } from '@/entities/Crypto/types'
 import { API_URL } from '@/shared/config/api'
 import { useCryptoToggleFavorite } from './useCryptoToggleFavorite'
 import { useCryptoFavorite as useCryptoFavoriteQuery } from '../api/queries'
 
 export function useCryptoFavorite() {
-  const rows = ref<CryptoFavoriteResponse>([])
+  const rows = ref<ICryptoServerRow[]>([])
   let socket: Socket | null = null
 
   const { data, isLoading, error, refetch } = useCryptoFavoriteQuery({})
 
-  const { toggleFavorite } = useCryptoToggleFavorite(rows)
+  const { toggleFavorite, isLoading: isMutating } = useCryptoToggleFavorite(rows, {
+    onUnfavorite: (symbol: string) => {
+      rows.value = rows.value.filter((item) => item.symbol !== symbol)
+    },
+  })
 
   watch(
     data,
     (newData) => {
       if (newData) {
-        rows.value = newData
+        if (!isMutating.value) {
+          rows.value = newData
+        }
       }
     },
     { immediate: true },
@@ -27,12 +33,10 @@ export function useCryptoFavorite() {
     if (socket) return
     socket = io(`${API_URL}/crypto-v1`, { transports: ['websocket'] })
 
-    // Update favorite list
-    socket.on('ticker:favorite', (data: CryptoFavoriteResponse) => {
+    socket.on('ticker:favorite', (data: ICryptoServerRow[]) => {
       rows.value = data
     })
 
-    // Point updates by symbols
     socket.on('ticker', (data: ICryptoServerRow) => {
       const index = rows.value.findIndex((r) => r.symbol === data.symbol)
       if (index !== -1) {
@@ -67,7 +71,6 @@ export function useCryptoFavorite() {
     if (symbols.length) socket.emit('unsubscribe', symbols)
   }
 
-  // Follow changes in the symbol composition and recreate subscriptions
   watch(
     () =>
       rows.value

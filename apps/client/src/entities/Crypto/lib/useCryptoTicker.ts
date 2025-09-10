@@ -1,23 +1,24 @@
 import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import { io, type Socket } from 'socket.io-client'
-import type { CryptoListResponse } from '@/entities/Crypto/types'
+import type { ICryptoServerRow } from '@/entities/Crypto/types'
 import { API_URL } from '@/shared/config/api'
 import { useCryptoToggleFavorite } from './useCryptoToggleFavorite'
 import { useCryptoList } from '../api/queries'
 
-// All coins with TanStack Query + WebSocket updates
 export function useCryptoTicker() {
-  const rows = ref<CryptoListResponse>([])
+  const rows = ref<ICryptoServerRow[]>([])
   let socket: Socket | null = null
 
   const { data, isLoading, error, refetch } = useCryptoList({})
-  const { toggleFavorite } = useCryptoToggleFavorite(rows)
+  const { toggleFavorite, isLoading: isMutating } = useCryptoToggleFavorite(rows)
 
   watch(
     data,
     (newData) => {
       if (newData) {
-        rows.value = newData
+        if (!isMutating.value) {
+          rows.value = newData
+        }
       }
     },
     { immediate: true },
@@ -26,7 +27,7 @@ export function useCryptoTicker() {
   function connect(): void {
     if (socket) return
     socket = io(`${API_URL}/crypto-v1`, { transports: ['websocket'] })
-    socket.on('ticker:all', (data: CryptoListResponse) => {
+    socket.on('ticker:all', (data: ICryptoServerRow[]) => {
       rows.value = data
     })
   }

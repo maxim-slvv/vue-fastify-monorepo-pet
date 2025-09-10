@@ -87,6 +87,7 @@ const createTypedColumns = (isLoading: Ref<boolean>, onToggleFavorite?: ToggleFa
     align: 'right',
     width: '140px',
     component: SparkPopoverCell,
+    skeletonClass: 'h-8 w-full',
     componentProps: (row): ISparkPopoverCellProps => ({
       row,
       loading: isLoading.value,

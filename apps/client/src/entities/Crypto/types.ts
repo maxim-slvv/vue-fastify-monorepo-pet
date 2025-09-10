@@ -1,3 +1,5 @@
+import type { PaginatedListResponse, WithPagination } from '@/shared/api'
+
 export interface ICryptoServerRow {
   rank: number
   name: string
@@ -14,6 +16,10 @@ export interface ICryptoServerRow {
   isFavorite?: boolean
 }
 
-export type CryptoListResponse = ICryptoServerRow[]
-export type CryptoTopResponse = ICryptoServerRow[]
-export type CryptoFavoriteResponse = ICryptoServerRow[]
+export type CryptoListRequest = WithPagination
+export type CryptoTopRequest = WithPagination
+export type CryptoFavoriteRequest = WithPagination
+
+export type CryptoListResponse = PaginatedListResponse<ICryptoServerRow>
+export type CryptoTopResponse = PaginatedListResponse<ICryptoServerRow>
+export type CryptoFavoriteResponse = PaginatedListResponse<ICryptoServerRow>
