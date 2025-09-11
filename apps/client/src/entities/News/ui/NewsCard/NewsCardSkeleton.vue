@@ -3,7 +3,10 @@ import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
 </script>
 
 <template>
-  <div class="rounded-lg border bg-card shadow-sm" :style="{ borderColor: 'var(--border)' }">
+  <div
+    class="rounded-lg border shadow-sm"
+    :style="{ borderColor: 'var(--border)', backgroundColor: 'var(--card)' }"
+  >
     <!-- Header -->
     <div class="flex items-center justify-between px-3 py-2">
       <div class="flex items-center gap-2">

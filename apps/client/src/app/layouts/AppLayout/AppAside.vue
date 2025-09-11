@@ -11,18 +11,20 @@ defineComponent({ name: 'AppAside' })
 const { rows: news, isLoading: loading } = useNewsBrief()
 </script>
 <template>
-  <LayoutBlock border="left" class="w-100 shrink-0 overflow-y-auto select-none">
-    <div class="p-4 flex flex-col gap-3">
-      <UITypography variant="text-m-bold">News</UITypography>
+  <LayoutBlock border="left" class="w-100 shrink-0 select-none">
+    <div class="p-4 pr-0 pb-0 flex flex-col h-full">
+      <UITypography variant="text-m-bold" class="mb-3">News</UITypography>
 
-      <template v-if="loading">
-        <div class="flex flex-col gap-2">
-          <NewsCardSkeleton v-for="i in 3" :key="i" />
+      <div class="flex-1 overflow-y-auto">
+        <template v-if="loading">
+          <div class="flex flex-col gap-2">
+            <NewsCardSkeleton v-for="i in 3" :key="i" />
+          </div>
+        </template>
+
+        <div v-else class="flex flex-col gap-2">
+          <NewsCard v-for="item in news" :key="item.id ?? item.url" :row="item" />
         </div>
-      </template>
-
-      <div v-else class="flex flex-col gap-2">
-        <NewsCard v-for="item in news" :key="item.id ?? item.url" :row="item" />
       </div>
     </div>
   </LayoutBlock>

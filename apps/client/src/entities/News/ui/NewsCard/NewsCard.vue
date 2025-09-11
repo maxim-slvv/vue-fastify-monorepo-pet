@@ -12,7 +12,10 @@ const props = defineProps<{ row: NewsRow }>()
 </script>
 
 <template>
-  <div class="rounded-lg border bg-card shadow-sm" :style="{ borderColor: 'var(--border)' }">
+  <div
+    class="rounded-lg border shadow-sm"
+    :style="{ borderColor: 'var(--border)', backgroundColor: 'var(--card)' }"
+  >
     <NewsHeader :row="props.row" />
 
     <div class="px-3 pb-3">

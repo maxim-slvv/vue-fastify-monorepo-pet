@@ -14,7 +14,7 @@ const isLoading = ref(true)
 onMounted(() => {
   setTimeout(() => {
     isLoading.value = false
-  }, 300) // TODO: Убрать задержку
+  }, 300) // что бы не спамить на каждый hover
 })
 </script>
 

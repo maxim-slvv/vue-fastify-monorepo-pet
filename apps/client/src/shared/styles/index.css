@@ -252,6 +252,7 @@ html:not(.dark) {
   --surface: var(--surface-light);
   --border: var(--border-light);
   --bg-hover: var(--bg-hover-light);
+  --card: var(--bg-light);
   --brand-primary-soft: var(--brand-primary-soft-light);
   --skeleton-bg: var(--skeleton-bg-light);
   --nav-link-fg: var(--fg);
@@ -306,6 +307,7 @@ html.dark {
   --surface: var(--surface-dark);
   --border: var(--border-dark);
   --bg-hover: var(--bg-hover-dark);
+  --card: var(--bg-dark);
   --brand-primary-soft: var(--brand-primary-soft-dark);
   --skeleton-bg: var(--skeleton-bg-dark);
   --nav-link-fg: var(--fg);
@@ -422,6 +424,9 @@ html.dark .p-popover .p-popover-arrow {
   background-color: var(--p-datatable-row-hover-background) !important;
   color: var(--p-datatable-row-hover-color) !important;
 }
+.p-datatable-paginator-bottom {
+  border: none !important;
+}
 
 /* Что бы не запаздывал переход цвета при смене темы
 .p-datatable-thead > tr > th,
@@ -433,7 +438,41 @@ html.dark .p-popover .p-popover-arrow {
 .p-paginator {
   background: transparent !important;
   border: none !important;
-  padding: 0 !important;
+  padding: 16px !important;
+}
+.p-paginator-content {
+  display: flex !important;
+  width: 100% !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.p-paginator-rpp-dropdown {
+  display: flex !important;
+}
+
+.p-paginator-content > *:not(.p-paginator-rpp-dropdown) {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.p-paginator-content {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.p-paginator-content > .p-paginator-rpp-dropdown {
+  flex-shrink: 0 !important;
+}
+
+.p-paginator-content > .p-paginator-rpp-dropdown {
+  margin-right: auto !important;
+}
+
+.p-paginator-content > *:not(.p-paginator-rpp-dropdown) {
+  margin-left: 8px !important;
 }
 
 .p-paginator .p-paginator-pages .p-paginator-page {
@@ -494,4 +533,91 @@ html.dark .p-popover .p-popover-arrow {
   color: var(--fg) !important;
   font-size: 0.875rem !important;
   padding: 0 0.75rem !important;
+}
+
+/* Select dropdown dark theme */
+html.dark .p-select {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--fg) !important;
+}
+
+html.dark .p-select .p-select-label {
+  color: var(--fg) !important;
+}
+
+html.dark .p-select .p-select-dropdown {
+  color: var(--fg) !important;
+}
+
+html.dark .p-select:hover {
+  border-color: var(--p-primary-color) !important;
+}
+
+html.dark .p-select.p-focus {
+  border-color: var(--p-primary-color) !important;
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--p-primary-color) 20%, transparent) !important;
+}
+
+html.dark .p-select .p-select-dropdown-icon {
+  color: var(--fg) !important;
+}
+
+/* Select dropdown panel dark theme */
+html.dark .p-select-overlay {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+    0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+html.dark .p-select-overlay .p-select-list {
+  background: var(--surface) !important;
+}
+
+html.dark .p-select-overlay .p-select-item {
+  color: var(--fg) !important;
+  background: transparent !important;
+}
+
+html.dark .p-select-overlay .p-select-item:hover {
+  background: var(--bg-hover) !important;
+  color: var(--fg) !important;
+}
+
+html.dark .p-select-overlay .p-select-item.p-highlight {
+  background: var(--p-primary-color) !important;
+  color: var(--p-primary-contrast-color) !important;
+}
+
+/* Select option dark theme */
+html.dark .p-select-overlay .p-select-option {
+  color: var(--fg) !important;
+  background: transparent !important;
+}
+
+html.dark .p-select-overlay .p-select-option:hover {
+  background: var(--bg-hover) !important;
+  color: var(--fg) !important;
+}
+
+html.dark .p-select-overlay .p-select-option.p-focus {
+  background: var(--bg-hover) !important;
+  color: var(--fg) !important;
+}
+
+html.dark .p-select-overlay .p-select-option.p-select-option-selected {
+  background: var(--p-primary-color) !important;
+  color: var(--p-primary-contrast-color) !important;
+}
+
+html.dark .p-select-overlay .p-select-option.p-select-option-selected:hover {
+  background: var(--p-primary-hover-color) !important;
+  color: var(--p-primary-contrast-color) !important;
+}
+
+html.dark .p-select-overlay .p-select-option.p-select-option-selected.p-focus {
+  background: var(--p-primary-hover-color) !important;
+  color: var(--p-primary-contrast-color) !important;
 }
