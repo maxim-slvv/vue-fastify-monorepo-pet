@@ -25,12 +25,6 @@ export const routes: RouteRecordRaw[] = [
         meta: { nav: { group: 'crypto', label: 'Favorites', icon: 'pi pi-sitemap' } },
       },
       {
-        path: 'defi',
-        name: 'crypto.defi',
-        component: StubPage,
-        meta: { nav: { group: 'crypto', label: 'DeFi', icon: 'pi pi-sliders-h' } },
-      },
-      {
         path: 'nft',
         name: 'crypto.nft',
         component: StubPage,

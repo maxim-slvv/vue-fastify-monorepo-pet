@@ -2,11 +2,13 @@ export {
   makeResource,
   registerListRoute,
   registerActionRoute,
+  registerSingleRoute,
   type ResourceConfig,
   type MethodName,
   type RouteRegister,
   type ListRouteOptions,
   type ActionRouteOptions,
+  type SingleRouteOptions,
   type FastifyApp,
 } from './builder/index.ts'
 

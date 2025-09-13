@@ -22,6 +22,16 @@ export function makeResource<
     paginatedSchemaByPreset(preset: keyof typeof cfg.presets) {
       return createPaginatedResponseSchema(this.schemaByPreset(preset))
     },
+    singleSchemaByPreset(preset: keyof typeof cfg.presets) {
+      const mask: Partial<Record<keyof Row, true>> = {}
+      ;(Object.entries(cfg.presets[preset as string]) as Array<[keyof Row, boolean]>).forEach(
+        ([k, include]) => {
+          if (include) mask[k] = true
+        },
+      )
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return cfg.rowSchema.pick(mask as any)
+    },
     examplesByPreset(preset: keyof typeof cfg.presets, count = 1, overrides?: Partial<Row>) {
       const list: Partial<Row>[] = []
       for (let i = 0; i < count; i += 1) {

@@ -9,6 +9,7 @@ export interface CryptoService {
   list(): Promise<ICryptoServerRow[]>
   listTop(): Promise<ICryptoServerRow[]>
   listFavorite(): Promise<ICryptoServerRow[]>
+  getBySymbol(symbol: CryptoSymbol): Promise<ICryptoServerRow | null>
   tick(): Promise<ICryptoServerRow[]>
   setFavorite(symbol: CryptoSymbol, isFavorite: boolean): Promise<ICryptoServerRow[]>
 }
@@ -34,6 +35,12 @@ export class DefaultCryptoService
   async listFavorite(): Promise<ICryptoServerRow[]> {
     const rows = await this.repository.getAll()
     return rows.filter((row) => row.isFavorite)
+  }
+
+  async getBySymbol(symbol: CryptoSymbol): Promise<ICryptoServerRow | null> {
+    const rows = await this.repository.getAll()
+    const coin = rows.find((row) => row.symbol === symbol)
+    return coin || null
   }
 
   async setFavorite(symbol: CryptoSymbol, isFavorite: boolean): Promise<ICryptoServerRow[]> {

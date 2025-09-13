@@ -3,11 +3,20 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 
 import { InMemoryCryptoRepository } from './store/repository.ts'
 import { DefaultCryptoService } from './service/index.ts'
-import { registerListRoute, registerActionRoute } from '../_common/resource/index.ts'
+import {
+  registerListRoute,
+  registerActionRoute,
+  registerSingleRoute,
+} from '../_common/resource/index.ts'
 import { makeResource } from '../_common/resource/index.ts'
 
 import { cryptoFieldExamples } from './types/schema.ts'
-import { cryptoRowSchema, favoriteParamsSchema, favoriteBodySchema } from './types.ts'
+import {
+  cryptoRowSchema,
+  favoriteParamsSchema,
+  favoriteBodySchema,
+  coinParamsSchema,
+} from './types.ts'
 import { cryptoFieldsPresets } from './store/selectors/index.ts'
 
 export async function registerCryptoRoutes(app: FastifyInstance): Promise<void> {
@@ -56,5 +65,18 @@ export async function registerCryptoRoutes(app: FastifyInstance): Promise<void> 
       const { isFavorite } = favoriteBodySchema.parse(req.body)
       return service.setFavorite(symbol, isFavorite)
     },
+  })
+
+  registerSingleRoute(zapp, {
+    method: 'GET',
+    path: '/api/crypto/:symbol',
+    resource: cryptoResource,
+    preset: 'full',
+    paramsSchema: coinParamsSchema,
+    handler: async (req) => {
+      const { symbol } = coinParamsSchema.parse(req.params)
+      return service.getBySymbol(symbol)
+    },
+    notFoundMessage: 'Coin not found',
   })
 }

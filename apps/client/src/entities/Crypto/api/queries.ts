@@ -8,6 +8,8 @@ import type {
   CryptoTopResponse,
   CryptoFavoriteRequest,
   CryptoFavoriteResponse,
+  CryptoBySymbolRequest,
+  CryptoBySymbolResponse,
   ICryptoServerRow,
 } from '../types'
 import type { PaginatedListResponse } from '@/shared/api'
@@ -17,6 +19,7 @@ export const CRYPTO_QUERY_KEYS = {
   list: ['crypto', 'list'],
   top: ['crypto', 'top'],
   favorite: ['crypto', 'favorite'],
+  bySymbol: (symbol: string) => ['crypto', 'bySymbol', symbol],
 } as const
 
 export const useCryptoList: QueryHook<
@@ -81,6 +84,34 @@ export const useCryptoFavorite: QueryHook<
   })
 }
 
+export const useCryptoBySymbol: QueryHook<CryptoBySymbolRequest, CryptoBySymbolResponse> = ({
+  params,
+  options,
+  enabled = true,
+}) => {
+  return useQuery({
+    queryKey: computed(() => {
+      return [
+        ...CRYPTO_QUERY_KEYS.bySymbol((unref(params) as CryptoBySymbolRequest)?.symbol),
+        unref(params),
+      ]
+    }),
+    queryFn: async ({ signal }) => {
+      const response = await api.get<CryptoBySymbolResponse>(
+        `/api/crypto/${(unref(params) as CryptoBySymbolRequest)?.symbol}`,
+        {
+          signal,
+        },
+      )
+      return response.data
+    },
+    enabled: computed(() => {
+      return enabled && !!(unref(params) as CryptoBySymbolRequest)?.symbol
+    }),
+    ...options,
+  })
+}
+
 export const invalidateCryptoList = () => {
   invalidateQueries(CRYPTO_QUERY_KEYS.list)
 }
@@ -91,4 +122,8 @@ export const invalidateCryptoTop = () => {
 
 export const invalidateCryptoFavorite = () => {
   invalidateQueries(CRYPTO_QUERY_KEYS.favorite)
+}
+
+export const invalidateCryptoBySymbol = (symbol: string) => {
+  invalidateQueries(CRYPTO_QUERY_KEYS.bySymbol(symbol))
 }

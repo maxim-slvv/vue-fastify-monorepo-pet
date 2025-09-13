@@ -14,12 +14,67 @@ export interface ICryptoServerRow {
   volume24h: string
   spark: number[]
   isFavorite?: boolean
+  //--------------------------------
+  site?: string
+  unlockedMarketCap?: string
+  fdv?: string
+  volMarketCapRatio?: string
+  totalSupply?: string
+  maxSupply?: string
+  circulatingSupply?: string
+  socialNetworks?: {
+    twitter?: string
+    telegram?: string
+    discord?: string
+    reddit?: string
+  }
+  contracts?: {
+    platform: string
+    address: string
+  }[]
+  explorers?: {
+    name: string
+    url: string
+  }[]
+  wallets?: {
+    name: string
+    url: string
+  }[]
+  ucid?: string
+  allTimeHigh?: {
+    price: number
+    date: string
+  }
+  allTimeLow?: {
+    price: number
+    date: string
+  }
 }
+
+export type ICryptoBaseRow = Pick<
+  ICryptoServerRow,
+  | 'rank'
+  | 'name'
+  | 'symbol'
+  | 'image'
+  | 'price'
+  | 'ch24h'
+  | 'ch24h_direction'
+  | 'ch7d'
+  | 'ch7d_direction'
+  | 'marketCap'
+  | 'volume24h'
+  | 'spark'
+  | 'isFavorite'
+>
 
 export type CryptoListRequest = WithPagination
 export type CryptoTopRequest = WithPagination
 export type CryptoFavoriteRequest = WithPagination
 
-export type CryptoListResponse = PaginatedListResponse<ICryptoServerRow>
-export type CryptoTopResponse = PaginatedListResponse<ICryptoServerRow>
-export type CryptoFavoriteResponse = PaginatedListResponse<ICryptoServerRow>
+export type CryptoBySymbolRequest = { symbol: string }
+export type CryptoBySymbolResponse = ICryptoServerRow
+
+export type CryptoListResponse = PaginatedListResponse<ICryptoBaseRow>
+export type CryptoTopResponse = PaginatedListResponse<ICryptoBaseRow>
+export type CryptoFavoriteResponse = PaginatedListResponse<ICryptoBaseRow>

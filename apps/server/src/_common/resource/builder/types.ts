@@ -48,5 +48,19 @@ export interface MutationRouteOptions {
   method: MethodName | RouteRegister
 }
 
+export interface SingleRouteOptions<
+  RowShape extends z.ZodRawShape,
+  Row extends z.infer<z.ZodObject<RowShape>>,
+> {
+  path: string
+  resource: ReturnType<typeof import('./resource-factory.ts').makeResource<RowShape, Row>>
+  preset: string
+  paramsSchema: z.ZodTypeAny
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handler: (req: any) => Promise<Row | null>
+  method: MethodName | RouteRegister
+  notFoundMessage?: string
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type FastifyApp = FastifyInstance<any, any, any, any, any>
