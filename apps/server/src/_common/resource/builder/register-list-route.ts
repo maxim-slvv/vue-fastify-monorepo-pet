@@ -4,6 +4,7 @@ import {
   createPaginationMeta,
   applyPagination,
   applySorting,
+  applySearch,
   type PaginationParams,
   type PaginatedResponse,
 } from '../pagination/index.ts'
@@ -44,8 +45,13 @@ export function registerListRoute<
 
     const allData = await opts.handler(paginationParams)
 
-    const sortedData = applySorting(
+    const searchedData = applySearch(
       allData as Record<string, string | number | boolean | Date>[],
+      paginationParams,
+    ) as Row[]
+
+    const sortedData = applySorting(
+      searchedData as Record<string, string | number | boolean | Date>[],
       paginationParams,
     ) as Row[]
 

@@ -252,7 +252,7 @@ html:not(.dark) {
   --surface: var(--surface-light);
   --border: var(--border-light);
   --bg-hover: var(--bg-hover-light);
-  --card: var(--bg-light);
+  --card: var(--bg-soft-light);
   --brand-primary-soft: var(--brand-primary-soft-light);
   --skeleton-bg: var(--skeleton-bg-light);
   --nav-link-fg: var(--fg);
@@ -572,10 +572,6 @@ html.dark .p-select-overlay {
     0 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
 }
 
-html.dark .p-select-overlay .p-select-list {
-  background: var(--surface) !important;
-}
-
 html.dark .p-select-overlay .p-select-item {
   color: var(--fg) !important;
   background: transparent !important;
@@ -620,4 +616,56 @@ html.dark .p-select-overlay .p-select-option.p-select-option-selected:hover {
 html.dark .p-select-overlay .p-select-option.p-select-option-selected.p-focus {
   background: var(--p-primary-hover-color) !important;
   color: var(--p-primary-contrast-color) !important;
+}
+
+/* PrimeVue InputText Dark Theme */
+html.dark .p-inputtext {
+  background: var(--surface-dark) !important;
+  border: 1px solid var(--border-dark) !important;
+  color: var(--fg-dark) !important;
+}
+
+html.dark .p-inputtext:focus {
+  border-color: var(--brand-primary) !important;
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25) !important;
+}
+
+html.dark .p-inputtext::placeholder {
+  color: var(--fg-dark) !important;
+  opacity: 0.6 !important;
+}
+
+/* PrimeVue IconField Dark Theme */
+html.dark .p-iconfield {
+  background: var(--surface-dark) !important;
+  border: 1px solid var(--border-dark) !important;
+  border-radius: 6px !important;
+}
+
+html.dark .p-iconfield:focus-within {
+  border-color: var(--brand-primary) !important;
+  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25) !important;
+}
+
+/* PrimeVue InputIcon Dark Theme */
+html.dark .p-inputicon {
+  color: var(--fg-dark) !important;
+  opacity: 0.7 !important;
+}
+
+html.dark .p-inputicon:hover {
+  color: var(--brand-danger) !important;
+  opacity: 1 !important;
+}
+
+/* Table Action Panel Styles */
+.table-action-panel {
+  display: flex;
+  width: 100%;
+}
+
+.table-action-panel-actions {
+  width: 100%;
+  display: flex;
+  gap: 15px;
 }

@@ -12,6 +12,7 @@ export interface PaginationRequest {
   limit?: number
   sort?: string
   order?: 'asc' | 'desc'
+  search?: string
 }
 
 export interface PaginatedResponse<T> {

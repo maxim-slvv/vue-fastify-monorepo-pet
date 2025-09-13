@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import DataTable from 'primevue/datatable'
-import type { DataTableMethods } from 'primevue/datatable'
+import type { DataTableMethods, DataTableSortEvent } from 'primevue/datatable'
 import Column from 'primevue/column'
 import { ref, useSlots, computed } from 'vue'
 import UITypography from '@/shared/ui/Typography/UITypography.vue'
 import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
-import type { PaginationState } from '@/shared/lib/pagination'
-import { PAGE_SIZE_OPTIONS } from '@/shared/lib/pagination'
+import type { PaginationState } from '@/shared/api/pagination'
+import { PAGE_SIZE_OPTIONS } from '@/shared/api/pagination'
 
 type Align = 'left' | 'center' | 'right'
 
@@ -23,6 +23,7 @@ export interface ColumnDef<Row = any, ComponentProps = Record<string, unknown>> 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component?: any
   componentProps?: (row: Row) => ComponentProps | Record<string, unknown>
+  sortable?: boolean
 }
 
 const props = defineProps<{
@@ -40,6 +41,13 @@ const props = defineProps<{
   totalRecords?: number
   emptyStateEmoji?: string
   emptyStateText?: string
+  sortField?: string
+  sortOrder?: 'asc' | 'desc'
+}>()
+
+const emit = defineEmits<{
+  'update:sortField': [value: string]
+  'update:sortOrder': [value: 'asc' | 'desc']
 }>()
 
 const slots = useSlots()
@@ -47,7 +55,7 @@ const slots = useSlots()
 const paginationEnabled = computed(() => Boolean(props.pagination?.showPagination.value))
 const paginationRows = computed(() => props.pagination?.pageSize.value || 20)
 const paginationFirst = computed(() => props.pagination?.first.value || 0)
-const paginationTotal = computed(() => props.totalRecords || props.rows.length)
+const paginationTotal = computed(() => props.totalRecords ?? props.rows.length)
 
 const isEmpty = computed(() => !props.loading && props.rows.length === 0)
 const showEmptyState = computed(
@@ -67,6 +75,16 @@ function exportCSV(): void {
 
 function onPageChange(event: { first: number; rows: number; page: number }): void {
   props.pagination?.onPageChange(event)
+}
+
+function onSort(event: DataTableSortEvent): void {
+  const field = typeof event.sortField === 'string' ? event.sortField : undefined
+  const order = event.sortOrder === 1 ? 'asc' : 'desc'
+
+  if (field) {
+    emit('update:sortField', field)
+    emit('update:sortOrder', order)
+  }
 }
 
 defineExpose({ exportCSV })
@@ -92,18 +110,22 @@ defineExpose({ exportCSV })
       :value="props.rows"
       :dataKey="props.rowKey"
       rowHover
+      :lazy="true"
       :scrollable="props.scrollable"
       :scrollHeight="props.scrollHeight"
       :scrollDirection="props.scrollDirection ?? 'both'"
+      :sortField="props.sortField"
+      :sortOrder="props.sortOrder === 'asc' ? 1 : props.sortOrder === 'desc' ? -1 : undefined"
       class="w-full"
       :paginator="paginationEnabled"
       :rows="paginationRows"
       :first="paginationFirst"
       :totalRecords="paginationTotal"
       :rowsPerPageOptions="PAGE_SIZE_OPTIONS"
-      paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+      paginatorTemplate="RowsPerPageDropdown CurrentPageReport FirstPageLink PrevPageLink NextPageLink LastPageLink "
       currentPageReportTemplate="{first} to {last} of {totalRecords}"
       @page="onPageChange"
+      @sort="onSort"
       :pt="{
         table: {
           class: [props.tableClass],
@@ -117,6 +139,7 @@ defineExpose({ exportCSV })
         :key="col.field"
         :field="col.field"
         :header="col.header"
+        :sortable="col.sortable"
         :pt="{
           headerCell: {
             class: [col.headerClass],

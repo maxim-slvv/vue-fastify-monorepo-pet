@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/vue-query'
 import type { MutationHook } from '@/shared/lib/query/vue-query-types'
-import { api, invalidateQueries } from '@/shared/api'
+import { api } from '@/shared/api'
 import type { ICryptoServerRow } from '../types'
+import { CRYPTO_QUERY_KEYS } from './queries'
 
 export interface SetFavoriteRequest {
   symbol: string
@@ -38,29 +39,31 @@ export const useSetCryptoFavorite: MutationHook<SetFavoriteRequest, SetFavoriteR
       return response
     },
     onMutate: async (variables) => {
-      await queryClient.cancelQueries({ queryKey: ['crypto', 'list'] })
-      await queryClient.cancelQueries({ queryKey: ['crypto', 'top'] })
-      await queryClient.cancelQueries({ queryKey: ['crypto', 'favorite'] })
+      await queryClient.cancelQueries({ queryKey: CRYPTO_QUERY_KEYS.list })
+      await queryClient.cancelQueries({ queryKey: CRYPTO_QUERY_KEYS.top })
+      await queryClient.cancelQueries({ queryKey: CRYPTO_QUERY_KEYS.favorite })
 
-      const previousList = queryClient.getQueryData<ICryptoServerRow[]>(['crypto', 'list'])
-      const previousTop = queryClient.getQueryData<ICryptoServerRow[]>(['crypto', 'top'])
-      const previousFavorite = queryClient.getQueryData<ICryptoServerRow[]>(['crypto', 'favorite'])
+      const previousList = queryClient.getQueryData<ICryptoServerRow[]>(CRYPTO_QUERY_KEYS.list)
+      const previousTop = queryClient.getQueryData<ICryptoServerRow[]>(CRYPTO_QUERY_KEYS.top)
+      const previousFavorite = queryClient.getQueryData<ICryptoServerRow[]>(
+        CRYPTO_QUERY_KEYS.favorite,
+      )
 
-      queryClient.setQueryData<ICryptoServerRow[]>(['crypto', 'list'], (old) => {
+      queryClient.setQueryData<ICryptoServerRow[]>(CRYPTO_QUERY_KEYS.list, (old) => {
         if (!old || !Array.isArray(old)) return old
         return updateFavoriteInArray(old, variables.symbol, variables.isFavorite)
       })
 
-      queryClient.setQueryData<ICryptoServerRow[]>(['crypto', 'top'], (old) => {
+      queryClient.setQueryData<ICryptoServerRow[]>(CRYPTO_QUERY_KEYS.top, (old) => {
         if (!old || !Array.isArray(old)) return old
         return updateFavoriteInArray(old, variables.symbol, variables.isFavorite)
       })
 
-      queryClient.setQueryData<ICryptoServerRow[]>(['crypto', 'favorite'], (old) => {
+      queryClient.setQueryData<ICryptoServerRow[]>(CRYPTO_QUERY_KEYS.favorite, (old) => {
         if (!old || !Array.isArray(old)) return old
 
         if (variables.isFavorite) {
-          const listData = queryClient.getQueryData<ICryptoServerRow[]>(['crypto', 'list'])
+          const listData = queryClient.getQueryData<ICryptoServerRow[]>(CRYPTO_QUERY_KEYS.list)
           const itemToAdd = Array.isArray(listData)
             ? listData.find((item) => item.symbol === variables.symbol)
             : null
@@ -80,13 +83,13 @@ export const useSetCryptoFavorite: MutationHook<SetFavoriteRequest, SetFavoriteR
     },
     onError: (error, variables, context) => {
       if (context?.previousList) {
-        queryClient.setQueryData(['crypto', 'list'], context.previousList)
+        queryClient.setQueryData(CRYPTO_QUERY_KEYS.list, context.previousList)
       }
       if (context?.previousTop) {
-        queryClient.setQueryData(['crypto', 'top'], context.previousTop)
+        queryClient.setQueryData(CRYPTO_QUERY_KEYS.top, context.previousTop)
       }
       if (context?.previousFavorite) {
-        queryClient.setQueryData(['crypto', 'favorite'], context.previousFavorite)
+        queryClient.setQueryData(CRYPTO_QUERY_KEYS.favorite, context.previousFavorite)
       }
       onError?.(error, variables, context)
     },
@@ -94,8 +97,4 @@ export const useSetCryptoFavorite: MutationHook<SetFavoriteRequest, SetFavoriteR
       onSettled?.(data, error, variables, context)
     },
   })
-}
-
-export const invalidateCryptoFavorites = () => {
-  invalidateQueries(['crypto', 'favorite'])
 }

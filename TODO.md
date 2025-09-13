@@ -13,7 +13,6 @@ https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?n
 
 1 раздел:
 [x] Добавить в избранное и при переходе в избранное - подписываться только на избранные валюты
-[] CoinTable показать инфу https://primevue.org/popover/
 
 [х] Весь текст на странице обернуть в UITypography для того что бы использовать цвета и размеры
 [x] Динамические стили блоков в константы
@@ -40,15 +39,19 @@ https://www.figma.com/design/m9or9cCSAJwFO5KVmrfb4n/Free-Dashboard--Community-?n
 [x] Back: архитекрура модулей
 [x] Back: новый модуль для новостей https://coinmarketcap.com/ru/currencies/pudgy-penguins/
 [x] Swagger
-[??] OrvalDev?
+[??] OrvalDev? - НЕТ лушче ZOD схемы иметь чем зависеть от постоянно генерируемых типов
 
-[x] Front: Axios.
+[x] Front: Axios
 [x] Front: Tanstack Query
-[] Back: Каждый роут наследует пагинацию, сортировку по ячейкам и по rank, поиск
-[] Front: захардкорженные лимиты убрать
+[x] Back: Каждый роут наследует пагинацию, сортировку по ячейкам и по rank, поиск
+[x] Front: захардкорженные лимиты убрать
 
-[] Front: Фильтры: Поиск, сортировка ASC/DESC (Rank), 
-[] Front: Таблица может управлять запросом? - научим! - конфигурировать параметры - скорее через nuqs и url.
+[] Front: Фильтры: Поиск, сортировка ASC/DESC (Rank)
+[] Back: Поиск only Name
+[] Back: Сортировка по числам не особо точная (проверить)?
+[] CoinTable показать инфу https://primevue.org/popover/ - Убогий поповер, нужно другой использовать
+
+[] В новостях - лайки на ws, свои лайки хранить, анимацию?
  
 [] Новая страница в отдельной вкладке?
 [] Неплохой компоуз инфы https://www.bybit.com/ru-RU/price/pudgy-penguins/ 

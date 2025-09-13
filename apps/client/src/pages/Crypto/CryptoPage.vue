@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { defineComponent, computed } from 'vue'
 import UiDataTable from '@/shared/ui/DataTable/UiDataTable.vue'
-import { useCryptoTicker } from '@/entities/Crypto/lib/useCryptoTicker'
+import { useCryptoTop } from '@/entities/Crypto/lib/useCryptoTop'
 import type { ICryptoServerRow } from '@/entities/Crypto/types'
 import { createCryptoColumns } from '@/entities/Crypto/lib/columns'
-import { usePagination } from '@/shared/lib/pagination'
+import { usePagination } from '@/shared/api/pagination'
 
 defineComponent({ name: 'CryptoPage' })
 
-const { rows, isLoading, toggleFavorite } = useCryptoTicker()
+const { rows, meta, isLoading, toggleFavorite } = useCryptoTop()
 const columns = createCryptoColumns(isLoading, toggleFavorite)
 
 const skeletonRows = computed<ICryptoServerRow[]>(() =>
@@ -28,7 +28,8 @@ const skeletonRows = computed<ICryptoServerRow[]>(() =>
   })),
 )
 
-const totalRecords = computed(() => rows.value?.length || 0)
+const totalRecords = computed(() => meta.value?.total ?? 0)
+
 const pagination = usePagination({
   totalRecords,
 })
@@ -44,6 +45,7 @@ const rowsToShow = computed(() => (isLoading.value ? skeletonRows.value : rows.v
     :loading="isLoading"
     :pagination="pagination"
     :totalRecords="totalRecords"
+    :searchable="true"
     emptyStateEmoji="📊"
     emptyStateText="Нет данных о криптовалютах"
   />

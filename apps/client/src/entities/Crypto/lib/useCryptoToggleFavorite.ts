@@ -1,6 +1,7 @@
 import type { Ref } from 'vue'
 import type { ICryptoServerRow } from '@/entities/Crypto/types'
 import { useSetCryptoFavorite } from '../api/mutations'
+import { invalidateCryptoList, invalidateCryptoTop, invalidateCryptoFavorite } from '../api/queries'
 
 interface UseCryptoToggleFavoriteOptions {
   onUnfavorite?: (symbol: string) => void
@@ -11,6 +12,11 @@ export function useCryptoToggleFavorite(
   options?: UseCryptoToggleFavoriteOptions,
 ) {
   const setFavoriteMutation = useSetCryptoFavorite({
+    onSuccess: () => {
+      invalidateCryptoList()
+      invalidateCryptoTop()
+      invalidateCryptoFavorite()
+    },
     onError: (error, variables) => {
       console.error('Error toggling favorite:', error)
 
@@ -19,7 +25,7 @@ export function useCryptoToggleFavorite(
         if (!variables.isFavorite && options?.onUnfavorite) {
           // Если мы пытались убрать из избранного, но произошла ошибка,
           // нужно восстановить элемент в массиве
-          // Здесь нужна более сложная логика восстановления из кэша TanStack Query
+          //TODO: Здесь нужна более сложная логика восстановления из кэша TanStack Query
           console.warn('Failed to remove from favorites, element should be restored')
         } else {
           // Обычный откат для изменения состояния

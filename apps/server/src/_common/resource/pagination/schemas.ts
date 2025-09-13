@@ -13,6 +13,7 @@ export const paginationParamsSchema = z.object({
   limit: z.coerce.number().int().positive().max(MAX_LIMIT).optional(),
   sort: z.string().optional(),
   order: z.enum([ORDER_ASC, ORDER_DESC]).optional(),
+  search: z.string().optional(),
 })
 
 export const paginationMetaSchema = z.object({

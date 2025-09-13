@@ -78,12 +78,35 @@ export function applySorting<T extends Record<string, string | number | boolean 
 }
 
 function extractNumericValue(value: string): number | null {
-  const match = value.match(/-?\d+(?:[.,]\d+)?/)
+  const cleaned = value
+    .replace(/[$€£¥₹]/g, '') // Remove currency symbols
+    .replace(/,/g, '') // Remove thousand separators
+    .replace(/\s/g, '') // Remove spaces
+    .replace(/[^\d.-]/g, '') // Keep only digits, dots, and minus signs
+
+  const match = cleaned.match(/-?\d+(?:\.\d+)?/)
   if (!match) return null
 
-  const cleaned = match[0].replace(',', '.')
-  const parsed = parseFloat(cleaned)
+  const parsed = parseFloat(match[0])
   return isNaN(parsed) ? null : parsed
+}
+
+export function applySearch<T extends Record<string, string | number | boolean | Date>>(
+  data: T[],
+  params: Pick<PaginationParams, 'search'>,
+): T[] {
+  if (!params.search) return data
+
+  const searchTerm = params.search.toLowerCase().trim()
+  if (!searchTerm) return data
+
+  return data.filter((item) => {
+    return Object.values(item).some((value) => {
+      if (value === null || value === undefined) return false
+      const stringValue = String(value).toLowerCase()
+      return stringValue.includes(searchTerm)
+    })
+  })
 }
 
 export function isPaginationRequested(params: PaginationParams): boolean {

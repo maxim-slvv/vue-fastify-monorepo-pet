@@ -1,6 +1,6 @@
 export const PAGINATION_DEFAULTS = {
   PAGE: 1,
-  LIMIT: 20,
+  LIMIT: 10,
   MAX_LIMIT: 100,
   ORDER: 'asc' as const,
   SORT_FIELD: 'rank' as const,

@@ -32,6 +32,7 @@ const createTypedColumns = (isLoading: Ref<boolean>, onToggleFavorite?: ToggleFa
     field: 'name',
     header: 'Name',
     width: '220px',
+    sortable: true,
     component: CoinMainInfo,
     componentProps: (row): ICoinMainInfoProps => ({
       tagText: row.symbol,
@@ -48,6 +49,7 @@ const createTypedColumns = (isLoading: Ref<boolean>, onToggleFavorite?: ToggleFa
     header: 'Price',
     align: 'right',
     width: '130px',
+    sortable: true,
     component: PriceCell,
     componentProps: (row): IPriceCellProps => ({
       value: row.price,
@@ -111,6 +113,7 @@ export function createCryptoColumns(
       header: '#',
       align: 'center',
       width: '56px',
+      sortable: true,
     },
     ...(typedColumns as ColumnDef<ICryptoServerRow>[]),
     {
@@ -118,6 +121,7 @@ export function createCryptoColumns(
       header: 'Market Cap',
       align: 'right',
       width: '180px',
+      sortable: true,
       skeletonClass: 'h-5 w-full',
     },
     {
@@ -125,6 +129,7 @@ export function createCryptoColumns(
       header: 'Volume(24h)',
       align: 'right',
       width: '180px',
+      sortable: true,
       skeletonClass: 'h-5 w-full',
     },
   ]

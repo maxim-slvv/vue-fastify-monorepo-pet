@@ -10,27 +10,31 @@ import type {
   CryptoFavoriteResponse,
   ICryptoServerRow,
 } from '../types'
+import type { PaginatedListResponse } from '@/shared/api'
+import { computed, unref } from 'vue'
 
-const CRYPTO_QUERY_KEYS = {
+export const CRYPTO_QUERY_KEYS = {
   list: ['crypto', 'list'],
   top: ['crypto', 'top'],
   favorite: ['crypto', 'favorite'],
 } as const
 
-export const useCryptoList: QueryHook<CryptoListRequest, ICryptoServerRow[]> = ({
-  params,
-  options,
-  enabled = true,
-}) => {
+export const useCryptoList: QueryHook<
+  CryptoListRequest,
+  PaginatedListResponse<ICryptoServerRow>
+> = ({ params, options, enabled = true }) => {
+  // да, тут нельзя просто так создать:
+  // const currentParams = unref(params) - вычисляется один раз при создании query
+  // useQuery и queryFn не увидят изменений и не сделают новые запросы
+
   return useQuery({
-    queryKey: [...CRYPTO_QUERY_KEYS.list, params],
+    queryKey: computed(() => [...CRYPTO_QUERY_KEYS.list, unref(params)]),
     queryFn: async ({ signal }) => {
       const response = await api.get<CryptoListResponse>('/api/crypto', {
         signal,
-        params,
+        params: unref(params),
       })
-
-      return response.data.data
+      return response.data
     },
     placeholderData: keepPreviousData,
     enabled,
@@ -38,19 +42,19 @@ export const useCryptoList: QueryHook<CryptoListRequest, ICryptoServerRow[]> = (
   })
 }
 
-export const useCryptoTop: QueryHook<CryptoTopRequest, ICryptoServerRow[]> = ({
+export const useCryptoTop: QueryHook<CryptoTopRequest, PaginatedListResponse<ICryptoServerRow>> = ({
   params,
   options,
   enabled = true,
 }) => {
   return useQuery({
-    queryKey: [...CRYPTO_QUERY_KEYS.top, params],
+    queryKey: computed(() => [...CRYPTO_QUERY_KEYS.top, unref(params)]),
     queryFn: async ({ signal }) => {
       const response = await api.get<CryptoTopResponse>('/api/crypto/top', {
         signal,
-        params,
+        params: unref(params),
       })
-      return response.data.data
+      return response.data
     },
     placeholderData: keepPreviousData,
     enabled,
@@ -58,19 +62,18 @@ export const useCryptoTop: QueryHook<CryptoTopRequest, ICryptoServerRow[]> = ({
   })
 }
 
-export const useCryptoFavorite: QueryHook<CryptoFavoriteRequest, ICryptoServerRow[]> = ({
-  params,
-  options,
-  enabled = true,
-}) => {
+export const useCryptoFavorite: QueryHook<
+  CryptoFavoriteRequest,
+  PaginatedListResponse<ICryptoServerRow>
+> = ({ params, options, enabled = true }) => {
   return useQuery({
-    queryKey: [...CRYPTO_QUERY_KEYS.favorite, params],
+    queryKey: computed(() => [...CRYPTO_QUERY_KEYS.favorite, unref(params)]),
     queryFn: async ({ signal }) => {
       const response = await api.get<CryptoFavoriteResponse>('/api/crypto/favorite', {
         signal,
-        params,
+        params: unref(params),
       })
-      return response.data.data
+      return response.data
     },
     placeholderData: keepPreviousData,
     enabled,

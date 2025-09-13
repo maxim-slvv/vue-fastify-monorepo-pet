@@ -1,7 +1,6 @@
-import { computed, ref, type Ref } from 'vue'
-import { useUrlSearchParams } from '@vueuse/core'
-import { parseUrlNumber } from '@/shared/lib/nuqs'
-import { DEFAULT_PAGE_SIZE } from './constants'
+import { computed, type Ref } from 'vue'
+import { DEFAULT_PAGE_SIZE } from '../../api/pagination/constants'
+import { useSearchSort } from '@/shared/api/search/useSearchSort'
 
 export interface PaginationOptions {
   defaultPageSize?: number
@@ -27,20 +26,21 @@ export function usePagination(options: PaginationOptions = {}): PaginationState 
     enableOnlyWhenNeeded = false,
   } = options
 
-  const params = useUrlSearchParams('history', { removeNullishValues: true })
+  const { page: searchPage, limit: searchLimit } = useSearchSort()
 
   const page = computed({
-    get: () => parseUrlNumber(params.page as string, 1),
+    get: () => searchPage.value,
     set: (value: number) => {
-      if (value === 1) {
-        delete params.page
-      } else {
-        params.page = String(value)
-      }
+      searchPage.value = value
     },
   })
 
-  const pageSize = ref(defaultPageSize)
+  const pageSize = computed({
+    get: () => searchLimit.value || defaultPageSize,
+    set: (value: number) => {
+      searchLimit.value = value
+    },
+  })
 
   const first = computed(() => (page.value - 1) * pageSize.value)
 

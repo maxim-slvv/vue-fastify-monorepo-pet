@@ -27,6 +27,7 @@ export {
   createPaginationMeta,
   applyPagination,
   applySorting,
+  applySearch,
   isPaginationRequested,
 } from './utils.ts'
 

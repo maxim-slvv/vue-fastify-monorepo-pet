@@ -3,11 +3,11 @@ import { io, type Socket } from 'socket.io-client'
 import type { ICryptoServerRow } from '@/entities/Crypto/types'
 import { API_URL } from '@/shared/config/api'
 import { useCryptoToggleFavorite } from './useCryptoToggleFavorite'
-import { useCryptoFavorite as useCryptoFavoriteQuery } from '../api/queries'
+import { useCryptoList } from '../api/queries'
 import type { PaginationMeta } from '@/shared/api'
 import { useSearchSort } from '@/shared/api/search/useSearchSort'
 
-export function useCryptoFavorite() {
+export function useCryptoTop() {
   const rows = ref<ICryptoServerRow[]>([])
   let socket: Socket | null = null
   const subscribedSymbols = ref<string[]>([])
@@ -39,13 +39,8 @@ export function useCryptoFavorite() {
     return params
   })
 
-  const { data, isLoading, error, refetch } = useCryptoFavoriteQuery({ params: paramsComputed })
-
-  const { toggleFavorite, isLoading: isMutating } = useCryptoToggleFavorite(rows, {
-    onUnfavorite: (symbol: string) => {
-      rows.value = rows.value.filter((item) => item.symbol !== symbol)
-    },
-  })
+  const { data, isLoading, error, refetch } = useCryptoList({ params: paramsComputed })
+  const { toggleFavorite, isLoading: isMutating } = useCryptoToggleFavorite(rows)
 
   watch(
     data,
@@ -54,9 +49,11 @@ export function useCryptoFavorite() {
         if (!isMutating.value) {
           rows.value = newData.data
           meta.value = newData.meta
+          // Создаем ключ кеша на основе всех параметров запроса
           const cacheKey = JSON.stringify(paramsComputed.value)
           pagesCache.value[cacheKey] = newData.data
 
+          // Подписываемся только на символы текущей страницы
           const nextSymbols = newData.data.map((row) => row.symbol.toUpperCase())
           const prevSymbols = subscribedSymbols.value
 
@@ -77,8 +74,10 @@ export function useCryptoFavorite() {
   )
 
   watch([page, limit, searchValue, sortField, sortOrder], () => {
+    // Создаем ключ кеша на основе текущих параметров
     const cacheKey = JSON.stringify(paramsComputed.value)
     if (pagesCache.value[cacheKey]) {
+      // сразу показываем из кэша fallback и подписываемся на нужные символы
       const cached = pagesCache.value[cacheKey]
       rows.value = cached
       const symbols = cached.map((r) => r.symbol.toUpperCase())
@@ -96,7 +95,7 @@ export function useCryptoFavorite() {
   function connect(): void {
     if (socket) return
     socket = io(`${API_URL}/crypto-v1`, { transports: ['websocket'] })
-
+    // Слушаем батч-обновления
     socket.on('ticker:batch', (batch: ICryptoServerRow[]) => {
       if (!Array.isArray(batch) || batch.length === 0) return
       const bySymbol = new Map(batch.map((r) => [r.symbol, r]))

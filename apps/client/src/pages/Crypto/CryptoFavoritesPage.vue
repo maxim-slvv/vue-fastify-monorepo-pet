@@ -4,11 +4,11 @@ import UiDataTable from '@/shared/ui/DataTable/UiDataTable.vue'
 import type { ICryptoServerRow } from '@/entities/Crypto/types'
 import { useCryptoFavorite } from '@/entities/Crypto/lib/useCryptoFavorite'
 import { createCryptoColumns } from '@/entities/Crypto/lib/columns'
-import { usePagination } from '@/shared/lib/pagination'
+import { usePagination } from '@/shared/api/pagination'
 
 defineComponent({ name: 'CryptoFavoritesPage' })
 
-const { rows, isLoading, toggleFavorite } = useCryptoFavorite()
+const { rows, meta, isLoading, toggleFavorite } = useCryptoFavorite()
 const columns = createCryptoColumns(isLoading, toggleFavorite)
 
 const skeletonRows = computed<ICryptoServerRow[]>(() =>
@@ -28,7 +28,7 @@ const skeletonRows = computed<ICryptoServerRow[]>(() =>
   })),
 )
 
-const totalRecords = computed(() => rows.value?.length || 0)
+const totalRecords = computed(() => meta.value?.total ?? 0)
 const pagination = usePagination({
   totalRecords,
 })
@@ -44,6 +44,7 @@ const rowsToShow = computed(() => (isLoading.value ? skeletonRows.value : rows.v
     :loading="isLoading"
     :pagination="pagination"
     :totalRecords="totalRecords"
+    :searchable="true"
     emptyStateEmoji="⭐"
     emptyStateText="Нет избранных криптовалют"
   />

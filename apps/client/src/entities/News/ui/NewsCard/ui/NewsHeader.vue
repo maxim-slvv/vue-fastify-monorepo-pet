@@ -2,7 +2,7 @@
 import { computed, defineProps } from 'vue'
 import type { NewsRow } from '@/entities/News/types'
 import UITypography from '@/shared/ui/Typography/UITypography.vue'
-import { formatDate } from '@/shared/date/utils'
+import { formatDate } from '@/shared/utils'
 import UiPicture from '@/shared/ui/Picture/UiPicture.vue'
 import ComposeAvatarInfo from '@/shared/ui/ComposeInfo/ComposeAvatarInfo.vue'
 
