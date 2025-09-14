@@ -74,10 +74,9 @@ export function useCryptoTop() {
   )
 
   watch([page, limit, searchValue, sortField, sortOrder], () => {
-    // Создаем ключ кеша на основе текущих параметров
     const cacheKey = JSON.stringify(paramsComputed.value)
     if (pagesCache.value[cacheKey]) {
-      // сразу показываем из кэша fallback и подписываемся на нужные символы
+      // показываем fallback и подписываемся на нужные символы
       const cached = pagesCache.value[cacheKey]
       rows.value = cached
       const symbols = cached.map((r) => r.symbol.toUpperCase())

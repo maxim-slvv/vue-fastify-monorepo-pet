@@ -8,26 +8,41 @@ import UiDialog from '@/shared/ui/Dialog/UiDialog.vue'
 import BaseDataTable from '@/shared/ui/DataTable/BaseDataTable.vue'
 import UITypography from '@/shared/ui/Typography/UITypography.vue'
 import type { PaginationState } from '@/shared/api/pagination'
+import type { PaginationMeta } from '@/shared/api/pagination/types'
+import { usePagination } from '@/shared/api/pagination'
 import { useSearchSort } from '@/shared/api/search/useSearchSort'
 
 defineOptions({ name: 'UiDataTable' })
 
 export type { ColumnDef } from '@/shared/ui/DataTable/BaseDataTable.vue'
 
-const props = defineProps<{
-  rows: unknown[]
+interface Props<T = unknown> {
+  rows: T[]
   columns: import('@/shared/ui/DataTable/BaseDataTable.vue').ColumnDef[]
   tableClass?: string
   rowKey?: string
   loading?: boolean
   fullscreen?: boolean
-  pagination?: PaginationState
+  meta?: PaginationMeta | null
   totalRecords?: number
   emptyStateEmoji?: string
   emptyStateText?: string
   searchable?: boolean
   sortField?: string
   sortOrder?: 'asc' | 'desc'
+  skeletonLength?: number
+  pagination?: PaginationState
+}
+
+const props = defineProps<Props>()
+
+interface TableFeatures {
+  router: ReturnType<typeof import('vue-router').useRouter>
+}
+
+const emit = defineEmits<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  rowClick: [row: any, features: TableFeatures]
 }>()
 
 const innerRef = ref<{ exportCSV: () => void } | null>(null)
@@ -44,6 +59,30 @@ const {
   clearSearch,
   clearSort,
 } = useSearchSort()
+
+const skeletonRows = computed(() => {
+  if (!props.loading || !props.skeletonLength) return []
+  return Array.from({ length: props.skeletonLength }, (_, i) => ({
+    symbol: `__skeleton_${i}__`,
+  }))
+})
+
+const rowsToShow = computed(() => {
+  if (props.loading && props.skeletonLength) {
+    return skeletonRows.value
+  }
+  return props.rows
+})
+
+const totalRecords = computed(() => {
+  if (props.meta?.total !== undefined) {
+    return props.meta.total
+  }
+  return props.totalRecords ?? props.rows.length
+})
+
+const internalPagination = usePagination({ totalRecords })
+const pagination = computed(() => props.pagination ?? internalPagination)
 
 const hasInput = computed(() => searchInput.value.length > 0)
 
@@ -109,19 +148,20 @@ function clearSorting(): void {
     <!-- TODO  scrollHeight="70vh" - observer -->
     <BaseDataTable
       ref="innerRef"
-      :rows="props.rows"
+      :rows="rowsToShow"
       :columns="props.columns"
       :tableClass="props.tableClass"
       :rowKey="props.rowKey"
       :loading="props.loading"
-      :pagination="props.pagination"
-      :totalRecords="props.totalRecords"
+      :pagination="pagination"
+      :totalRecords="totalRecords"
       :emptyStateEmoji="props.emptyStateEmoji"
       :emptyStateText="props.emptyStateText"
       :sortField="searchSortField"
       :sortOrder="searchSortOrder"
       @update:sortField="(value) => (searchSortField = value)"
       @update:sortOrder="(value) => (searchSortOrder = value)"
+      @row-click="(row, features) => emit('rowClick', row, features)"
       scrollable
       scrollHeight="70vh"
       minTableWidth="64rem"
@@ -134,19 +174,20 @@ function clearSorting(): void {
         <UITypography variant="text-l-bold">Fullscreen Table</UITypography>
       </template>
       <BaseDataTable
-        :rows="props.rows"
+        :rows="rowsToShow"
         :columns="props.columns"
         :tableClass="props.tableClass"
         :rowKey="props.rowKey"
         :loading="props.loading"
-        :pagination="props.pagination"
-        :totalRecords="props.totalRecords"
+        :pagination="pagination"
+        :totalRecords="totalRecords"
         :emptyStateEmoji="props.emptyStateEmoji"
         :emptyStateText="props.emptyStateText"
         :sortField="searchSortField"
         :sortOrder="searchSortOrder"
         @update:sortField="(value) => (searchSortField = value)"
         @update:sortOrder="(value) => (searchSortOrder = value)"
+        @row-click="(row, features) => emit('rowClick', row, features)"
         scrollable
         scrollHeight="flex"
         minTableWidth="64rem"

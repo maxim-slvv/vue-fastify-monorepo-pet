@@ -3,6 +3,7 @@ import DataTable from 'primevue/datatable'
 import type { DataTableMethods, DataTableSortEvent } from 'primevue/datatable'
 import Column from 'primevue/column'
 import { ref, useSlots, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import UITypography from '@/shared/ui/Typography/UITypography.vue'
 import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
 import type { PaginationState } from '@/shared/api/pagination'
@@ -45,12 +46,23 @@ const props = defineProps<{
   sortOrder?: 'asc' | 'desc'
 }>()
 
+interface TableFeatures {
+  router: ReturnType<typeof useRouter>
+}
+
 const emit = defineEmits<{
   'update:sortField': [value: string]
   'update:sortOrder': [value: 'asc' | 'desc']
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  rowClick: [row: any, features: TableFeatures]
 }>()
 
 const slots = useSlots()
+const router = useRouter()
+
+const features: TableFeatures = {
+  router,
+}
 
 const paginationEnabled = computed(() => Boolean(props.pagination?.showPagination.value))
 const paginationRows = computed(() => props.pagination?.pageSize.value || 20)
@@ -85,6 +97,15 @@ function onSort(event: DataTableSortEvent): void {
     emit('update:sortField', field)
     emit('update:sortOrder', order)
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function onRowClick(event: { data: any }): void {
+  if (props.loading || (event.data.symbol && event.data.symbol.startsWith('__skeleton_'))) {
+    return
+  }
+
+  emit('rowClick', event.data, features)
 }
 
 defineExpose({ exportCSV })
@@ -126,6 +147,7 @@ defineExpose({ exportCSV })
       currentPageReportTemplate="{first} to {last} of {totalRecords}"
       @page="onPageChange"
       @sort="onSort"
+      @row-click="onRowClick"
       :pt="{
         table: {
           class: [props.tableClass],

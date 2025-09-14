@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouterView, type RouteRecordRaw } from 'vue-router'
 import CryptoPage from '@/pages/Crypto/CryptoPage.vue'
 import CryptoFavoritesPage from '@/pages/Crypto/CryptoFavoritesPage.vue'
+import CryptoDetailPage from '@/pages/Crypto/CryptoDetailPage.vue'
 
 const StubPage = () => import('@/pages/StubPage.vue')
 
@@ -29,6 +30,12 @@ export const routes: RouteRecordRaw[] = [
         name: 'crypto.nft',
         component: StubPage,
         meta: { nav: { group: 'crypto', label: 'NFT', icon: 'pi pi-images' } },
+      },
+      {
+        path: ':symbol',
+        name: 'crypto.detail',
+        component: CryptoDetailPage,
+        meta: { hideFromNav: true },
       },
     ],
   },
