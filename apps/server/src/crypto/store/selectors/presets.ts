@@ -56,7 +56,7 @@ export const cryptoFieldsPresets = {
     ch7d_direction: true,
     marketCap: true,
     volume24h: true,
-    spark: false,
+    spark: true,
     isFavorite: true,
     site: true,
     unlockedMarketCap: true,

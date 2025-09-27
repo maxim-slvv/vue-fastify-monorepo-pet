@@ -22,14 +22,22 @@ const props = withDefaults(
   },
 )
 
-const min = computed(() => Math.min(...props.data))
-const max = computed(() => Math.max(...props.data))
+const min = computed(() => {
+  if (!props.data || !Array.isArray(props.data) || props.data.length === 0) return 0
+  return Math.min(...props.data)
+})
+const max = computed(() => {
+  if (!props.data || !Array.isArray(props.data) || props.data.length === 0) return 1
+  return Math.max(...props.data)
+})
 const color = computed(() => {
   if (props.direction) return props.direction === 'up' ? props.upColor : props.downColor
+  if (!props.data || !Array.isArray(props.data) || props.data.length === 0) return props.upColor
   return props.data[props.data.length - 1] >= props.data[0] ? props.upColor : props.downColor
 })
 
 const path = computed(() => {
+  if (!props.data || !Array.isArray(props.data)) return ''
   const len = props.data.length
   if (!len) return ''
   const range = max.value - min.value || 1

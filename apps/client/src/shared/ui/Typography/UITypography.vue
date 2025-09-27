@@ -28,7 +28,7 @@ const variants = {
   'text-caption': ['text-caption'],
 } as const
 
-type Variant = keyof typeof variants
+export type Variant = keyof typeof variants
 
 const props = withDefaults(
   defineProps<{

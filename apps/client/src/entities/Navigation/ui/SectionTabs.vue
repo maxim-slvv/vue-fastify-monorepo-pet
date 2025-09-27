@@ -37,11 +37,36 @@ const active = computed({
   get: () => (route.name as string) ?? '',
   set: (name: string) => router.push({ name }),
 })
+
+const showBackButton = computed(() => {
+  const standardPages = tabRoutes.value.map((r) => r.path.split('/').pop()).filter(Boolean)
+  const currentPage = route.path.split('/').pop() || ''
+
+  return /^\/crypto\/[^\/]+$/.test(route.path) && !standardPages.includes(currentPage)
+})
+
+const backButtonItems = computed(() => [
+  {
+    key: 'back',
+    label: 'Back',
+    icon: 'pi pi-arrow-left',
+  },
+])
+
+const backActive = computed({
+  get: () => (showBackButton.value ? 'back' : ''),
+  set: (key: string) => {
+    if (key === 'back') {
+      router.back()
+    }
+  },
+})
 </script>
 
 <template>
-  <div v-if="currentGroup && items.length" class="p-4">
-    <Subnav v-model="active" :items="items" />
+  <div class="flex gap-4 p-4">
+    <Subnav v-if="showBackButton" v-model="backActive" :items="backButtonItems" />
+    <Subnav v-if="currentGroup && items.length" v-model="active" :items="items" />
   </div>
   <slot />
 </template>

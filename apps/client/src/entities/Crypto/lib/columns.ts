@@ -54,6 +54,7 @@ const createTypedColumns = (isLoading: Ref<boolean>, onToggleFavorite?: ToggleFa
     componentProps: (row): IPriceCellProps => ({
       value: row.price,
       loading: isLoading.value,
+      variant: 'text-m-bold',
     }),
   }
 

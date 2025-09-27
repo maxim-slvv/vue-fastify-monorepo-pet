@@ -1,57 +1,54 @@
 <script setup lang="ts">
 import { defineComponent, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useCryptoTop } from '@/entities/Crypto/lib/useCryptoTop'
+import { useRoute } from 'vue-router'
+import { useCryptoDetail } from '@/entities/Crypto/lib/useCryptoDetail'
+import { formatApiError, formatDate } from '@/shared/utils'
 import CoinMainInfo from '@/entities/Crypto/ui/CoinMainInfo.vue'
 import PriceCell from '@/entities/Crypto/ui/PriceCell.vue'
 import PercentCell from '@/entities/Crypto/ui/PercentCell.vue'
 import SparklineCell from '@/entities/Crypto/ui/SparklineCell.vue'
 import FavoriteToggle from '@/entities/Crypto/ui/FavoriteToggle.vue'
+import TimePeriodButtons from '@/entities/Crypto/ui/TimePeriodButtons.vue'
+import PriceMinMaxDisplay from '@/entities/Crypto/ui/PriceMinMaxDisplay.vue'
+import InfoItem from '@/entities/Crypto/ui/InfoItem.vue'
 import UiButton from '@/shared/ui/Button/Button.vue'
 import UITypography from '@/shared/ui/Typography/UITypography.vue'
 import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
+import ShareIcon from '@/entities/Crypto/ui/ShareIcon.vue'
 
 defineComponent({ name: 'CryptoDetailPage' })
 
 const route = useRoute()
-const router = useRouter()
 
 const symbol = computed(() => route.params.symbol as string)
 
-const { rows, isLoading, toggleFavorite } = useCryptoTop()
+const { cryptoData, isLoading, error, toggleFavorite } = useCryptoDetail(symbol.value)
 
-const cryptoData = computed(() => {
-  return rows.value.find((crypto) => crypto.symbol.toLowerCase() === symbol.value.toLowerCase())
-})
+const safeData = computed(() => cryptoData.value!)
 
-const goBack = () => {
-  router.back()
+const openUrl = (url: string) => {
+  window.open(url)
 }
 </script>
 
 <template>
-  <div class="p-6 max-w-4xl mx-auto">
-    <!-- Header -->
-    <div class="flex items-center gap-4 mb-6">
-      <UiButton variant="secondary" @click="goBack">
-        <i class="pi pi-arrow-left"></i>
-        <span>Назад</span>
-      </UiButton>
-
-      <UITypography variant="text-l-bold" class="text-fg"> Детали криптовалюты </UITypography>
-    </div>
-
+  <div class="px-4 pb-4">
     <!-- Loading State -->
     <div v-if="isLoading" class="space-y-6">
-      <UiSkeleton class="h-16 w-full" />
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <UiSkeleton v-for="i in 6" :key="i" class="h-24 w-full" />
-      </div>
-      <UiSkeleton class="h-64 w-full" />
+      <UiSkeleton class="h-full w-full" />
+    </div>
+
+    <!-- Error State -->
+    <div v-if="error" class="text-center py-12">
+      <div class="text-6xl mb-4">❌</div>
+      <UITypography variant="text-l-bold" class="text-fg mb-2">Ошибка загрузки: </UITypography>
+      <UITypography variant="text-m" class="text-fg opacity-70">
+        {{ formatApiError(error.response?.data || error) }}
+      </UITypography>
     </div>
 
     <!-- Crypto Not Found -->
-    <div v-else-if="!cryptoData" class="text-center py-12">
+    <div v-else-if="!cryptoData && !isLoading" class="text-center py-12">
       <div class="text-6xl mb-4">🔍</div>
       <UITypography variant="text-l-bold" class="text-fg mb-2">
         Криптовалюта не найдена
@@ -62,140 +59,151 @@ const goBack = () => {
     </div>
 
     <!-- Crypto Details -->
-    <div v-else class="space-y-6">
-      <!-- Main Info Card -->
-      <div class="bg-surface-0 rounded-lg border border-surface-border p-6">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-4">
-            <CoinMainInfo
-              :name="cryptoData.name"
-              :tagText="cryptoData.symbol"
-              :image="cryptoData.image"
-              size="lg"
-              variant="inlineAvatarNameTextTag"
-            />
-            <div class="text-2xl font-bold text-fg">#{{ cryptoData.rank }}</div>
-          </div>
-
-          <FavoriteToggle
-            :symbol="cryptoData.symbol"
-            :isFavorite="cryptoData.isFavorite"
-            :loading="isLoading"
-            :onToggle="toggleFavorite"
+    <div v-else-if="cryptoData" class="space-y-2">
+      <section class="flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <CoinMainInfo
+            :name="safeData.name"
+            :tagText="safeData.symbol"
+            :image="safeData.image"
+            size="lg"
+            variant="inlineAvatarNameTextTag"
           />
-        </div>
-
-        <!-- Price Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="text-center md:text-left">
-            <UITypography variant="text-s" class="text-fg opacity-70 mb-1">
-              Текущая цена
-            </UITypography>
-            <PriceCell :value="cryptoData.price" class="text-2xl" />
-          </div>
-
-          <div class="text-center">
-            <UITypography variant="text-s" class="text-fg opacity-70 mb-1">
-              Изменение за 24ч
-            </UITypography>
-            <PercentCell
-              :value="cryptoData.ch24h"
-              :trend="cryptoData.ch24h_direction"
-              class="text-xl"
+          <div class="flex items-center gap-2">
+            <FavoriteToggle
+              :symbol="safeData.symbol"
+              :isFavorite="safeData.isFavorite"
+              :loading="isLoading"
+              :onToggle="toggleFavorite"
             />
-          </div>
-
-          <div class="text-center md:text-right">
-            <UITypography variant="text-s" class="text-fg opacity-70 mb-1">
-              Изменение за 7д
-            </UITypography>
-            <PercentCell
-              :value="cryptoData.ch7d"
-              :trend="cryptoData.ch7d_direction"
-              class="text-xl"
-            />
+            <ShareIcon :symbol="safeData.symbol" />
           </div>
         </div>
+        <!-- Social Networks -->
+        <section v-if="safeData.socialNetworks">
+          <div class="flex gap-2 flex-wrap">
+            <UiButton
+              v-if="safeData.socialNetworks.twitter"
+              variant="ghost"
+              @click="openUrl(safeData.socialNetworks.twitter)"
+              class="flex items-center gap-2"
+            >
+              <i class="pi pi-twitter" />
+            </UiButton>
+            <UiButton
+              v-if="safeData.socialNetworks.telegram"
+              variant="ghost"
+              @click="openUrl(safeData.socialNetworks.telegram)"
+              class="flex items-center gap-2"
+            >
+              <i class="pi pi-send" />
+            </UiButton>
+            <UiButton
+              v-if="safeData.socialNetworks.discord"
+              variant="ghost"
+              @click="openUrl(safeData.socialNetworks.discord)"
+              class="flex items-center gap-2"
+            >
+              <i class="pi pi-discord" />
+            </UiButton>
+            <UiButton
+              v-if="safeData.socialNetworks.reddit"
+              variant="ghost"
+              @click="openUrl(safeData.socialNetworks.reddit)"
+              class="flex items-center gap-2"
+            >
+              <i class="pi pi-reddit" />
+            </UiButton>
+          </div>
+        </section>
+      </section>
+
+      <div class="flex justify-between">
+        <PriceCell :value="safeData.price" variant="text-h2" />
       </div>
 
-      <!-- Statistics Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Market Stats -->
-        <div class="bg-surface-0 rounded-lg border border-surface-border p-6">
-          <UITypography variant="text-l-bold" class="text-fg mb-4">
-            Рыночная статистика
-          </UITypography>
+      <section class="flex items-center justify-between">
+        <TimePeriodButtons />
+        <PriceMinMaxDisplay :min="safeData.allTimeLow?.price" :max="safeData.allTimeHigh?.price" />
+      </section>
 
-          <div class="space-y-4">
-            <div class="flex justify-between items-center">
-              <UITypography variant="text-m" class="text-fg opacity-70">
-                Рыночная капитализация
-              </UITypography>
-              <UITypography variant="text-m-bold" class="text-fg">
-                {{ cryptoData.marketCap }}
-              </UITypography>
-            </div>
-
-            <div class="flex justify-between items-center">
-              <UITypography variant="text-m" class="text-fg opacity-70">
-                Объем торгов (24ч)
-              </UITypography>
-              <UITypography variant="text-m-bold" class="text-fg">
-                {{ cryptoData.volume24h }}
-              </UITypography>
-            </div>
-
-            <div class="flex justify-between items-center">
-              <UITypography variant="text-m" class="text-fg opacity-70"> Рейтинг </UITypography>
-              <UITypography variant="text-m-bold" class="text-fg">
-                #{{ cryptoData.rank }}
-              </UITypography>
-            </div>
-          </div>
-        </div>
-
-        <!-- Price Chart -->
-        <div class="bg-surface-0 rounded-lg border border-surface-border p-6">
-          <UITypography variant="text-l-bold" class="text-fg mb-4">
-            График цены (7 дней)
-          </UITypography>
-
-          <div class="flex justify-center items-center h-32">
-            <SparklineCell
-              :data="cryptoData.spark"
-              :direction="cryptoData.ch7d_direction"
-              :percent="cryptoData.ch7d"
-              :width="300"
-              :height="120"
-            />
-          </div>
-        </div>
+      <div class="flex bg-blue-100 h-[470px] w-full">
+        <SparklineCell
+          :data="safeData.spark"
+          :direction="safeData.ch7d_direction"
+          :percent="safeData.ch7d"
+          :width="300"
+          :height="120"
+        />
       </div>
 
-      <!-- Additional Info -->
-      <div class="bg-surface-0 rounded-lg border border-surface-border p-6">
-        <UITypography variant="text-l-bold" class="text-fg mb-4">
-          Дополнительная информация
-        </UITypography>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <UITypography variant="text-s" class="text-fg opacity-70 mb-1"> Символ </UITypography>
-            <UITypography variant="text-m-bold" class="text-fg">
-              {{ cryptoData.symbol }}
-            </UITypography>
+      <div class="flex justify-between">
+        <section v-if="safeData.socialNetworks">
+          <div class="flex gap-2 flex-wrap">
+            <UiButton
+              v-if="safeData.site"
+              variant="secondary"
+              @click="openUrl(safeData.site)"
+              class="flex items-center gap-2"
+            >
+              <i class="pi pi-globe" />
+              Official site
+            </UiButton>
+            <UiButton
+              v-if="safeData.explorers?.[0]"
+              variant="secondary"
+              @click="openUrl(safeData.explorers[0].url)"
+              class="flex items-center gap-2"
+            >
+              <i class="pi pi-search" />
+              {{ safeData.explorers[0].name }}
+            </UiButton>
+            <UiButton
+              v-if="safeData.wallets?.[0]"
+              variant="secondary"
+              @click="openUrl(safeData.wallets[0].url)"
+              class="flex items-center gap-2"
+            >
+              <i class="pi pi-wallet" />
+              {{ safeData.wallets[0].name }}
+            </UiButton>
           </div>
-
-          <div>
-            <UITypography variant="text-s" class="text-fg opacity-70 mb-1">
-              Полное название
-            </UITypography>
-            <UITypography variant="text-m-bold" class="text-fg">
-              {{ cryptoData.name }}
-            </UITypography>
-          </div>
-        </div>
+        </section>
       </div>
+      <section class="grid grid-cols-5 gap-4">
+        <InfoItem label="Rank" :value="`#${safeData.rank}`" />
+        <InfoItem label="Symbol" :value="safeData.symbol" />
+        <InfoItem label="Name" :value="safeData.name" />
+        <InfoItem label="Circulating Supply" :value="safeData.circulatingSupply" />
+        <InfoItem label="Max Supply" :value="safeData.maxSupply" />
+
+        <InfoItem label="24h Change">
+          <PercentCell :value="safeData.ch24h" :trend="safeData.ch24h_direction" class="text-xl" />
+        </InfoItem>
+        <InfoItem label="7d Change">
+          <PercentCell :value="safeData.ch7d" :trend="safeData.ch7d_direction" class="text-xl" />
+        </InfoItem>
+        <InfoItem label="Market Cap">
+          <PriceCell :value="safeData.marketCap" class="text-2xl" />
+        </InfoItem>
+        <InfoItem label="24h Volume">
+          <PriceCell :value="safeData.volume24h" class="text-2xl" />
+        </InfoItem>
+
+        <InfoItem label="FDV" :value="safeData.fdv" />
+        <InfoItem label="Vol/Market Cap" :value="safeData.volMarketCapRatio" />
+        <InfoItem label="Total Supply" :value="safeData.totalSupply" />
+        <InfoItem label="Unlocked Market Cap" :value="safeData.unlockedMarketCap" />
+
+        <InfoItem label="All Time High" v-if="safeData.allTimeHigh">
+          <PriceCell :value="safeData.allTimeHigh.price" />
+          <div class="text-xs text-gray-500">{{ formatDate(safeData.allTimeHigh.date) }}</div>
+        </InfoItem>
+        <InfoItem label="All Time Low" v-if="safeData.allTimeLow">
+          <PriceCell :value="safeData.allTimeLow.price" />
+          <div class="text-xs text-gray-500">{{ formatDate(safeData.allTimeLow.date) }}</div>
+        </InfoItem>
+      </section>
     </div>
   </div>
 </template>

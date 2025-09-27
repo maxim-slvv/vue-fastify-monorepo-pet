@@ -4,6 +4,7 @@ import UITypography from '@/shared/ui/Typography/UITypography.vue'
 import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
 import CoinMainInfo from '@/entities/Crypto/ui/CoinMainInfo.vue'
 import type { ICryptoServerRow } from '@/entities/Crypto/types'
+import { formatPrice } from '@/shared/utils'
 
 const props = defineProps<{
   row: ICryptoServerRow
@@ -32,7 +33,7 @@ onMounted(() => {
           <UiSkeleton class="h-5 w-24" />
         </div>
       </div>
-      <div class="mt-4"></div>
+      <div class="mt-2"></div>
       <UiSkeleton class="h-65 w-full" rounded="lg" />
       <div class="mt-3 flex items-center justify-between">
         <UiSkeleton class="h-3 w-12" />
@@ -55,7 +56,7 @@ onMounted(() => {
           class="min-w-0"
         />
         <div class="text-right">
-          <UITypography variant="text-l-bold">{{ props.row.price }}</UITypography>
+          <UITypography variant="text-l-bold">{{ formatPrice(props.row.price) }}</UITypography>
           <div class="flex items-center justify-end gap-1">
             <span :class="props.row.ch24h_direction === 'up' ? 'text-green-600' : 'text-red-500'">
               {{ props.row.ch24h_direction === 'up' ? '▲' : '▼' }}

@@ -1,5 +1,7 @@
 import type { PaginatedListResponse, WithPagination } from '@/shared/api'
 
+export type CryptoTimePeriod = '24h' | '7d' | '14d' | '30d' | '60d' | '200d' | '1y'
+
 export interface ICryptoServerRow {
   rank: number
   name: string

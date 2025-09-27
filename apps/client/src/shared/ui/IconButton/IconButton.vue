@@ -25,9 +25,9 @@ const sizeClasses = {
 }
 
 const variantClasses = {
-  default: 'hover:bg-black/5 hover:scale-110',
-  ghost: 'hover:bg-black/3 hover:scale-105',
-  outline: 'border border-gray-300 hover:bg-black/5 hover:scale-105',
+  default: 'hover:bg-black/5',
+  ghost: 'hover:bg-black/3',
+  outline: 'border border-gray-300 hover:bg-black/5',
 }
 </script>
 

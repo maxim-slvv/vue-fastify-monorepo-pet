@@ -97,7 +97,7 @@ export function createBasicCoinData(
   return {
     symbol,
     image: `/cdn/image/${symbol}.png`,
-    price: `$${price.toFixed(price < PRICE_DECIMAL_THRESHOLD ? PRICE_HIGH_DECIMALS : PRICE_LOW_DECIMALS)}`,
+    price: `${price.toFixed(price < PRICE_DECIMAL_THRESHOLD ? PRICE_HIGH_DECIMALS : PRICE_LOW_DECIMALS)}`,
     ch24h: `${Math.abs(ch24h).toFixed(2)}%`,
     ch24h_direction: (ch24h >= 0 ? 'up' : 'down') as 'up' | 'down',
     ch7d: `${Math.abs(ch7d).toFixed(2)}%`,

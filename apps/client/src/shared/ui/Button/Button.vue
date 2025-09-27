@@ -38,7 +38,21 @@ const buttonProps = computed(() => {
 </script>
 
 <template>
-  <Button v-bind="buttonProps">
+  <Button v-bind="buttonProps" :class="{ 'ui-button-primary': props.variant === 'primary' }">
     <slot />
   </Button>
 </template>
+
+<style scoped>
+.ui-button-primary {
+  color: white !important;
+}
+
+.ui-button-primary :deep(.p-button-label) {
+  color: white !important;
+}
+
+.ui-button-primary :deep(span) {
+  color: white !important;
+}
+</style>

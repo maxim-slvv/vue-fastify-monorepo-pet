@@ -35,13 +35,16 @@ const imageSrc = computed(() => {
 
 <template>
   <div>
-    <UiSkeleton v-if="props.loading" :class="imageCls({ size: props.size })" rounded="full" />
-    <UiPicture
-      v-else
-      :src="imageSrc"
-      :alt="props.alt"
-      :class="imageCls({ size: props.size })"
-      loading="lazy"
-    />
+    <div v-if="props.loading" class="mt-[-4px]">
+      <UiSkeleton :class="imageCls({ size: props.size })" rounded="full" />
+    </div>
+    <div v-else class="mt-1">
+      <UiPicture
+        :src="imageSrc"
+        :alt="props.alt"
+        :class="imageCls({ size: props.size })"
+        loading="lazy"
+      />
+    </div>
   </div>
 </template>

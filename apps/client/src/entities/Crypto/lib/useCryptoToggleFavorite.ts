@@ -20,15 +20,15 @@ export function useCryptoToggleFavorite(
     onError: (error, variables) => {
       console.error('Error toggling favorite:', error)
 
-      // Откатываем локальное состояние при ошибке
+      //* Откатываем локальное состояние при ошибке
       if (rows) {
         if (!variables.isFavorite && options?.onUnfavorite) {
-          // Если мы пытались убрать из избранного, но произошла ошибка,
-          // нужно восстановить элемент в массиве
+          //* Если мы пытались убрать из избранного, но произошла ошибка,
+          //* нужно восстановить элемент в массиве
           //TODO: Здесь нужна более сложная логика восстановления из кэша TanStack Query
           console.warn('Failed to remove from favorites, element should be restored')
         } else {
-          // Обычный откат для изменения состояния
+          //* Обычный откат для изменения состояния
           const index = rows.value.findIndex((r) => r.symbol === variables.symbol)
           if (index !== -1) {
             rows.value = [
