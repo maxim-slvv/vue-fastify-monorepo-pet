@@ -393,23 +393,6 @@ html.dark .p-popover .p-popover-arrow {
   border-left-color: #000000 !important;
 }
 
-/* Button */
-.p-button.p-button-primary:hover {
-  background: var(--p-primary-hover-color) !important;
-  border-color: var(--p-primary-hover-color) !important;
-}
-
-/* Success button overrides */
-.p-button.p-button-success {
-  background: var(--p-success-color) !important;
-  border-color: var(--p-success-color) !important;
-  color: var(--p-success-contrast-color) !important;
-}
-.p-button.p-button-success:hover {
-  background: var(--p-success-hover-color) !important;
-  border-color: var(--p-success-hover-color) !important;
-}
-
 /* DataTable */
 .p-datatable-thead > tr > th {
   background-color: var(--p-datatable-header-cell-background) !important;
@@ -533,6 +516,66 @@ html.dark .p-popover .p-popover-arrow {
   color: var(--fg) !important;
   font-size: 0.875rem !important;
   padding: 0 0.75rem !important;
+}
+
+/* Secondary buttons for dark theme only */
+html.dark .p-button.p-button-secondary {
+  background: var(--p-secondary-color) !important;
+  border-color: var(--p-secondary-color) !important;
+  color: var(--p-secondary-contrast-color) !important;
+}
+
+html.dark .p-button.p-button-secondary:hover {
+  background: var(--p-secondary-hover-color) !important;
+  border-color: var(--p-secondary-hover-color) !important;
+}
+
+/* Success buttons for dark theme */
+html.dark .p-button.p-button-success {
+  background: var(--p-success-color) !important;
+  border-color: var(--p-success-color) !important;
+  color: var(--p-success-contrast-color) !important;
+}
+
+html.dark .p-button.p-button-success:hover {
+  background: var(--p-success-hover-color) !important;
+  border-color: var(--p-success-hover-color) !important;
+}
+
+/* Info buttons for dark theme */
+html.dark .p-button.p-button-info {
+  background: var(--p-info-color) !important;
+  border-color: var(--p-info-color) !important;
+  color: var(--p-info-contrast-color) !important;
+}
+
+html.dark .p-button.p-button-info:hover {
+  background: var(--p-info-hover-color) !important;
+  border-color: var(--p-info-hover-color) !important;
+}
+
+/* Warning buttons for dark theme */
+html.dark .p-button.p-button-warn {
+  background: var(--p-warn-color) !important;
+  border-color: var(--p-warn-color) !important;
+  color: var(--p-warn-contrast-color) !important;
+}
+
+html.dark .p-button.p-button-warn:hover {
+  background: var(--p-warn-hover-color) !important;
+  border-color: var(--p-warn-hover-color) !important;
+}
+
+/* Danger buttons for dark theme */
+html.dark .p-button.p-button-danger {
+  background: var(--p-danger-color) !important;
+  border-color: var(--p-danger-color) !important;
+  color: var(--p-danger-contrast-color) !important;
+}
+
+html.dark .p-button.p-button-danger:hover {
+  background: var(--p-danger-hover-color) !important;
+  border-color: var(--p-danger-hover-color) !important;
 }
 
 /* Select dropdown dark theme */

@@ -2,7 +2,7 @@
 import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCryptoDetail } from '@/entities/Crypto/lib/useCryptoDetail'
-import { formatApiError, formatDate } from '@/shared/utils'
+import { formatApiError } from '@/shared/utils'
 import { CRYPTO_TIME_DEFAULT } from '@/entities/Crypto/constants'
 import type { CryptoTimePeriod } from '@/entities/Crypto/types'
 import CoinMainInfo from '@/entities/Crypto/ui/CoinMainInfo.vue'
@@ -193,7 +193,7 @@ const openUrl = (url: string) => {
         </InfoItem>
 
         <InfoItem label="FDV" :value="safeData.fdv" />
-        <InfoItem label="Vol/Market Cap" :value="safeData.volMarketCapRatio" />
+        <!-- <InfoItem label="Vol/Market Cap" :value="safeData.volMarketCapRatio" />
         <InfoItem label="Total Supply" :value="safeData.totalSupply" />
         <InfoItem label="Unlocked Market Cap" :value="safeData.unlockedMarketCap" />
 
@@ -204,7 +204,7 @@ const openUrl = (url: string) => {
         <InfoItem label="All Time Low" v-if="safeData.allTimeLow">
           <PriceCell :value="safeData.allTimeLow.price" />
           <div class="text-xs text-gray-500">{{ formatDate(safeData.allTimeLow.date) }}</div>
-        </InfoItem>
+        </InfoItem> -->
       </section>
     </div>
   </div>

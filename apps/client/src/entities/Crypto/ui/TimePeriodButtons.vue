@@ -4,7 +4,6 @@ import { useRoute, useRouter } from 'vue-router'
 import UiButton from '@/shared/ui/Button/Button.vue'
 import { CRYPTO_TIME_DEFAULT, CRYPTO_TIME_PERIODS } from '../constants'
 import type { CryptoTimePeriod } from '../types'
-import UITypography from '@/shared/ui/Typography/UITypography.vue'
 
 defineOptions({ name: 'TimePeriodButtons' })
 
@@ -34,10 +33,10 @@ const selectPeriod = (period: CryptoTimePeriod) => {
       v-for="period in CRYPTO_TIME_PERIODS"
       :key="period.queryParam"
       size="small"
-      :variant="activePeriod === period.queryParam ? 'primary' : 'ghost'"
+      :variant="activePeriod === period.queryParam ? 'primary' : 'secondary'"
       @click="selectPeriod(period.queryParam)"
     >
-      <UITypography variant="text-s">{{ period.label }}</UITypography>
+      {{ period.label }}
     </UiButton>
   </div>
 </template>
