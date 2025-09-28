@@ -5,12 +5,13 @@ import IconField from 'primevue/iconfield'
 import InputIcon from 'primevue/inputicon'
 import UiButton from '@/shared/ui/Button/Button.vue'
 import UiDialog from '@/shared/ui/Dialog/UiDialog.vue'
-import BaseDataTable from '@/shared/ui/DataTable/BaseDataTable.vue'
+import BaseDataTable, { ColumnDef } from '@/shared/ui/DataTable/BaseDataTable.vue'
 import UITypography from '@/shared/ui/Typography/UITypography.vue'
 import type { PaginationState } from '@/shared/api/pagination'
 import type { PaginationMeta } from '@/shared/api/pagination/types'
 import { usePagination } from '@/shared/api/pagination'
 import { useSearchSort } from '@/shared/api/search/useSearchSort'
+import { useRouter } from 'vue-router'
 
 defineOptions({ name: 'UiDataTable' })
 
@@ -18,7 +19,7 @@ export type { ColumnDef } from '@/shared/ui/DataTable/BaseDataTable.vue'
 
 interface Props<T = unknown> {
   rows: T[]
-  columns: import('@/shared/ui/DataTable/BaseDataTable.vue').ColumnDef[]
+  columns: ColumnDef[]
   tableClass?: string
   rowKey?: string
   loading?: boolean
@@ -37,7 +38,7 @@ interface Props<T = unknown> {
 const props = defineProps<Props>()
 
 interface TableFeatures {
-  router: ReturnType<typeof import('vue-router').useRouter>
+  router: ReturnType<typeof useRouter>
 }
 
 const emit = defineEmits<{

@@ -1,17 +1,28 @@
-import type { ICryptoServerRow } from '../types.ts'
+import type { ICryptoInternalRow } from '../types.ts'
 import { initialCryptoRows } from './state.ts'
 
 export interface CryptoRepository {
-  getAll(): Promise<ICryptoServerRow[]>
-  saveAll(rows: ICryptoServerRow[]): Promise<void>
+  getAll(): Promise<ICryptoInternalRow[]>
+  saveAll(rows: ICryptoInternalRow[]): Promise<void>
 }
 
 export class InMemoryCryptoRepository implements CryptoRepository {
-  async getAll(): Promise<ICryptoServerRow[]> {
-    return initialCryptoRows
+  private data: ICryptoInternalRow[]
+
+  constructor() {
+    this.data = initialCryptoRows.map((row) => ({
+      ...row,
+      spark: row.spark.map((day) => [...day]),
+    }))
   }
 
-  async saveAll(rows: ICryptoServerRow[]): Promise<void> {
-    for (let i = 0; i < rows.length; i += 1) initialCryptoRows[i] = rows[i]
+  async getAll(): Promise<ICryptoInternalRow[]> {
+    return this.data
+  }
+
+  async saveAll(rows: ICryptoInternalRow[]): Promise<void> {
+    this.data = rows
   }
 }
+
+export const cryptoRepository = new InMemoryCryptoRepository()

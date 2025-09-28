@@ -1,11 +1,11 @@
-import { ICryptoServerRow } from '../types.ts'
-import { createSparkline, createBasicCoinData } from './generators.ts'
+import { ICryptoInternalRow } from '../types.ts'
+import { createDailySparklines, createBasicCoinData } from './generators.ts'
 
-export const initialCryptoRows: ICryptoServerRow[] = [
+export const initialCryptoRows: ICryptoInternalRow[] = [
   {
     rank: 1,
     name: 'Bitcoin',
-    spark: createSparkline(21, 120, 3),
+    spark: createDailySparklines(120, 6),
     isFavorite: true,
     ...createBasicCoinData('BTC', 'Bitcoin', '766,432,564,346', '38,544,965,954', {
       priceRange: [45000, 55000],
@@ -57,7 +57,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 2,
     name: 'Ethereum',
-    spark: createSparkline(21, 115, 3),
+    spark: createDailySparklines(115, 3),
     isFavorite: true,
     ...createBasicCoinData('ETH', 'Ethereum', '285,843,885,844', '24,954,954,953', {
       priceRange: [2400, 2700],
@@ -99,7 +99,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 3,
     name: 'Tether',
-    spark: createSparkline(21, 100, 0.5),
+    spark: createDailySparklines(100, 0.5),
     ...createBasicCoinData('USDT', 'Tether', '112,000,000,000', '56,000,000,000', {
       priceRange: [0.99, 1.01],
       ch24hRange: [-0.2, 0.2],
@@ -110,7 +110,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 4,
     name: 'Cardano',
-    spark: createSparkline(21, 62, 2.5),
+    spark: createDailySparklines(62, 2.5),
     ...createBasicCoinData('ADA', 'Cardano', '21,500,000,000', '850,000,000', {
       priceRange: [0.5, 0.8],
       ch24hRange: [0, 2],
@@ -121,7 +121,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 5,
     name: 'Bitcoin Cash',
-    spark: createSparkline(21, 120, 3),
+    spark: createDailySparklines(120, 6),
     ...createBasicCoinData('BCH', 'Bitcoin Cash', '8,200,000,000', '320,000,000', {
       priceRange: [350, 450],
       ch24hRange: [0, 1.5],
@@ -132,7 +132,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 6,
     name: 'Litecoin',
-    spark: createSparkline(21, 95, 2.5),
+    spark: createDailySparklines(95, 5),
     ...createBasicCoinData('LTC', 'Litecoin', '5,300,000,000', '240,000,000', {
       priceRange: [65, 85],
       ch24hRange: [0.5, 2],
@@ -143,7 +143,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 7,
     name: 'Dogecoin',
-    spark: createSparkline(21, 45, 4),
+    spark: createDailySparklines(45, 8),
     ...createBasicCoinData('DOGE', 'Dogecoin', '17,400,000,000', '1,100,000,000', {
       priceRange: [0.1, 0.15],
       ch24hRange: [-3, 3],
@@ -154,7 +154,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 8,
     name: 'Solana',
-    spark: createSparkline(21, 130, 3),
+    spark: createDailySparklines(130, 6),
     ...createBasicCoinData('SOL', 'Solana', '63,000,000,000', '2,300,000,000', {
       priceRange: [120, 160],
       ch24hRange: [1, 3],
@@ -165,7 +165,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 9,
     name: 'Uniswap',
-    spark: createSparkline(21, 85, 2.5),
+    spark: createDailySparklines(85, 5),
     isFavorite: false,
     ...createBasicCoinData('UNI', 'Uniswap', '4,800,000,000', '180,000,000', {
       priceRange: [7, 10],
@@ -177,7 +177,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 10,
     name: 'Shiba Inu',
-    spark: createSparkline(21, 35, 5),
+    spark: createDailySparklines(35, 8),
     ...createBasicCoinData('SHIB', 'Shiba Inu', '9,100,000,000', '420,000,000', {
       priceRange: [0.00001, 0.00003],
       launchYear: 2020,
@@ -186,7 +186,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 11,
     name: 'Toncoin',
-    spark: createSparkline(21, 70, 2.2),
+    spark: createDailySparklines(70, 5),
     ...createBasicCoinData('TON', 'Toncoin', '21,000,000,000', '500,000,000', {
       priceRange: [5, 7],
       launchYear: 2018,
@@ -195,7 +195,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 12,
     name: 'Stellar',
-    spark: createSparkline(21, 55, 2),
+    spark: createDailySparklines(55, 2),
     ...createBasicCoinData('XLM', 'Stellar', '3,400,000,000', '120,000,000', {
       priceRange: [0.1, 0.15],
       launchYear: 2014,
@@ -204,7 +204,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 13,
     name: 'Sui',
-    spark: createSparkline(21, 60, 2.5),
+    spark: createDailySparklines(60, 2.5),
     ...createBasicCoinData('SUI', 'Sui', '1,800,000,000', '95,000,000', {
       priceRange: [1.2, 1.6],
       launchYear: 2023,
@@ -213,13 +213,13 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 14,
     name: 'Radworks',
-    spark: createSparkline(21, 60, 2.5),
+    spark: createDailySparklines(60, 2.5),
     ...createBasicCoinData('RAD', 'Radworks', '120,000,000', '9,000,000', { priceRange: [2, 3] }),
   },
   {
     rank: 15,
     name: 'PROVE',
-    spark: createSparkline(21, 45, 4),
+    spark: createDailySparklines(45, 8),
     ...createBasicCoinData('PROVE', 'PROVE', '15,000,000', '1,200,000', {
       priceRange: [0.1, 0.15],
     }),
@@ -227,7 +227,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 16,
     name: 'PENGU',
-    spark: createSparkline(21, 40, 4),
+    spark: createDailySparklines(40, 4),
     ...createBasicCoinData('PENGU', 'PENGU', '8,000,000', '600,000', {
       priceRange: [0.025, 0.035],
       launchYear: 2024,
@@ -236,7 +236,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 17,
     name: 'Magic',
-    spark: createSparkline(21, 75, 3.2),
+    spark: createDailySparklines(75, 3.2),
     ...createBasicCoinData('MAGIC', 'Magic', '250,000,000', '20,000,000', {
       priceRange: [0.7, 1],
     }),
@@ -244,7 +244,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 18,
     name: 'Pepe',
-    spark: createSparkline(21, 30, 5),
+    spark: createDailySparklines(30, 5),
     ...createBasicCoinData('PEPE', 'Pepe', '4,500,000,000', '650,000,000', {
       priceRange: [0.000008, 0.000012],
       launchYear: 2023,
@@ -253,7 +253,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 19,
     name: 'Popcat',
-    spark: createSparkline(21, 50, 4.5),
+    spark: createDailySparklines(50, 4.5),
     ...createBasicCoinData('POPCAT', 'Popcat', '120,000,000', '9,500,000', {
       priceRange: [0.18, 0.22],
     }),
@@ -261,7 +261,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 20,
     name: 'Meme',
-    spark: createSparkline(21, 42, 3.8),
+    spark: createDailySparklines(42, 3.8),
     ...createBasicCoinData('MEME', 'Meme', '20,000,000', '1,700,000', {
       priceRange: [0.015, 0.025],
     }),
@@ -269,7 +269,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 21,
     name: 'dogwifhat',
-    spark: createSparkline(21, 80, 4),
+    spark: createDailySparklines(80, 4),
     ...createBasicCoinData('WIF', 'dogwifhat', '2,400,000,000', '180,000,000', {
       priceRange: [2, 3],
       launchYear: 2023,
@@ -278,7 +278,7 @@ export const initialCryptoRows: ICryptoServerRow[] = [
   {
     rank: 22,
     name: 'TRUMP',
-    spark: createSparkline(21, 95, 3.5),
+    spark: createDailySparklines(95, 3.5),
     ...createBasicCoinData('TRUMP', 'TRUMP', '500,000,000', '40,000,000', {
       priceRange: [6, 8],
       launchYear: 2024,

@@ -27,6 +27,8 @@ export const IMAGE_SYMBOLS = [
 
 export const cryptoSymbolSchema = z.enum(IMAGE_SYMBOLS)
 
+export const timePeriodSchema = z.enum(['24h', '7d', '14d', '30d', '60d', '200d', '1y'])
+
 export const cryptoRowSchema = z.object({
   rank: z.number(),
   name: z.string(),
@@ -37,9 +39,26 @@ export const cryptoRowSchema = z.object({
   ch24h_direction: z.enum(['up', 'down']),
   ch7d: z.string(),
   ch7d_direction: z.enum(['up', 'down']),
+  ch14d: z.string(),
+  ch14d_direction: z.enum(['up', 'down']),
+  ch30d: z.string(),
+  ch30d_direction: z.enum(['up', 'down']),
+  ch60d: z.string(),
+  ch60d_direction: z.enum(['up', 'down']),
+  ch200d: z.string(),
+  ch200d_direction: z.enum(['up', 'down']),
+  ch1y: z.string(),
+  ch1y_direction: z.enum(['up', 'down']),
   marketCap: z.string(),
   volume24h: z.string(),
-  spark: z.array(z.number()),
+  spark: z.object({
+    points: z.array(z.number()),
+    timestamps: z.array(z.number()),
+    period: z.string(),
+    pointsPerDay: z.number(),
+    totalDays: z.number(),
+    resolution: z.string(),
+  }),
   isFavorite: z.boolean().optional(),
   site: z.string().url().optional(),
   unlockedMarketCap: z.string().optional(),
@@ -109,9 +128,26 @@ export const cryptoFieldExamples: { [K in keyof CryptoRow]-?: CryptoRow[K] } = {
   ch24h_direction: 'down',
   ch7d: '0.85%',
   ch7d_direction: 'down',
+  ch14d: '2.15%',
+  ch14d_direction: 'up',
+  ch30d: '5.32%',
+  ch30d_direction: 'up',
+  ch60d: '12.45%',
+  ch60d_direction: 'up',
+  ch200d: '45.67%',
+  ch200d_direction: 'up',
+  ch1y: '89.23%',
+  ch1y_direction: 'up',
   marketCap: '$766,432,564,346',
   volume24h: '$38,544,965,954',
-  spark: [1, 2, 3, 4, 5],
+  spark: {
+    points: [1, 2, 3, 4, 5],
+    timestamps: [1640995200000, 1640995500000, 1640995800000, 1640996100000, 1640996400000],
+    period: '24h',
+    pointsPerDay: 288,
+    totalDays: 1,
+    resolution: '5min',
+  },
   isFavorite: true,
   site: 'https://bitcoin.org',
   unlockedMarketCap: '$766,432,564,346',
@@ -168,5 +204,6 @@ export const cryptoFieldExamples: { [K in keyof CryptoRow]-?: CryptoRow[K] } = {
 export const favoriteParamsSchema = z.object({ symbol: cryptoSymbolSchema })
 export const favoriteBodySchema = z.object({ isFavorite: z.boolean() })
 export const coinParamsSchema = z.object({ symbol: cryptoSymbolSchema })
+export const periodQuerySchema = z.object({ period: timePeriodSchema.default('7d') })
 
 export type { z }

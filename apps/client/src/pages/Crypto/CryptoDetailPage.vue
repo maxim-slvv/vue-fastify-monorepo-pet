@@ -3,6 +3,8 @@ import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useCryptoDetail } from '@/entities/Crypto/lib/useCryptoDetail'
 import { formatApiError, formatDate } from '@/shared/utils'
+import { CRYPTO_TIME_DEFAULT } from '@/entities/Crypto/constants'
+import type { CryptoTimePeriod } from '@/entities/Crypto/types'
 import CoinMainInfo from '@/entities/Crypto/ui/CoinMainInfo.vue'
 import PriceCell from '@/entities/Crypto/ui/PriceCell.vue'
 import PercentCell from '@/entities/Crypto/ui/PercentCell.vue'
@@ -21,8 +23,9 @@ defineComponent({ name: 'CryptoDetailPage' })
 const route = useRoute()
 
 const symbol = computed(() => route.params.symbol as string)
+const period = computed(() => (route.query.period as CryptoTimePeriod) || CRYPTO_TIME_DEFAULT)
 
-const { cryptoData, isLoading, error, toggleFavorite } = useCryptoDetail(symbol.value)
+const { cryptoData, isLoading, error, toggleFavorite } = useCryptoDetail(symbol.value, period)
 
 const safeData = computed(() => cryptoData.value!)
 
@@ -131,9 +134,8 @@ const openUrl = (url: string) => {
         <SparklineCell
           :data="safeData.spark"
           :direction="safeData.ch7d_direction"
-          :percent="safeData.ch7d"
-          :width="300"
-          :height="120"
+          :width="1200"
+          :height="600"
         />
       </div>
 

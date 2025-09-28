@@ -14,6 +14,7 @@ export const paginationParamsSchema = z.object({
   sort: z.string().optional(),
   order: z.enum([ORDER_ASC, ORDER_DESC]).optional(),
   search: z.string().optional(),
+  period: z.enum(['24h', '7d', '14d', '30d', '60d', '200d', '1y']).default('7d').optional(),
 })
 
 export const paginationMetaSchema = z.object({

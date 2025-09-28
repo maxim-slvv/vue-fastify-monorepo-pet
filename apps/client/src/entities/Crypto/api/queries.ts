@@ -19,7 +19,7 @@ export const CRYPTO_QUERY_KEYS = {
   list: ['crypto', 'list'],
   top: ['crypto', 'top'],
   favorite: ['crypto', 'favorite'],
-  bySymbol: (symbol: string) => ['crypto', 'bySymbol', symbol],
+  bySymbol: (symbol: string, period?: string) => ['crypto', 'bySymbol', symbol, period],
 } as const
 
 export const useCryptoList: QueryHook<
@@ -91,16 +91,19 @@ export const useCryptoBySymbol: QueryHook<CryptoBySymbolRequest, CryptoBySymbolR
 }) => {
   return useQuery({
     queryKey: computed(() => {
+      const currentParams = unref(params) as CryptoBySymbolRequest
       return [
-        ...CRYPTO_QUERY_KEYS.bySymbol((unref(params) as CryptoBySymbolRequest)?.symbol),
+        ...CRYPTO_QUERY_KEYS.bySymbol(currentParams?.symbol, currentParams?.period),
         unref(params),
       ]
     }),
     queryFn: async ({ signal }) => {
+      const currentParams = unref(params) as CryptoBySymbolRequest
       const response = await api.get<CryptoBySymbolResponse>(
-        `/api/crypto/${(unref(params) as CryptoBySymbolRequest)?.symbol}`,
+        `/api/crypto/${currentParams?.symbol}`,
         {
           signal,
+          params: currentParams?.period ? { period: currentParams.period } : undefined,
         },
       )
       return response.data
@@ -124,6 +127,9 @@ export const invalidateCryptoFavorite = () => {
   invalidateQueries(CRYPTO_QUERY_KEYS.favorite)
 }
 
-export const invalidateCryptoBySymbol = (symbol: string) => {
-  invalidateQueries(CRYPTO_QUERY_KEYS.bySymbol(symbol))
+export const invalidateCryptoBySymbol = (symbol: string, period?: string) => {
+  const queryKey = period
+    ? CRYPTO_QUERY_KEYS.bySymbol(symbol, period)
+    : ['crypto', 'bySymbol', symbol]
+  invalidateQueries(queryKey as readonly string[])
 }

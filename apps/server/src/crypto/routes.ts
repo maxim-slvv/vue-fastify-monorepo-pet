@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 
-import { InMemoryCryptoRepository } from './store/repository.ts'
+import { cryptoRepository } from './store/repository.ts'
 import { DefaultCryptoService } from './service/index.ts'
 import {
   registerListRoute,
@@ -27,7 +27,7 @@ export async function registerCryptoRoutes(app: FastifyInstance): Promise<void> 
     presets: cryptoFieldsPresets,
   })
 
-  const service = new DefaultCryptoService(new InMemoryCryptoRepository())
+  const service = new DefaultCryptoService(cryptoRepository)
 
   const zapp = app.withTypeProvider<ZodTypeProvider>()
 
@@ -36,7 +36,12 @@ export async function registerCryptoRoutes(app: FastifyInstance): Promise<void> 
     path: '/api/crypto',
     resource: cryptoResource,
     preset: 'base',
-    handler: () => service.list(),
+    handler: async (params) => {
+      const period = params?.period || '7d'
+      const result = await service.list(period)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return result as any[]
+    },
   })
 
   registerListRoute(zapp, {
@@ -44,7 +49,12 @@ export async function registerCryptoRoutes(app: FastifyInstance): Promise<void> 
     path: '/api/crypto/top',
     resource: cryptoResource,
     preset: 'top',
-    handler: () => service.listTop(),
+    handler: async (params) => {
+      const period = params?.period || '7d'
+      const result = await service.listTop(period)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return result as any[]
+    },
   })
 
   registerListRoute(zapp, {
@@ -52,7 +62,12 @@ export async function registerCryptoRoutes(app: FastifyInstance): Promise<void> 
     path: '/api/crypto/favorite',
     resource: cryptoResource,
     preset: 'favorite',
-    handler: () => service.listFavorite(),
+    handler: async (params) => {
+      const period = params?.period || '7d'
+      const result = await service.listFavorite(period)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return result as any[]
+    },
   })
 
   registerActionRoute(zapp, {
@@ -75,7 +90,10 @@ export async function registerCryptoRoutes(app: FastifyInstance): Promise<void> 
     paramsSchema: coinParamsSchema,
     handler: async (req) => {
       const { symbol } = coinParamsSchema.parse(req.params)
-      return service.getBySymbol(symbol)
+      const period = req.query?.period || '7d'
+      const result = await service.getBySymbol(symbol, period)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return result as any
     },
     notFoundMessage: 'Coin not found',
   })

@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 import { z } from 'zod'
 import type { PaginationParams } from '../pagination/index.ts'
+import { makeResource } from './resource-factory.ts'
 
 export interface ResourceConfig<
   RowShape extends z.ZodRawShape,
@@ -22,7 +23,7 @@ export interface ListRouteOptions<
   Row extends z.infer<z.ZodObject<RowShape>>,
 > {
   path: string
-  resource: ReturnType<typeof import('./resource-factory.ts').makeResource<RowShape, Row>>
+  resource: ReturnType<typeof makeResource<RowShape, Row>>
   preset: string
   handler: (params?: PaginationParams) => Promise<Row[]>
   method: MethodName | RouteRegister
@@ -53,7 +54,7 @@ export interface SingleRouteOptions<
   Row extends z.infer<z.ZodObject<RowShape>>,
 > {
   path: string
-  resource: ReturnType<typeof import('./resource-factory.ts').makeResource<RowShape, Row>>
+  resource: ReturnType<typeof makeResource<RowShape, Row>>
   preset: string
   paramsSchema: z.ZodTypeAny
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

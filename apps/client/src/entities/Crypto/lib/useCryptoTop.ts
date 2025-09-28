@@ -1,13 +1,17 @@
-import { ref, onMounted, onBeforeUnmount, watch, computed, unref } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch, computed, unref, type Ref } from 'vue'
 import { io, type Socket } from 'socket.io-client'
-import type { ICryptoServerRow } from '@/entities/Crypto/types'
+import type {
+  ICryptoServerRow,
+  ICryptoInternalRow,
+  CryptoTimePeriod,
+} from '@/entities/Crypto/types'
 import { API_URL } from '@/shared/config/api'
 import { useCryptoToggleFavorite } from './useCryptoToggleFavorite'
 import { useCryptoList } from '../api/queries'
 import type { PaginationMeta } from '@/shared/api'
 import { useSearchSort } from '@/shared/api/search/useSearchSort'
 
-export function useCryptoTop() {
+export function useCryptoTop(period?: Ref<CryptoTimePeriod>) {
   const rows = ref<ICryptoServerRow[]>([])
   let socket: Socket | null = null
   const subscribedSymbols = ref<string[]>([])
@@ -23,6 +27,7 @@ export function useCryptoTop() {
     const order = unref(sortOrder)
     const currentPage = unref(page)
     const currentLimit = unref(limit)
+    const currentPeriod = period ? unref(period) : undefined
 
     params.page = currentPage.toString()
     params.limit = currentLimit.toString()
@@ -35,6 +40,9 @@ export function useCryptoTop() {
     }
     if (order) {
       params.order = order
+    }
+    if (currentPeriod) {
+      params.period = currentPeriod
     }
     return params
   })
@@ -94,13 +102,51 @@ export function useCryptoTop() {
   function connect(): void {
     if (socket) return
     socket = io(`${API_URL}/crypto-v1`, { transports: ['websocket'] })
-    // Слушаем батч-обновления
-    socket.on('ticker:batch', (batch: ICryptoServerRow[]) => {
+
+    socket.on('ticker:batch', (batch: ICryptoInternalRow[]) => {
       if (!Array.isArray(batch) || batch.length === 0) return
       const bySymbol = new Map(batch.map((r) => [r.symbol, r]))
-      rows.value = rows.value.map((row) =>
-        bySymbol.has(row.symbol) ? { ...row, ...bySymbol.get(row.symbol)! } : row,
-      )
+
+      rows.value = rows.value.map((row) => {
+        if (bySymbol.has(row.symbol)) {
+          const update = bySymbol.get(row.symbol)!
+
+          if (update.spark && row.spark) {
+            const lastDay = update.spark[update.spark.length - 1] || []
+            const newPoint = lastDay[lastDay.length - 1]
+
+            if (newPoint !== undefined) {
+              const currentPoints = row.spark.points
+              const updatedPoints = [...currentPoints.slice(1), newPoint]
+
+              const currentTimestamps = row.spark.timestamps
+              const newTimestamp = Date.now()
+              const updatedTimestamps = [...currentTimestamps.slice(1), newTimestamp]
+
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              const { spark: _, ...updateWithoutSpark } = update
+              return {
+                ...row,
+                ...updateWithoutSpark,
+                spark: {
+                  ...row.spark,
+                  points: updatedPoints,
+                  timestamps: updatedTimestamps,
+                },
+              }
+            } else {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              const { spark: _, ...updateWithoutSpark } = update
+              return { ...row, ...updateWithoutSpark }
+            }
+          } else {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const { spark: _, ...updateWithoutSpark } = update
+            return { ...row, ...updateWithoutSpark }
+          }
+        }
+        return row
+      })
     })
   }
 

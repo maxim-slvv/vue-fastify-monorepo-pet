@@ -2,10 +2,11 @@
 import Sparkline from '@/shared/ui/Sparkline/Sparkline.vue'
 import UITypography from '@/shared/ui/Typography/UITypography.vue'
 import UiSkeleton from '@/shared/ui/Skeleton/UiSkeleton.vue'
+import { RichSparkline } from '../types'
 
 const props = withDefaults(
   defineProps<{
-    data: number[]
+    data: number[] | RichSparkline
     direction: 'up' | 'down'
     percent?: string
     showPercent?: boolean

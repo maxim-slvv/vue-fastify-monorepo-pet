@@ -1,9 +1,9 @@
 import type { Namespace } from 'socket.io'
-import { InMemoryCryptoRepository } from './store/repository.ts'
+import { cryptoRepository } from './store/repository.ts'
 import { DefaultCryptoService } from './service/index.ts'
 
 export function startCryptoTicker(io: Namespace): void {
-  const service = new DefaultCryptoService(new InMemoryCryptoRepository())
+  const service = new DefaultCryptoService(cryptoRepository)
 
   io.on('connection', (socket) => {
     const safeEmit = (event: string, payload: unknown) => {
@@ -48,10 +48,8 @@ export function startCryptoTicker(io: Namespace): void {
     const interval = setInterval(async () => {
       try {
         const updated = await service.tick()
-        // Батчим обновления по символам в одно сообщение
         io.emit('ticker:batch', updated)
         const [top, fav] = await Promise.all([service.listTop(), service.listFavorite()])
-        // Рассылаем топ/избранное только подписанным комнатам
         io.to('TOP').emit('ticker:top', top)
         io.to('FAVORITE').emit('ticker:favorite', fav)
       } catch {

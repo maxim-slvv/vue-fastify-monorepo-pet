@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import UiButton from '@/shared/ui/Button/Button.vue'
 import { CRYPTO_TIME_DEFAULT, CRYPTO_TIME_PERIODS } from '../constants'
 import type { CryptoTimePeriod } from '../types'
@@ -7,7 +8,20 @@ import UITypography from '@/shared/ui/Typography/UITypography.vue'
 
 defineOptions({ name: 'TimePeriodButtons' })
 
-const activePeriod = ref<CryptoTimePeriod>(CRYPTO_TIME_DEFAULT)
+const route = useRoute()
+const router = useRouter()
+
+const activePeriod = computed({
+  get: () => (route.query.period as CryptoTimePeriod) || CRYPTO_TIME_DEFAULT,
+  set: (period: CryptoTimePeriod) => {
+    router.push({
+      query: {
+        ...route.query,
+        period: period !== CRYPTO_TIME_DEFAULT ? period : undefined,
+      },
+    })
+  },
+})
 
 const selectPeriod = (period: CryptoTimePeriod) => {
   activePeriod.value = period
