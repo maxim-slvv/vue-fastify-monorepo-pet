@@ -1,7 +1,11 @@
 import type { Ref } from 'vue'
 import type { ICryptoServerRow } from '@/entities/Crypto/types'
-import { useSetCryptoFavorite } from '../api/mutations'
-import { invalidateCryptoList, invalidateCryptoTop, invalidateCryptoFavorite } from '../api/queries'
+import { useSetCryptoFavorite } from '../../api/mutations'
+import {
+  invalidateCryptoList,
+  invalidateCryptoTop,
+  invalidateCryptoFavorite,
+} from '../../api/queries'
 
 interface UseCryptoToggleFavoriteOptions {
   onUnfavorite?: (symbol: string) => void

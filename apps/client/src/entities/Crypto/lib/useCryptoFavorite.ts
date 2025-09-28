@@ -1,19 +1,10 @@
-import { ref, onMounted, onBeforeUnmount, watch, computed, unref } from 'vue'
-import { io, type Socket } from 'socket.io-client'
-import type { ICryptoServerRow, ICryptoInternalRow } from '@/entities/Crypto/types'
-import { API_URL } from '@/shared/config/api'
-import { useCryptoToggleFavorite } from './useCryptoToggleFavorite'
+import { computed, unref } from 'vue'
+import { useCryptoToggleFavorite } from './utils/useCryptoToggleFavorite'
 import { useCryptoFavorite as useCryptoFavoriteQuery } from '../api/queries'
-import type { PaginationMeta } from '@/shared/api'
 import { useSearchSort } from '@/shared/api/search/useSearchSort'
+import { useCryptoTable } from './utils/useCryptoTable'
 
 export function useCryptoFavorite() {
-  const rows = ref<ICryptoServerRow[]>([])
-  let socket: Socket | null = null
-  const subscribedSymbols = ref<string[]>([])
-  const meta = ref<PaginationMeta | null>(null)
-  const pagesCache = ref<Record<string, ICryptoServerRow[]>>({})
-
   const { searchValue, sortField, sortOrder, page, limit } = useSearchSort()
 
   const paramsComputed = computed(() => {
@@ -39,151 +30,29 @@ export function useCryptoFavorite() {
     return params
   })
 
-  const { data, isLoading, error, refetch } = useCryptoFavoriteQuery({ params: paramsComputed })
-
-  const { toggleFavorite, isLoading: isMutating } = useCryptoToggleFavorite(rows, {
-    onUnfavorite: (symbol: string) => {
-      rows.value = rows.value.filter((item) => item.symbol !== symbol)
+  const table = useCryptoTable(
+    () => useCryptoFavoriteQuery({ params: paramsComputed }),
+    paramsComputed,
+    {
+      onUnfavorite: (symbol: string) => {
+        table.rows.value = table.rows.value.filter((item) => item.symbol !== symbol)
+      },
     },
-  })
-
-  watch(
-    data,
-    (newData) => {
-      if (newData) {
-        if (!isMutating.value) {
-          rows.value = newData.data
-          meta.value = newData.meta
-          const cacheKey = JSON.stringify(paramsComputed.value)
-          pagesCache.value[cacheKey] = newData.data
-
-          const nextSymbols = newData.data.map((row) => row.symbol.toUpperCase())
-          const prevSymbols = subscribedSymbols.value
-
-          const prevSet = new Set(prevSymbols)
-          const nextSet = new Set(nextSymbols)
-
-          const toSubscribe = nextSymbols.filter((s) => !prevSet.has(s))
-          const toUnsubscribe = prevSymbols.filter((s) => !nextSet.has(s))
-
-          if (toUnsubscribe.length) unsubscribeFromSymbols(toUnsubscribe)
-          if (toSubscribe.length) subscribeToSymbols(toSubscribe)
-
-          subscribedSymbols.value = nextSymbols
-        }
-      }
-    },
-    { immediate: true },
   )
 
-  watch([page, limit, searchValue, sortField, sortOrder], () => {
-    const cacheKey = JSON.stringify(paramsComputed.value)
-    if (pagesCache.value[cacheKey]) {
-      const cached = pagesCache.value[cacheKey]
-      rows.value = cached
-      const symbols = cached.map((r) => r.symbol.toUpperCase())
-      const prevSymbols = subscribedSymbols.value
-      const prevSet = new Set(prevSymbols)
-      const nextSet = new Set(symbols)
-      const toSubscribe = symbols.filter((s) => !prevSet.has(s))
-      const toUnsubscribe = prevSymbols.filter((s) => !nextSet.has(s))
-      if (toUnsubscribe.length) unsubscribeFromSymbols(toUnsubscribe)
-      if (toSubscribe.length) subscribeToSymbols(toSubscribe)
-      subscribedSymbols.value = symbols
-    }
-  })
-
-  function connect(): void {
-    if (socket) return
-    socket = io(`${API_URL}/crypto-v1`, { transports: ['websocket'] })
-
-    socket.on('ticker:batch', (batch: ICryptoInternalRow[]) => {
-      if (!Array.isArray(batch) || batch.length === 0) return
-      const bySymbol = new Map(batch.map((r) => [r.symbol, r]))
-
-      rows.value = rows.value.map((row) => {
-        if (bySymbol.has(row.symbol)) {
-          const update = bySymbol.get(row.symbol)!
-
-          if (update.spark && row.spark) {
-            const lastDay = update.spark[update.spark.length - 1] || []
-            const newPoint = lastDay[lastDay.length - 1]
-
-            if (newPoint !== undefined) {
-              const currentPoints = row.spark.points
-              const updatedPoints = [...currentPoints.slice(1), newPoint]
-
-              const currentTimestamps = row.spark.timestamps
-              const newTimestamp = Date.now()
-              const updatedTimestamps = [...currentTimestamps.slice(1), newTimestamp]
-
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              const { spark: _, ...updateWithoutSpark } = update
-              return {
-                ...row,
-                ...updateWithoutSpark,
-                spark: {
-                  ...row.spark,
-                  points: updatedPoints,
-                  timestamps: updatedTimestamps,
-                },
-              }
-            } else {
-              // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              const { spark: _, ...updateWithoutSpark } = update
-              return { ...row, ...updateWithoutSpark }
-            }
-          } else {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const { spark: _, ...updateWithoutSpark } = update
-            return { ...row, ...updateWithoutSpark }
-          }
-        }
-        return row
-      })
-    })
-  }
-
-  function disconnect(): void {
-    if (!socket) return
-    socket.removeAllListeners()
-    socket.disconnect()
-    socket = null
-  }
-
-  function subscribeToSymbols(symbols: string[]): void {
-    if (!socket || symbols.length === 0) return
-    socket.emit(
-      'subscribe',
-      symbols.map((s) => s.toUpperCase()),
-    )
-  }
-
-  function unsubscribeFromSymbols(symbols: string[]): void {
-    if (!socket || symbols.length === 0) return
-    socket.emit(
-      'unsubscribe',
-      symbols.map((s) => s.toUpperCase()),
-    )
-  }
-
-  onMounted(() => {
-    connect()
-  })
-
-  onBeforeUnmount(() => {
-    disconnect()
+  const { toggleFavorite } = useCryptoToggleFavorite(table.rows, {
+    onUnfavorite: table.removeFavorite,
   })
 
   return {
-    rows,
-    meta,
-    pagesCache,
-    isLoading,
-    error,
-    connect,
-    disconnect,
+    rows: table.rows,
+    meta: table.meta,
+    pagesCache: table.pagesCache,
+    isLoading: table.isLoading,
+    error: table.error,
+    connect: table.connect,
+    disconnect: table.disconnect,
     toggleFavorite,
-    refetch,
+    refetch: table.refetch,
   }
 }
