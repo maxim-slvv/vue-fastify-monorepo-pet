@@ -1,6 +1,10 @@
 Запуск в dev:
 
 ```
+nvm use 20.19.0
+```
+2 терминала
+```
 yarn --cwd apps/client dev
 yarn --cwd apps/server dev
 ```

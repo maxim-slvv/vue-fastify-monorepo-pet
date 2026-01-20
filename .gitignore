@@ -8,10 +8,11 @@ node_modules
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+.nx/
+.claude/
+CLAUDE.md
 dist
 dist-ssr
 coverage
 *.log
 
-
-.nx/

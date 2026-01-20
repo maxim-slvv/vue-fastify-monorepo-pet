@@ -97,7 +97,6 @@ export function createRichSparkline(
   }
 
   const MAX_POINTS = 300
-  const baseTimestamp = Date.now() - dailySparklines.length * 24 * 60 * 60 * 1000
 
   let days: number[][]
   let totalDays: number
@@ -167,13 +166,15 @@ export function createRichSparkline(
   const result = extractPointsFromDaysWithLimit(days, maxPointsForPeriod)
   const pointsPerDay = Math.max(1, Math.floor(maxPointsForPeriod / days.length))
 
+  const now = Date.now()
   const timestamps = result.map((_, index) => {
     const dayIndex = Math.floor(index / pointsPerDay)
     const pointInDay = index % pointsPerDay
-    const dayTimestamp = baseTimestamp + (days.length - totalDays + dayIndex) * 24 * 60 * 60 * 1000
+
+    const dayTimestamp = now - (totalDays - dayIndex) * 24 * 60 * 60 * 1000
 
     if (pointsPerDay === 1) {
-      return dayTimestamp + 23 * 60 * 60 * 1000
+      return dayTimestamp
     } else {
       const pointInterval = (24 * 60 * 60 * 1000) / pointsPerDay
       return dayTimestamp + pointInDay * pointInterval

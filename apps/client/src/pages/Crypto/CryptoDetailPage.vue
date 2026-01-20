@@ -8,7 +8,7 @@ import type { CryptoTimePeriod } from '@/entities/Crypto/types'
 import CoinMainInfo from '@/entities/Crypto/ui/CoinMainInfo.vue'
 import PriceCell from '@/entities/Crypto/ui/PriceCell.vue'
 import PercentCell from '@/entities/Crypto/ui/PercentCell.vue'
-import SparklineCell from '@/entities/Crypto/ui/SparklineCell.vue'
+import { TradingChart } from '@/shared/ui/TradingChart'
 import FavoriteToggle from '@/entities/Crypto/ui/FavoriteToggle.vue'
 import TimePeriodButtons from '@/entities/Crypto/ui/TimePeriodButtons.vue'
 import PriceMinMaxDisplay from '@/entities/Crypto/ui/PriceMinMaxDisplay.vue'
@@ -130,12 +130,11 @@ const openUrl = (url: string) => {
         <PriceMinMaxDisplay :min="safeData.allTimeLow?.price" :max="safeData.allTimeHigh?.price" />
       </section>
 
-      <div class="flex bg-blue-100 h-[470px] w-full">
-        <SparklineCell
-          :data="safeData.spark"
-          :direction="safeData.ch7d_direction"
-          :width="1200"
-          :height="600"
+      <div class="h-[470px] w-full">
+        <TradingChart
+          :points="safeData.spark?.points"
+          :timestamps="safeData.spark?.timestamps"
+          :line-color="safeData.ch7d_direction === 'up' ? '#22c55e' : '#ef4444'"
         />
       </div>
 
@@ -193,18 +192,7 @@ const openUrl = (url: string) => {
         </InfoItem>
 
         <InfoItem label="FDV" :value="safeData.fdv" />
-        <!-- <InfoItem label="Vol/Market Cap" :value="safeData.volMarketCapRatio" />
-        <InfoItem label="Total Supply" :value="safeData.totalSupply" />
-        <InfoItem label="Unlocked Market Cap" :value="safeData.unlockedMarketCap" />
 
-        <InfoItem label="All Time High" v-if="safeData.allTimeHigh">
-          <PriceCell :value="safeData.allTimeHigh.price" />
-          <div class="text-xs text-gray-500">{{ formatDate(safeData.allTimeHigh.date) }}</div>
-        </InfoItem>
-        <InfoItem label="All Time Low" v-if="safeData.allTimeLow">
-          <PriceCell :value="safeData.allTimeLow.price" />
-          <div class="text-xs text-gray-500">{{ formatDate(safeData.allTimeLow.date) }}</div>
-        </InfoItem> -->
       </section>
     </div>
   </div>
